@@ -18,13 +18,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'TELEPHONE')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'EMAIL')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'EMAIL')->input('email',['maxlength' => true]) ?>
 
     <?= $form->field($model, 'ADRESSE')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'USERNAME')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'PASSWORD')->passwordInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'ETAT')->dropDownList(['ACTIF'=>'Actif','INACTIF'=>'Inactif'],['prompt'=>'Statut']) ?>
 
     <?= $form->field($model, 'SEXE')->radioList(['M' => 'Masculin','F'=>'Féminin']) ?>
 

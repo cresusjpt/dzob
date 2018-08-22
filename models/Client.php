@@ -35,13 +35,15 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_PERSONNE', 'ID_CLIENT'], 'required'],
+            [['TYPE_CLIENT'], 'required'],
             [['ID_PERSONNE', 'ID_CLIENT'], 'integer'],
             [['DATE_NAISSANCE'], 'safe'],
+            [['ID_CLIENT'], 'unique'],
             [['NOM'], 'string', 'max' => 50],
             [['PRENOM'], 'string', 'max' => 100],
             [['SEXE'], 'string', 'max' => 1],
             [['TELEPHONE'], 'string', 'max' => 10],
+            [['TYPE_CLIENT'], 'string'],
             [['ADRESSE'], 'string', 'max' => 200],
             [['ID_PERSONNE', 'ID_CLIENT'], 'unique', 'targetAttribute' => ['ID_PERSONNE', 'ID_CLIENT']],
         ];
@@ -53,8 +55,9 @@ class Client extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_PERSONNE' => Yii::t('app', 'Id  Personne'),
-            'ID_CLIENT' => Yii::t('app', 'Id  Client'),
+            'ID_PERSONNE' => Yii::t('app', 'Id Personne'),
+            'TYPE_CLIENT' => Yii::t('app', 'Type client'),
+            'ID_CLIENT' => Yii::t('app', 'Id Client'),
             'NOM' => Yii::t('app', 'Nom'),
             'PRENOM' => Yii::t('app', 'Prenom'),
             'SEXE' => Yii::t('app', 'Sexe'),

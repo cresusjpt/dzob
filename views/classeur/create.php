@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Classeur */
 
-$this->title = Yii::t('app', 'Create Classeur');
+$this->title = Yii::t('app', 'Créer Classeur');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Classeurs'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

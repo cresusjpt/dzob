@@ -37,12 +37,13 @@ class Courrier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['REFERNCE', 'ID_PERSONNE', 'ID_PRIORITE', 'ID_TYPECOURRIER', 'DATE', 'OBJET_COURRIER'], 'required'],
+            [['REFERENCE', 'ACTEUR_COURRIER', 'ID_PRIORITE', 'ID_TYPECOURRIER', 'DATE', 'OBJET_COURRIER'], 'required'],
             [['ID_PERSONNE', 'ID_PRIORITE', 'ID_TYPECOURRIER'], 'integer'],
             [['DATE'], 'safe'],
-            [['REFERNCE'], 'string', 'max' => 11],
+            [['REFERENCE'], 'string', 'max' => 11],
+            [['ACTEUR_COURRIER'], 'string', 'max' => 250],
             [['OBJET_COURRIER'], 'string', 'max' => 200],
-            [['REFERNCE'], 'unique'],
+            [['REFERENCE'], 'unique'],
             [['ID_PRIORITE'], 'exist', 'skipOnError' => true, 'targetClass' => PrioriteCourrier::className(), 'targetAttribute' => ['ID_PRIORITE' => 'ID_PRIORITE']],
             [['ID_PERSONNE'], 'exist', 'skipOnError' => true, 'targetClass' => Utilisateur::className(), 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE']],
             [['ID_PERSONNE'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE']],
@@ -57,10 +58,11 @@ class Courrier extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'REFERNCE' => Yii::t('app', 'Refernce'),
-            'ID_PERSONNE' => Yii::t('app', 'Id  Personne'),
-            'ID_PRIORITE' => Yii::t('app', 'Id  Priorite'),
-            'ID_TYPECOURRIER' => Yii::t('app', 'Id  Typecourrier'),
+            'REFERENCE' => Yii::t('app', 'Reference'),
+            'ACTEUR_COURRIER' => Yii::t('app', 'Acteur'),
+            'ID_PERSONNE' => Yii::t('app', 'Personne'),
+            'ID_PRIORITE' => Yii::t('app', 'Priorite'),
+            'ID_TYPECOURRIER' => Yii::t('app', 'Type courrier'),
             'DATE' => Yii::t('app', 'Date'),
             'OBJET_COURRIER' => Yii::t('app', 'Objet  Courrier'),
         ];
@@ -111,6 +113,6 @@ class Courrier extends \yii\db\ActiveRecord
      */
     public function getFichiers()
     {
-        return $this->hasMany(Fichier::className(), ['REFERNCE' => 'REFERNCE']);
+        return $this->hasMany(Fichier::className(), ['REFERENCE' => 'REFERENCE']);
     }
 }

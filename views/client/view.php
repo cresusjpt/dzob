@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Client */
 
-$this->title = $model->ID_PERSONNE;
+$this->title = $model->NOM.' '.$model->PRENOM;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Clients'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'ID_PERSONNE' => $model->ID_PERSONNE, 'ID_CLIENT' => $model->ID_CLIENT], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'ID_PERSONNE' => $model->ID_PERSONNE, 'ID_CLIENT' => $model->ID_CLIENT], [
+        <?= Html::a(Yii::t('app', 'Modifier'), ['update', 'ID_PERSONNE' => $model->ID_PERSONNE, 'ID_CLIENT' => $model->ID_CLIENT], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Supprimer'), ['delete', 'ID_PERSONNE' => $model->ID_PERSONNE, 'ID_CLIENT' => $model->ID_CLIENT], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'Voulez vous vraiment supprimer l\'élément?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'ID_PERSONNE',
             'ID_CLIENT',
+            'TYPE_CLIENT',
             'NOM',
             'PRENOM',
             'SEXE',

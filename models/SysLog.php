@@ -34,11 +34,12 @@ class SysLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_LOG', 'CODE_ACTION', 'ID_PERSONNE', 'IDENTIFIANT', 'DATE_LOG', 'TABLE_LOG', 'LIB_LOG'], 'required'],
+            [['CODE_ACTION', 'ID_PERSONNE', 'IDENTIFIANT', 'DATE_LOG', 'TABLE_LOG', 'LIB_LOG'], 'required'],
             [['ID_LOG', 'ID_PERSONNE', 'IDENTIFIANT'], 'integer'],
             [['DATE_LOG'], 'safe'],
             [['CODE_ACTION'], 'string', 'max' => 25],
-            [['TABLE_LOG', 'LIB_LOG'], 'string', 'max' => 50],
+            [['TABLE_LOG'], 'string', 'max' => 50],
+            [['LIB_LOG'], 'string', 'max' => 5000],
             [['ID_LOG'], 'unique'],
             [['CODE_ACTION'], 'exist', 'skipOnError' => true, 'targetClass' => Action::className(), 'targetAttribute' => ['CODE_ACTION' => 'CODE_ACTION']],
             [['ID_PERSONNE', 'IDENTIFIANT'], 'exist', 'skipOnError' => true, 'targetClass' => Utilisateur::className(), 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE', 'IDENTIFIANT' => 'IDENTIFIANT']],
@@ -53,10 +54,10 @@ class SysLog extends \yii\db\ActiveRecord
         return [
             'ID_LOG' => Yii::t('app', 'Id  Log'),
             'CODE_ACTION' => Yii::t('app', 'Action'),
-            'ID_PERSONNE' => Yii::t('app', 'Id  Personne'),
+            'ID_PERSONNE' => Yii::t('app', 'Identifiant Personne'),
             'IDENTIFIANT' => Yii::t('app', 'Nom de l\'Utilisateur'),
             'DATE_LOG' => Yii::t('app', 'Date Journal'),
-            'TABLE_LOG' => Yii::t('app', 'Table Concerné'),
+            'TABLE_LOG' => Yii::t('app', 'Table Concernée'),
             'LIB_LOG' => Yii::t('app', 'Libelle Journal'),
         ];
     }

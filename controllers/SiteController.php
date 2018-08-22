@@ -63,10 +63,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest){
+        if (Yii::$app->user->isGuest) {
             $this->redirect('site/login');
+        } else {
+            return $this->render('index');
         }
-        return $this->render('index');
+
     }
 
     /**
@@ -76,7 +78,6 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        Yii::$app->user->logout();
         $this->layout = 'loginLayout';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -87,7 +88,6 @@ class SiteController extends Controller
             return $this->goBack();
         }
 
-        $model->password = '';
         return $this->render('login', [
             'models' => $model,
         ]);
@@ -99,7 +99,7 @@ class SiteController extends Controller
      */
     public function actionRegister()
     {
-        if (!Yii::$app->user->isGuest){
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $this->layout = 'loginLayout';
@@ -110,11 +110,11 @@ class SiteController extends Controller
 
             if ($models->validate()) {
                 $models->save();
-                Yii::$app->session->setFlash('success', 'Sing up successfull');
+                Yii::$app->session->setFlash('success', 'Sign up successfull');
                 return $this->redirect('site/login');
             }
         }
-        return $this->render('register',['models'=>$models]);
+        return $this->render('register', ['models' => $models]);
     }
 
 
@@ -124,9 +124,12 @@ class SiteController extends Controller
      */
     public function actionForgot()
     {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $this->layout = 'loginLayout';
         $models = new Utilisateur();
-        return $this->render('forgot',['models'=>$models]);
+        return $this->render('forgot', ['models' => $models]);
     }
 
     /**
@@ -137,9 +140,6 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
-        $model = new LoginForm();
-        //return $this->render('login',['models'=>$model]);
         return $this->goHome();
     }
 
@@ -166,21 +166,47 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionAbout(){
+    public function actionAbout()
+    {
         return $this->render('about');
     }
 
-    public function actionHello(){
-      $test = 'JEANPAUL TOSSOU';
-      return $this->render('hello',array('name'=>$test));
+    public function actionHello()
+    {
+        $test = 'JEANPAUL TOSSOU';
+        return $this->render('hello', array('name' => $test));
     }
 
-    public function actionUser(){
-      $model = new UserForm;
-      if ($model->load(Yii::$app->request->post() && $model->validate() )) {
-        // code...
-      }else {
-        return $this->render('userForm',['model'=>$model]);
-      }
+    public function actionUser()
+    {
+        $model = new UserForm;
+        if ($model->load(Yii::$app->request->post() && $model->validate())) {
+            // code...
+        } else {
+            return $this->render('userForm', ['model' => $model]);
+        }
+    }
+
+    /**
+     * Displays profile page.
+     *
+     * @return string
+     */
+    public function actionProfile()
+    {
+        return $this->render('myprofile');
+    }
+
+    public function actionLock()
+    {
+        $this->layout = 'loginLayout';
+        $id = Yii::$app->user->id;
+        if (!is_null($id)) {
+            $user = Yii::$app->user->identity;
+            Yii::$app->user->logout();
+            return $this->render('lock', ['models' => $user]);
+        } else {
+            $this->redirect('site/login');
+        }
     }
 }

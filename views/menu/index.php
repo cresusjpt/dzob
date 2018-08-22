@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MenuSearch */
@@ -13,10 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="menu-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Menu'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Créer Menu'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,15 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'ID_MENU',
-            'MEN_ID_MENU',
             'NAME_MENU',
             'LIBEL_MENU',
-            'MENU_URL:url',
+            'CONTROLE',
+            'MEN_ID_MENU',
+            'NUM_ORDREMENU',
+            //'MENU_URL:url',
             //'ICONE_NAME_MENU',
-            //'CONTROLE',
-            //'NUM_ORDREMENU',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
 </div>

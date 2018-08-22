@@ -100,6 +100,8 @@ class AppAsset extends AssetBundle
         'T_assets/plugins/jquery.sparkline/jquery.sparkline.js',
         'T_assets/plugins/easy-pie-chart/dist/jquery.easypiechart.min.js',
         'T_assets/js/index.js',
+        'T_assets/plugins/jquery.pulsate/jquery.pulsate.min.js',
+		'T_assets/js/pages-user-profile.js',
 
         /*CORE JAVASCRIPTS*/
         'T_assets/js/main.js',

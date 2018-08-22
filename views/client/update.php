@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Client */
 
-$this->title = Yii::t('app', 'Update Client: {nameAttribute}', [
-    'nameAttribute' => $model->ID_PERSONNE,
+$this->title = Yii::t('app', 'Modifier Client: {nameAttribute}', [
+    'nameAttribute' => $model->NOM.' '.$model->PRENOM,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Clients'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->ID_PERSONNE, 'url' => ['view', 'ID_PERSONNE' => $model->ID_PERSONNE, 'ID_CLIENT' => $model->ID_CLIENT]];

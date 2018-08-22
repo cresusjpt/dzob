@@ -5,12 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Profil */
 
-$this->title = Yii::t('app', 'Update Profil: {nameAttribute}', [
+$this->title = Yii::t('app', 'Modifier Profil: {nameAttribute}', [
     'nameAttribute' => $model->CODE_PROFIL,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Profils'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->CODE_PROFIL, 'url' => ['view', 'id' => $model->CODE_PROFIL]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Modifier');
 ?>
 <div class="profil-update">
 

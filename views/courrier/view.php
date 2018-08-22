@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Courrier */
 
-$this->title = $model->REFERNCE;
+$this->title = $model->REFERENCE.'/'.$model->DATE;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Courriers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->REFERNCE], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->REFERNCE], [
+        <?= Html::a(Yii::t('app', 'Modifier'), ['update', 'id' => $model->REFERENCE], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Supprimer'), ['delete', 'id' => $model->REFERENCE], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'Voulez vous vraiment supprimer l\'élément?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'REFERNCE',
+            'REFERENCE',
             'ID_PERSONNE',
             'ID_PRIORITE',
             'ID_TYPECOURRIER',

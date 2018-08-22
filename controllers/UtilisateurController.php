@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Action;
 use Yii;
 use app\models\Utilisateur;
 use app\models\UtilisateurSearch;
@@ -53,8 +54,21 @@ class UtilisateurController extends Controller
      */
     public function actionView($ID_PERSONNE, $IDENTIFIANT)
     {
+        $model = $this->findModel($ID_PERSONNE, $IDENTIFIANT);
+        //print_r($model);
+        //var_dump(Yii::$app->urlManager->parseRequest(Yii::$app->request));
+        var_dump(Yii::$app->controller->id );
+        die();
+
+        $action = Action::findOne(['LIB_ACTION'=>'Consultation']);
+        $action = $action->CODE_ACTION;
+        $table = strtoupper(Utilisateur::tableName());
+
+        $logManager = new SysLogManager();
+        $logManager->inputLog($action,$table,$model);
+
         return $this->render('view', [
-            'model' => $this->findModel($ID_PERSONNE, $IDENTIFIANT),
+            'model' => $model,
         ]);
     }
 

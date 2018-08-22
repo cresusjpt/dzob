@@ -39,7 +39,7 @@ class AyantDroit extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_PERSONNE', 'ID_AYANTDROIT'], 'required'],
+            [['NOM','SEXE', 'PRENOM','DATE_NAISSANCE'], 'required'],
             [['ID_PERSONNE', 'ID_AYANTDROIT'], 'integer'],
             [['DATE_NAISSANCE'], 'safe'],
             [['NOM'], 'string', 'max' => 50],
@@ -64,7 +64,7 @@ class AyantDroit extends \yii\db\ActiveRecord
             'SEXE' => Yii::t('app', 'Sexe'),
             'TELEPHONE' => Yii::t('app', 'Telephone'),
             'ADRESSE' => Yii::t('app', 'Adresse'),
-            'DATE_NAISSANCE' => Yii::t('app', 'Date  Naissance'),
+            'DATE_NAISSANCE' => Yii::t('app', 'Date de Naissance'),
         ];
     }
 

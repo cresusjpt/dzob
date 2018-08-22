@@ -5,12 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Courrier */
 
-$this->title = Yii::t('app', 'Update Courrier: {nameAttribute}', [
-    'nameAttribute' => $model->REFERNCE,
+$this->title = Yii::t('app', 'Modifier Courrier: {nameAttribute}', [
+    'nameAttribute' => $model->REFERENCE.'/'.$model->DATE,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Courriers'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->REFERNCE, 'url' => ['view', 'id' => $model->REFERNCE]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = ['label' => $model->REFERENCE, 'url' => ['view', 'id' => $model->REFERENCE]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Modifier');
 ?>
 <div class="courrier-update">
 

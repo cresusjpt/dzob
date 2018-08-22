@@ -51,7 +51,7 @@ class ClientController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($ID_PERSONNE, $ID_CLIENT)
+    public function actionView($ID_PERSONNE=0, $ID_CLIENT)
     {
         return $this->render('view', [
             'model' => $this->findModel($ID_PERSONNE, $ID_CLIENT),
@@ -104,6 +104,8 @@ class ClientController extends Controller
      * @param integer $ID_CLIENT
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($ID_PERSONNE, $ID_CLIENT)
     {
@@ -122,10 +124,11 @@ class ClientController extends Controller
      */
     protected function findModel($ID_PERSONNE, $ID_CLIENT)
     {
+
         if (($model = Client::findOne(['ID_PERSONNE' => $ID_PERSONNE, 'ID_CLIENT' => $ID_CLIENT])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
     }
 }

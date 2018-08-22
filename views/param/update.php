@@ -5,12 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\SysParam */
 
-$this->title = Yii::t('app', 'Update Sys Param: {nameAttribute}', [
+$this->title = Yii::t('app', 'Modifier Paramètre Système: {nameAttribute}', [
     'nameAttribute' => $model->PARAM_CODE,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sys Params'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Paramètre Système'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->PARAM_CODE, 'url' => ['view', 'id' => $model->PARAM_CODE]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Modifier');
 ?>
 <div class="sys-param-update">
 

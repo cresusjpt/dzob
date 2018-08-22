@@ -59,7 +59,7 @@ class Fonctionnalite extends \yii\db\ActiveRecord
             'FONCT_URL' => Yii::t('app', 'Lien Url'),
             'CONTROLE_FONCT' => Yii::t('app', 'Controle'),
             'NUM_ORDREFONCT' => Yii::t('app', 'Numero d\'ordre'),
-            'DESCRIPTION_FONCT' => Yii::t('app', 'Description Fonctionnalité'),
+            'DESCRIPTION_FONCT' => Yii::t('app', 'Description de la Fonctionnalité'),
         ];
     }
 

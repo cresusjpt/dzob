@@ -5,12 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Fonctionnalite */
 
-$this->title = Yii::t('app', 'Update Fonctionnalite: {nameAttribute}', [
-    'nameAttribute' => $model->ID_FONCT,
+$this->title = Yii::t('app', 'Modifier Fonctionnalité: {nameAttribute}', [
+    'nameAttribute' => $model->LIBEL_FONCT,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Fonctionnalites'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Fonctionnalités'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->ID_FONCT, 'url' => ['view', 'id' => $model->ID_FONCT]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Modifier');
 ?>
 <div class="fonctionnalite-update">
 

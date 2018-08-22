@@ -104,6 +104,8 @@ class AyantdroitController extends Controller
      * @param integer $ID_AYANTDROIT
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($ID_PERSONNE, $ID_AYANTDROIT)
     {
@@ -126,6 +128,6 @@ class AyantdroitController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
     }
 }

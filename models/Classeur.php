@@ -29,7 +29,7 @@ class Classeur extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_CLASSEUR', 'NOM_CLASSEUR', 'DATE_CLASSEUR'], 'required'],
+            [['NOM_CLASSEUR', 'DATE_CLASSEUR'], 'required'],
             [['ID_CLASSEUR'], 'integer'],
             [['DATE_CLASSEUR'], 'safe'],
             [['NOM_CLASSEUR'], 'string', 'max' => 50],
@@ -43,9 +43,9 @@ class Classeur extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_CLASSEUR' => Yii::t('app', 'Id  Classeur'),
-            'NOM_CLASSEUR' => Yii::t('app', 'Nom  Classeur'),
-            'DATE_CLASSEUR' => Yii::t('app', 'Date  Classeur'),
+            'ID_CLASSEUR' => Yii::t('app', 'Id Classeur'),
+            'NOM_CLASSEUR' => Yii::t('app', 'Nom Classeur'),
+            'DATE_CLASSEUR' => Yii::t('app', 'Date Classeur'),
         ];
     }
 

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Utilisateur */
 
-$this->title = Yii::t('app', 'Create Utilisateur');
+$this->title = Yii::t('app', 'Créer Utilisateur');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Utilisateurs'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

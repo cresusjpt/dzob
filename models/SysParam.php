@@ -41,9 +41,9 @@ class SysParam extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'PARAM_CODE' => Yii::t('app', 'Param  Code'),
-            'PARAM_VALUE' => Yii::t('app', 'Valeur paramètre'),
-            'PARAM_DESC' => Yii::t('app', 'Description Paramètre'),
+            'PARAM_CODE' => Yii::t('app', 'Code du Parametre'),
+            'PARAM_VALUE' => Yii::t('app', 'Valeur du paramètre'),
+            'PARAM_DESC' => Yii::t('app', 'Description du Paramètre'),
         ];
     }
 }

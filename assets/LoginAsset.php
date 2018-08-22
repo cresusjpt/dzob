@@ -49,6 +49,7 @@ class LoginAsset extends AssetBundle
         'T_assets/plugins/iCheck/jquery.icheck.min.js',
         'T_assets/js/main.js',
         'T_assets/js/login.js',
+        '',
     ];
     public $depends = [
         'yii\web\YiiAsset',

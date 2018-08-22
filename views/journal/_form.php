@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Utilisateur;
+use app\models\Action;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
@@ -14,9 +15,10 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ID_LOG')->textInput() ?>
-
-    <?= $form->field($model, 'CODE_ACTION')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'CODE_ACTION')->dropDownList(
+        ArrayHelper::map(Action::find()->all(),'CODE_ACTION','LIB_ACTION'),
+        ['prompt'=>'Action','maxlength'=>true]
+    ) ?>
 
     <?= $form->field($model, 'IDENTIFIANT')->dropDownList(
         ArrayHelper::map(Utilisateur::find()->all(),'IDENTIFIANT','USERNAME'),
@@ -27,10 +29,10 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'TABLE_LOG')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'LIB_LOG')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'LIB_LOG')->textarea(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Enregistrer'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

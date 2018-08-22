@@ -43,6 +43,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         {error}{hint}'
                 ])->textInput(['placeholder'=>'Prénom complet'])
                 ?>
+                <?= $form->field($models, 'EMAIL',['options'=>[
+                    'tag'=>'div',
+                    'class'=>'form-group required'
+                ],
+                    'template'=>'{input}
+                        {error}{hint}'
+                ])->input('email',['placeholder'=>'Email'])
+                ?>
                 <?= $form->field($models, 'TELEPHONE',['options'=>[
                     'tag'=>'div',
                     'class'=>'form-group required'
