@@ -15,6 +15,12 @@ use yii\filters\VerbFilter;
  */
 class UtilisateurController extends Controller
 {
+
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
+
     /**
      * @inheritdoc
      */
@@ -52,20 +58,16 @@ class UtilisateurController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($ID_PERSONNE, $IDENTIFIANT)
+    public function actionView($ID_PERSONNE = 0, $IDENTIFIANT)
     {
         $model = $this->findModel($ID_PERSONNE, $IDENTIFIANT);
-        //print_r($model);
-        //var_dump(Yii::$app->urlManager->parseRequest(Yii::$app->request));
-        var_dump(Yii::$app->controller->id );
-        die();
 
-        $action = Action::findOne(['LIB_ACTION'=>'Consultation']);
-        $action = $action->CODE_ACTION;
-        $table = strtoupper(Utilisateur::tableName());
-
-        $logManager = new SysLogManager();
-        $logManager->inputLog($action,$table,$model);
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Utilisateur::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
 
         return $this->render('view', [
             'model' => $model,
@@ -76,13 +78,26 @@ class UtilisateurController extends Controller
      * Creates a new Utilisateur model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws Yii\base\Exception
      */
     public function actionCreate()
     {
         $model = new Utilisateur();
+        $this->_logging = false;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID_PERSONNE' => $model->ID_PERSONNE, 'IDENTIFIANT' => $model->IDENTIFIANT]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->setPassword($model->rawpassword);
+            $model->generateAuthKey();
+            if ($model->validate()) {
+                $action = Action::findOne('CREATE');
+                $this->_user_actions = $action->CODE_ACTION;
+                $this->_tablename = Utilisateur::tableName();
+                $this->_models = $model;
+                $this->_logging = true;
+                $model->save();
+                $this->logger();
+                return $this->redirect(['view', 'ID_PERSONNE' => $model->ID_PERSONNE, 'IDENTIFIANT' => $model->IDENTIFIANT]);
+            }
         }
 
         return $this->render('create', [
@@ -97,15 +112,29 @@ class UtilisateurController extends Controller
      * @param integer $IDENTIFIANT
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \yii\base\Exception
      */
     public function actionUpdate($ID_PERSONNE, $IDENTIFIANT)
     {
         $model = $this->findModel($ID_PERSONNE, $IDENTIFIANT);
+        $this->_logging = false;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->setPassword($model->rawpassword);
+            $model->generateAuthKey();
+            $model->DM_MODIFICATION = date("Y-m-d H:i:s");
+            $action = Action::findOne('UPDATE');
+            $this->_user_actions = $action->CODE_ACTION;
+            $this->_tablename = Utilisateur::tableName();
+            $this->_models = $model;
+            $this->_logging = true;
+            $model->save();
+            $this->logger();
             return $this->redirect(['view', 'ID_PERSONNE' => $model->ID_PERSONNE, 'IDENTIFIANT' => $model->IDENTIFIANT]);
         }
 
+        //set password to null avoid to show the hashpassword in the view
+        $model->PASSWORD = null;
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -118,11 +147,20 @@ class UtilisateurController extends Controller
      * @param integer $IDENTIFIANT
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($ID_PERSONNE, $IDENTIFIANT)
     {
-        $this->findModel($ID_PERSONNE, $IDENTIFIANT)->delete();
+        $model = $this->findModel($ID_PERSONNE, $IDENTIFIANT);
 
+        $action = Action::findOne('CREATE');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Utilisateur::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $model->delete();
+        $this->logger();
         return $this->redirect(['index']);
     }
 
@@ -141,5 +179,26 @@ class UtilisateurController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'Cette page n\'existe pas.'));
+    }
+
+    /**
+     * @param $action
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action)
+    {
+        return parent::beforeAction($action); // TODO: Change the autogenerated stub
+    }
+
+    /**
+     *
+     */
+    protected function logger()
+    {
+        if ($this->_logging) {
+            $logManager = new SysLogManager();
+            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
+        }
     }
 }

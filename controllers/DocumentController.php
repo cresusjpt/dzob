@@ -2,18 +2,21 @@
 
 namespace app\controllers;
 
+use app\models\SysParam;
 use Yii;
 use app\models\Document;
 use app\models\DocumentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * DocumentController implements the CRUD actions for Document model.
  */
 class DocumentController extends Controller
 {
+
     /**
      * @inheritdoc
      */
@@ -66,8 +69,23 @@ class DocumentController extends Controller
     {
         $model = new Document();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_DOC]);
+        if ($model->load(Yii::$app->request->post())) {
+            if (!is_null($model->file = UploadedFile::getInstance($model,'file'))){
+                $model->DATE_EFFECTIVE = date("Y-m-d");
+                $upload_dir = SysParam::findOne('UPLOADS_DIR_NAME');
+                $doc_dir = SysParam::findOne('DOCUMENTS_DIR_NAME');
+                $source =  $upload_dir->PARAM_VALUE.'/'.$doc_dir->PARAM_VALUE.'/'.$model->TITRE_DOC.'_'.$model->DATE_EFFECTIVE.'.'.$model->file->extension;
+                $model->SOURCE = $source;
+                $model->CREATEUR = Yii::$app->user->identity->USERNAME;
+                $model->file->saveAs($source);
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->ID_DOC]);
+            }else{
+                Yii::$app->session->setFlash('failed', 'Une erreur s\'est produite. Veuillez réessayer en prenant soin d\'ajouter un document');
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
 
         return $this->render('create', [
@@ -86,7 +104,17 @@ class DocumentController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if (!is_null($model->file = UploadedFile::getInstance($model,'file'))){
+                $model->DATE_EFFECTIVE = date("Y-m-d");
+                $upload_dir = SysParam::findOne('UPLOADS_DIR_NAME');
+                $doc_dir = SysParam::findOne('DOCUMENTS_DIR_NAME');
+                $source =  $upload_dir->PARAM_VALUE.'/'.$doc_dir->PARAM_VALUE.'/'.$model->TITRE_DOC.'_'.$model->DATE_EFFECTIVE.'.'.$model->file->extension;
+                $model->SOURCE = $source;
+                $model->CREATEUR = Yii::$app->user->identity->USERNAME;
+                $model->file->saveAs($source);
+            }
+            $model->save();
             return $this->redirect(['view', 'id' => $model->ID_DOC]);
         }
 
@@ -101,6 +129,8 @@ class DocumentController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -122,6 +152,6 @@ class DocumentController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
     }
 }

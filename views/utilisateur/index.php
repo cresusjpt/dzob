@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'TELEPHONE',
             'ADRESSE',
             'DATE_NAISSANCE',
-            'SEXE',
+            'sexe',
             'EMAIL:email',
             //'PASSWORD',
             //'AUTH_KEY',

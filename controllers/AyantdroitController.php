@@ -21,7 +21,7 @@ class AyantdroitController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -51,7 +51,7 @@ class AyantdroitController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($ID_PERSONNE, $ID_AYANTDROIT)
+    public function actionView($ID_PERSONNE=0, $ID_AYANTDROIT)
     {
         return $this->render('view', [
             'model' => $this->findModel($ID_PERSONNE, $ID_AYANTDROIT),
@@ -84,7 +84,7 @@ class AyantdroitController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($ID_PERSONNE, $ID_AYANTDROIT)
+    public function actionUpdate($ID_PERSONNE=0, $ID_AYANTDROIT)
     {
         $model = $this->findModel($ID_PERSONNE, $ID_AYANTDROIT);
 
@@ -107,7 +107,7 @@ class AyantdroitController extends Controller
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionDelete($ID_PERSONNE, $ID_AYANTDROIT)
+    public function actionDelete($ID_PERSONNE=0, $ID_AYANTDROIT)
     {
         $this->findModel($ID_PERSONNE, $ID_AYANTDROIT)->delete();
 

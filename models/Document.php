@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "document".
  *
  * @property int $ID_DOC
+ * @property int $ID_DOSSIER
  * @property string $TITRE_DOC
  * @property string $DESCRIPTION_DOC
  * @property string $DATE_DOC
@@ -15,13 +16,14 @@ use Yii;
  * @property string $CREATEUR
  * @property string $SOURCE
  *
- * @property Constituer[] $constituers
- * @property Dossier[] $dOSSIERs
  * @property Contenir[] $contenirs
  * @property Metadonnee[] $mETAs
+ * @property Dossier $dOSSIER
  */
 class Document extends \yii\db\ActiveRecord
 {
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -36,13 +38,14 @@ class Document extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_DOC', 'TITRE_DOC', 'DESCRIPTION_DOC', 'DATE_DOC', 'CREATEUR', 'SOURCE'], 'required'],
-            [['ID_DOC'], 'integer'],
+            [['ID_DOSSIER', 'TITRE_DOC', 'DESCRIPTION_DOC', 'DATE_DOC', 'CREATEUR', 'SOURCE'], 'required'],
+            [['ID_DOSSIER'], 'integer'],
+            [['file'], 'file'],
             [['DATE_DOC', 'DATE_EFFECTIVE'], 'safe'],
             [['TITRE_DOC', 'CREATEUR'], 'string', 'max' => 50],
-            [['DESCRIPTION_DOC'], 'string', 'max' => 250],
+            [['DESCRIPTION_DOC'], 'string', 'max' => 5000],
             [['SOURCE'], 'string', 'max' => 150],
-            [['ID_DOC'], 'unique'],
+            [['ID_DOSSIER'], 'exist', 'skipOnError' => true, 'targetClass' => Dossier::className(), 'targetAttribute' => ['ID_DOSSIER' => 'ID_DOSSIER']],
         ];
     }
 
@@ -52,30 +55,16 @@ class Document extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_DOC' => Yii::t('app', 'Id  Doc'),
+            'ID_DOC' => Yii::t('app', 'Document'),
+            'file' => Yii::t('app', 'Fichier'),
+            'ID_DOSSIER' => Yii::t('app', 'Dossier'),
             'TITRE_DOC' => Yii::t('app', 'Titre  Doc'),
-            'DESCRIPTION_DOC' => Yii::t('app', 'Description  Doc'),
-            'DATE_DOC' => Yii::t('app', 'Date  Doc'),
-            'DATE_EFFECTIVE' => Yii::t('app', 'Date  Effective'),
+            'DESCRIPTION_DOC' => Yii::t('app', 'Description Document'),
+            'DATE_DOC' => Yii::t('app', 'Date Document'),
+            'DATE_EFFECTIVE' => Yii::t('app', 'Date Effective'),
             'CREATEUR' => Yii::t('app', 'Createur'),
             'SOURCE' => Yii::t('app', 'Source'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConstituers()
-    {
-        return $this->hasMany(Constituer::className(), ['ID_DOC' => 'ID_DOC']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDOSSIERs()
-    {
-        return $this->hasMany(Dossier::className(), ['ID_DOSSIER' => 'ID_DOSSIER'])->viaTable('constituer', ['ID_DOC' => 'ID_DOC']);
     }
 
     /**
@@ -92,5 +81,13 @@ class Document extends \yii\db\ActiveRecord
     public function getMETAs()
     {
         return $this->hasMany(Metadonnee::className(), ['ID_META' => 'ID_META'])->viaTable('contenir', ['ID_DOC' => 'ID_DOC']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDOSSIER()
+    {
+        return $this->hasOne(Dossier::className(), ['ID_DOSSIER' => 'ID_DOSSIER']);
     }
 }

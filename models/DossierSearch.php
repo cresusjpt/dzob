@@ -73,7 +73,8 @@ class DossierSearch extends Dossier
         $query->andFilterWhere(['like', 'LIBELLE_DOSSIER', $this->LIBELLE_DOSSIER])
             ->andFilterWhere(['like', 'COMMENTAIRE_DOSSIER', $this->COMMENTAIRE_DOSSIER])
             ->andFilterWhere(['like', 'ETAT_DOSSIER_TRAITEMENT', $this->ETAT_DOSSIER_TRAITEMENT])
-            ->andFilterWhere(['like', 'STATUT_DOSSIER', $this->STATUT_DOSSIER]);
+            ->andFilterWhere(['like', 'STATUT_DOSSIER', $this->STATUT_DOSSIER])
+            ->andFilterWhere(['like', 'FRAIS_DOSSIER', $this->FRAIS_DOSSIER]);
 
         return $dataProvider;
     }

@@ -27,11 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'REFERENCE',
-            'ID_PERSONNE',
-            'ID_PRIORITE',
-            'ID_TYPECOURRIER',
+            //'ID_PERSONNE',
+            'ACTEUR',
+            'pRIORITE.NATURE_COURRIER',
+            'tYPECOURRIER.NOM_TYPE',
             'DATE',
-            //'OBJET_COURRIER',
+            'OBJET_COURRIER',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

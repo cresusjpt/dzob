@@ -43,6 +43,7 @@ class AppAsset extends AssetBundle
         /*CSS REQUIRED FOR THIS PAGE ONLY*/
         'T_assets/plugins/weather-icons/css/weather-icons.min.css',
         'T_assets/plugins/nvd3/nv.d3.min.css',
+        'T_assets/plugins/jQuery-File-Upload/css/jquery.fileupload-ui.css',
 
         /*CORE CSS*/
         'T_assets/css/styles.css',
@@ -102,6 +103,20 @@ class AppAsset extends AssetBundle
         'T_assets/js/index.js',
         'T_assets/plugins/jquery.pulsate/jquery.pulsate.min.js',
 		'T_assets/js/pages-user-profile.js',
+        'T_assets/plugins/jQuery-File-Upload/js/vendor/jquery.ui.widget.js',
+        'http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js',
+        'T_assets/plugins/javascript-Load-Image/js/load-image.all.min.js',
+        'http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js',
+        'http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js',
+        'T_assets/plugins/jQuery-File-Upload/js/jquery.iframe-transport.js',
+        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload.js',
+        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-process.js',
+        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-image.js',
+        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-audio.js',
+        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-video.js',
+        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-validate.js',
+        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-ui.js',
+        'T_assets/plugins/jQuery-File-Upload/js/main.js',
 
         /*CORE JAVASCRIPTS*/
         'T_assets/js/main.js',

@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Dossier */
 
-$this->title = $model->ID_DOSSIER;
+$this->title = $model->LIBELLE_DOSSIER;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Dossiers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->ID_DOSSIER], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->ID_DOSSIER], [
+        <?= Html::a(Yii::t('app', 'Modifier'), ['update', 'id' => $model->ID_DOSSIER], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Supprimer'), ['delete', 'id' => $model->ID_DOSSIER], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'Voulez vous vraiment supprimer l\'élément?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,17 +29,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'ID_DOSSIER',
-            'ID_CLASSEUR',
-            'ID_PERSONNE',
-            'ID_CLIENT',
-            'DOS_ID_DOSSIER',
             'LIBELLE_DOSSIER',
-            'COMMENTAIRE_DOSSIER',
-            'DATE_CREATION',
-            'DATE_DMDOSSIER',
+            'cLASSEUR.NOM_CLASSEUR',
+            //'ID_PERSONNE',
+            'pERSONNE.NOM',
+            'pERSONNE.PRENOM',
+            'dOSIDDOSSIER.LIBELLE_DOSSIER',
             'FRAIS_DOSSIER',
-            'ETAT_DOSSIER_TRAITEMENT',
+            'DATE_CREATION',
+            'etatDossier',
             'STATUT_DOSSIER',
+            'COMMENTAIRE_DOSSIER',
+            'DATE_DMDOSSIER',
         ],
     ]) ?>
 

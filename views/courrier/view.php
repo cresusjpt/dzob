@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'REFERENCE',
             'ID_PERSONNE',
-            'ID_PRIORITE',
-            'ID_TYPECOURRIER',
+            'pRIORITE.NATURE_COURRIER',
+            'tYPECOURRIER.NOM_TYPE',
             'DATE',
             'OBJET_COURRIER',
         ],

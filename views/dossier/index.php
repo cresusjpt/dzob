@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Dossier'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Créer Dossier'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,17 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'ID_DOSSIER',
-            'ID_CLASSEUR',
-            'ID_PERSONNE',
-            'ID_CLIENT',
-            'DOS_ID_DOSSIER',
-            //'LIBELLE_DOSSIER',
+            //'ID_DOSSIER',
+            'dOSIDDOSSIER.LIBELLE_DOSSIER',
+            'cLASSEUR.NOM_CLASSEUR',
+            //'ID_PERSONNE',
+            'pERSONNE.NOM',
+            'pERSONNE.PRENOM',
+            'LIBELLE_DOSSIER',
             //'COMMENTAIRE_DOSSIER',
-            //'DATE_CREATION',
+            'DATE_CREATION',
             //'DATE_DMDOSSIER',
-            //'FRAIS_DOSSIER',
-            //'ETAT_DOSSIER_TRAITEMENT',
+            'FRAIS_DOSSIER',
+            'etatDossier',
             //'STATUT_DOSSIER',
 
             ['class' => 'yii\grid\ActionColumn'],

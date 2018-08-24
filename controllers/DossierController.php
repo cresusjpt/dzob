@@ -86,7 +86,9 @@ class DossierController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->DATE_DMDOSSIER = date("Y-m-d H:i:s");
+            $model->save();
             return $this->redirect(['view', 'id' => $model->ID_DOSSIER]);
         }
 
@@ -101,6 +103,8 @@ class DossierController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -118,10 +122,10 @@ class DossierController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Dossier::findOne($id)) !== null) {
+        if (($model = Dossier::findOne(['ID_DOSSIER'=>$id])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
     }
 }

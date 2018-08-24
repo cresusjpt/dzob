@@ -31,6 +31,7 @@ class Classeur extends \yii\db\ActiveRecord
         return [
             [['NOM_CLASSEUR', 'DATE_CLASSEUR'], 'required'],
             [['ID_CLASSEUR'], 'integer'],
+            [['NOM_CLASSEUR'], 'unique'],
             [['DATE_CLASSEUR'], 'safe'],
             [['NOM_CLASSEUR'], 'string', 'max' => 50],
             [['ID_CLASSEUR'], 'unique'],

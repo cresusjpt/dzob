@@ -31,32 +31,25 @@ class SysLogManager
 
     public function inputLog($action, $table, $model)
     {
-        $mo = get_object_vars($model);
-        print_r($mo);
-        $lib = $this->writeLibLog($mo);
+        $lib = $this->writeLibLog($model);
         $syslog = new SysLog();
         $syslog->CODE_ACTION = $action;
         $syslog->IDENTIFIANT = $this->_user->IDENTIFIANT;
-        $syslog->DATE_LOG = date('yyyy-mm-dd hh-mm-ss');
+        $syslog->DATE_LOG = date('Y-m-d H:i:s');
         $syslog->TABLE_LOG = $table;
         $syslog->LIB_LOG = $lib;
-        $syslog->save(false);
-        //var_dump($model);
-        //var_dump($this->_user);
-        //die();
+        $syslog->save();
     }
 
     private function writeLibLog($model)
     {
-        var_dump($model);
         $lib = '';
         if (!is_null($model)){
             foreach ($model as $item => $value) {
-                $lib = '::' . strtoupper($item) . ' = ' .$value.' ';
+                $lib .= '::' . strtoupper($item) . ' = ' .$value.' ';
             }
         }
-        var_dump($lib);
-        die();
+        //var_dump($lib);
         return $lib;
     }
 }

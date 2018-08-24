@@ -82,4 +82,18 @@ class Client extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Dossier::className(), ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_CLIENT' => 'ID_CLIENT']);
     }
+
+    /**
+     * @return string
+     */
+    public function getSexe()
+    {
+        $sexe = '';
+        if ($this->SEXE =='M'){
+            $sexe = 'Masculin';
+        }else if ($this->SEXE == 'F'){
+            $sexe = 'Feminin';
+        }
+        return $sexe;
+    }
 }

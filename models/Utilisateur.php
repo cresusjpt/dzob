@@ -28,7 +28,7 @@ class Utilisateur extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['USERNAME', 'rawpassword', 'PASSWORD', 'ADRESSE', 'TELEPHONE', 'NOM', 'PRENOM','EMAIL','SEXE','ETAT'], 'required'],
+            [['USERNAME', 'rawpassword', 'PASSWORD', 'ADRESSE', 'TELEPHONE','DATE_NAISSANCE' ,'NOM', 'PRENOM','EMAIL','SEXE','ETAT'], 'required'],
             ['USERNAME', 'unique', 'targetClass' => 'app\models\Utilisateur', 'message' => 'Le nom d\'utilisateur est déjà pris'],
             [['USERNAME'], 'string', 'max' => 32],
             [['EMAIL'],'email'],
@@ -114,6 +114,7 @@ class Utilisateur extends ActiveRecord implements IdentityInterface
     /**
      * Genrates remember me  authentification Key
      * @throws Exception
+     * @throws \yii\base\Exception
      */
     public function generateAuthKey()
     {
@@ -165,9 +166,24 @@ class Utilisateur extends ActiveRecord implements IdentityInterface
             'identifiant' => 'Identifiant',
             'username' => 'Nom d\'utilisateur',
             'PASSWORD' => 'Mot de passe',
+            'rawpassword' => 'Mot de passe encore',
             'AUTH_KEY' => 'Authentification Key',
             'ACCESS_TOKEN' => 'Access Token',
         ];
         //return parent::attributeLabels()
+    }
+
+    /**
+     * @return string
+     */
+    public function getSexe()
+    {
+        $sexe = '';
+        if ($this->SEXE =='M'){
+            $sexe = 'Masculin';
+        }else if ($this->SEXE == 'F'){
+            $sexe = 'Feminin';
+        }
+        return $sexe;
     }
 }

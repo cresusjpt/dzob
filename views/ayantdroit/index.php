@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'ID_AYANTDROIT',
             'NOM',
             'PRENOM',
-            'SEXE',
+            'sexe',
             'TELEPHONE',
             'ADRESSE',
             'DATE_NAISSANCE',

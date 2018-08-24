@@ -9,6 +9,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\datepicker\DatePicker;
 
 $this->title = 'Dzob | Login';
 $this->params['breadcrumbs'][] = $this->title;
@@ -43,6 +44,20 @@ $this->params['breadcrumbs'][] = $this->title;
                         {error}{hint}'
                 ])->textInput(['placeholder'=>'Prénom complet'])
                 ?>
+
+                <?= $form->field($models, 'DATE_NAISSANCE')->widget(
+                    DatePicker::class, [
+                    // inline too, not bad
+                    'inline' => false,
+                    'language' => 'fr',
+                    // modify template for custom rendering
+                    //'template' => '<div class="well well-sm" style="background-color: #fff;">{input}</div>',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd'
+                    ]
+                ]); ?>
+
                 <?= $form->field($models, 'EMAIL',['options'=>[
                     'tag'=>'div',
                     'class'=>'form-group required'
@@ -83,6 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         {error}{hint}'
                 ])->textInput(['placeholder'=>'Nom d\'utilisteur'])
                 ?>
+
                 <?= $form->field($models, 'PASSWORD',['options'=>[
                     'tag'=>'div',
                     'class'=>'form-group field-utilisateur-login required '

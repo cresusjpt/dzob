@@ -115,4 +115,18 @@ class AyantDroit extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Mobilier::className(), ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
     }
+
+    /**
+     * @return string
+     */
+    public function getSexe()
+    {
+        $sexe = '';
+        if ($this->SEXE =='M'){
+            $sexe = 'Masculin';
+        }else if ($this->SEXE == 'F'){
+            $sexe = 'Feminin';
+        }
+        return $sexe;
+    }
 }

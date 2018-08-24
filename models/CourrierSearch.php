@@ -18,7 +18,7 @@ class CourrierSearch extends Courrier
     public function rules()
     {
         return [
-            [['REFERNCE', 'DATE', 'OBJET_COURRIER'], 'safe'],
+            [['REFERENCE', 'DATE', 'OBJET_COURRIER'], 'safe'],
             [['ID_PERSONNE', 'ID_PRIORITE', 'ID_TYPECOURRIER'], 'integer'],
         ];
     }
@@ -65,7 +65,7 @@ class CourrierSearch extends Courrier
             'DATE' => $this->DATE,
         ]);
 
-        $query->andFilterWhere(['like', 'REFERNCE', $this->REFERNCE])
+        $query->andFilterWhere(['like', 'REFERENCE', $this->REFERENCE])
             ->andFilterWhere(['like', 'OBJET_COURRIER', $this->OBJET_COURRIER]);
 
         return $dataProvider;

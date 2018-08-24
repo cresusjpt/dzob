@@ -41,8 +41,8 @@ class TypeCourrier extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_TYPECOURRIER' => Yii::t('app', 'Id  Typecourrier'),
-            'NOM_TYPE' => Yii::t('app', 'Nom  Type'),
+            'ID_TYPECOURRIER' => Yii::t('app', 'Id Typecourrier'),
+            'NOM_TYPE' => Yii::t('app', 'Nom Type'),
         ];
     }
 

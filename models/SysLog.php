@@ -34,15 +34,14 @@ class SysLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CODE_ACTION', 'ID_PERSONNE', 'IDENTIFIANT', 'DATE_LOG', 'TABLE_LOG', 'LIB_LOG'], 'required'],
-            [['ID_LOG', 'ID_PERSONNE', 'IDENTIFIANT'], 'integer'],
+            [['CODE_ACTION', 'IDENTIFIANT', 'DATE_LOG', 'TABLE_LOG', 'LIB_LOG'], 'required'],
+            [['ID_LOG', 'IDENTIFIANT'], 'integer'],
             [['DATE_LOG'], 'safe'],
             [['CODE_ACTION'], 'string', 'max' => 25],
             [['TABLE_LOG'], 'string', 'max' => 50],
             [['LIB_LOG'], 'string', 'max' => 5000],
             [['ID_LOG'], 'unique'],
             [['CODE_ACTION'], 'exist', 'skipOnError' => true, 'targetClass' => Action::className(), 'targetAttribute' => ['CODE_ACTION' => 'CODE_ACTION']],
-            [['ID_PERSONNE', 'IDENTIFIANT'], 'exist', 'skipOnError' => true, 'targetClass' => Utilisateur::className(), 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE', 'IDENTIFIANT' => 'IDENTIFIANT']],
         ];
     }
 
