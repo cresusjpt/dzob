@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Evenement */
 
-$this->title = $model->ID_EVENEMENT;
+$this->title = $model->LIBELLE_EVENEMENT;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Evenements'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->ID_EVENEMENT], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->ID_EVENEMENT], [
+        <?= Html::a(Yii::t('app', 'Modifier'), ['update', 'id' => $model->ID_EVENEMENT], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Supprimer'), ['delete', 'id' => $model->ID_EVENEMENT], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'Voulez vous vraiment supprimer l\'élément?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,13 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'ID_EVENEMENT',
-            'REFERENCE_PATRIMOINE',
+            //'ID_EVENEMENT',
+            //'REFERENCE_PATRIMOINE',
             'LIBELLE_EVENEMENT',
-            'COMMENTAIRE_EVENEMENT',
             'DATE_EVENEMENT',
-            'ETAT_EVENEMENT',
             'DATE_REALISATION',
+            'COMMENTAIRE_EVENEMENT',
+            'ETAT_EVENEMENT',
         ],
     ]) ?>
 

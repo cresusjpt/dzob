@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use app\models\Classeur;
 use app\models\Dossier;
 use app\models\Client;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Dossier */
