@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Action;
 use Yii;
 use app\models\AyantDroit;
 use app\models\AyantDroitSearch;
@@ -14,6 +15,10 @@ use yii\filters\VerbFilter;
  */
 class AyantdroitController extends Controller
 {
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
     /**
      * @inheritdoc
      */
@@ -53,8 +58,15 @@ class AyantdroitController extends Controller
      */
     public function actionView($ID_PERSONNE=0, $ID_AYANTDROIT)
     {
+        $model = $this->findModel($ID_PERSONNE, $ID_AYANTDROIT);
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = AyantDroit::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
         return $this->render('view', [
-            'model' => $this->findModel($ID_PERSONNE, $ID_AYANTDROIT),
+            'model' => $model,
         ]);
     }
 
@@ -129,5 +141,15 @@ class AyantdroitController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
+    }
+    /**
+     *
+     */
+    protected function logger()
+    {
+        if ($this->_logging) {
+            $logManager = new SysLogManager();
+            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
+        }
     }
 }

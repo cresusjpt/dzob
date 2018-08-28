@@ -29,11 +29,12 @@ class PrioriteCourrier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_PRIORITE', 'NATURE_COURRIER', 'CLASSER'], 'required'],
+            [['NATURE_COURRIER', 'CLASSER'], 'required'],
             [['ID_PRIORITE'], 'integer'],
             [['NATURE_COURRIER'], 'string', 'max' => 50],
-            [['CLASSER'], 'string', 'max' => 1],
+            [['CLASSER'], 'boolean'],
             [['ID_PRIORITE'], 'unique'],
+            [['NATURE_COURRIER'], 'unique'],
         ];
     }
 
@@ -43,8 +44,8 @@ class PrioriteCourrier extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_PRIORITE' => Yii::t('app', 'Id  Priorite'),
-            'NATURE_COURRIER' => Yii::t('app', 'Nature  Courrier'),
+            'ID_PRIORITE' => Yii::t('app', 'Priorite'),
+            'NATURE_COURRIER' => Yii::t('app', 'Nature du Courrier'),
             'CLASSER' => Yii::t('app', 'Classer'),
         ];
     }
@@ -56,4 +57,13 @@ class PrioriteCourrier extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Courrier::className(), ['ID_PRIORITE' => 'ID_PRIORITE']);
     }
+
+    /**
+     * @return string
+     */
+    public function getClassement()
+    {
+        return $this->CLASSER == 1? 'Oui' : 'Non';
+    }
+
 }

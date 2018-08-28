@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Action;
+use app\models\AyantDroit;
 use Yii;
 use app\models\Immobilier;
 use app\models\ImmobilierSearch;
@@ -14,6 +16,10 @@ use yii\filters\VerbFilter;
  */
 class ImmobilerController extends Controller
 {
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
     /**
      * @inheritdoc
      */
@@ -21,7 +27,7 @@ class ImmobilerController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -53,8 +59,15 @@ class ImmobilerController extends Controller
      */
     public function actionView($REFERENCE_PATRIMOINE, $ID_IMMOBILIER)
     {
+        $model = $this->findModel($REFERENCE_PATRIMOINE,$ID_IMMOBILIER);
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Immobilier::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
         return $this->render('view', [
-            'model' => $this->findModel($REFERENCE_PATRIMOINE, $ID_IMMOBILIER),
+            'model' => $model,
         ]);
     }
 
@@ -67,7 +80,9 @@ class ImmobilerController extends Controller
     {
         $model = new Immobilier();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->ID_PERSONNE = AyantDroit::findOne(['ID_AYANTDROIT'=>$model->ID_AYANTDROIT])->ID_PERSONNE;
+            $model->save();
             return $this->redirect(['view', 'REFERENCE_PATRIMOINE' => $model->REFERENCE_PATRIMOINE, 'ID_IMMOBILIER' => $model->ID_IMMOBILIER]);
         }
 
@@ -88,7 +103,9 @@ class ImmobilerController extends Controller
     {
         $model = $this->findModel($REFERENCE_PATRIMOINE, $ID_IMMOBILIER);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->ID_PERSONNE = AyantDroit::findOne(['ID_AYANTDROIT'=>$model->ID_AYANTDROIT])->ID_PERSONNE;
+            $model->save();
             return $this->redirect(['view', 'REFERENCE_PATRIMOINE' => $model->REFERENCE_PATRIMOINE, 'ID_IMMOBILIER' => $model->ID_IMMOBILIER]);
         }
 
@@ -104,6 +121,8 @@ class ImmobilerController extends Controller
      * @param integer $ID_IMMOBILIER
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($REFERENCE_PATRIMOINE, $ID_IMMOBILIER)
     {
@@ -126,6 +145,17 @@ class ImmobilerController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
+    }
+
+    /**
+     *
+     */
+    protected function logger()
+    {
+        if ($this->_logging) {
+            $logManager = new SysLogManager();
+            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
+        }
     }
 }

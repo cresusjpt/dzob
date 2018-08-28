@@ -28,10 +28,11 @@ class TypeCourrier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_TYPECOURRIER', 'NOM_TYPE'], 'required'],
+            [['NOM_TYPE'], 'required'],
             [['ID_TYPECOURRIER'], 'integer'],
             [['NOM_TYPE'], 'string', 'max' => 25],
             [['ID_TYPECOURRIER'], 'unique'],
+            [['NOM_TYPE'], 'unique'],
         ];
     }
 
@@ -41,8 +42,8 @@ class TypeCourrier extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_TYPECOURRIER' => Yii::t('app', 'Id Typecourrier'),
-            'NOM_TYPE' => Yii::t('app', 'Nom Type'),
+            'ID_TYPECOURRIER' => Yii::t('app', 'Type courrier'),
+            'NOM_TYPE' => Yii::t('app', 'Nom Type courrier'),
         ];
     }
 

@@ -16,7 +16,7 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
-    public $rememberMe = true;
+    public $rememberMe = false;
 
     private $_user = false;
 
@@ -49,7 +49,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'nom d\'utilisateur ou mot de passe incorrect.');
             }
         }
     }
@@ -61,7 +61,12 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            $user = $this->getUser();
+            if ($user->ETAT == 'ACTIF') {
+                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            } else {
+                Yii::$app->session->setFlash('warning', 'Votre compte a été desactivé. Veuillez contacter l\'administrateur');
+            }
         }
         return false;
     }

@@ -26,6 +26,7 @@ class AppAsset extends AssetBundle
         'T_assets/plugins/iCheck/skins/all.css',
         'T_assets/plugins/perfect-scrollbar/src/perfect-scrollbar.css',
         'T_assets/plugins/animate.css/animate.min.css',
+        'http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,200,100,800',
 
         /*CSS REQUIRED FOR SUBVIEW CONTENTS*/
         'T_assets/plugins/owl-carousel/owl-carousel/owl.carousel.css',
@@ -49,9 +50,9 @@ class AppAsset extends AssetBundle
         'T_assets/css/styles.css',
         'T_assets/css/styles-responsive.css',
         'T_assets/css/plugins.css',
-        ['T_assets/css/themes/theme-style8.css','type'=>'text/css','id'=>'skin_color'],
+        ['T_assets/css/themes/theme-style9.css','type'=>'text/css','id'=>'skin_color'],
         ['T_assets/css/print.css','type'=>'text/css','media'=>'print'],
-        'T_assets/favicon.ico',
+        ['T_assets/favicon.ico', 'rel' => 'shortcut icon'],
     ];
     public $js = [
         /*MAIN JAVASCRIPTS*/
@@ -120,6 +121,9 @@ class AppAsset extends AssetBundle
 
         /*CORE JAVASCRIPTS*/
         'T_assets/js/main.js',
+
+        /*ckeditor */
+        'ckeditor/ckeditor/ckeditor.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

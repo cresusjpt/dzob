@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\TypeMetadonnee */
 
-$this->title = Yii::t('app', 'Create Type Metadonnee');
+$this->title = Yii::t('app', 'Ajouter Type Metadonnee');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Type Metadonnees'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

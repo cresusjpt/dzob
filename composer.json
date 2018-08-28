@@ -19,7 +19,12 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "yiisoft/yii2-jui": "^2.0",
-        "2amigos/yii2-date-picker-widget": "~1.0"
+        "2amigos/yii2-date-picker-widget": "~1.0",
+        "imxiangli/yii2-jquery-file-upload": "*",
+        "2amigos/yii2-file-upload-widget": "~1.0",
+        "2amigos/yii2-ckeditor-widget": "^2.1",
+        "wadeshuler/yii2-ckeditor-cdn": "~1.0",
+        "kartik-v/yii2-grid": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -64,7 +69,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "https://asset-packagist.org"
+            "url": "https://legacy-packages-via.contao-community-alliance.org"
         }
     ]
 }

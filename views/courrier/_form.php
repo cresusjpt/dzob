@@ -21,7 +21,7 @@ use dosamigos\datepicker\DatePicker;
     <?= $form->field($model, 'ACTEUR_COURRIER')->textInput() ?>
 
     <?= $form->field($model, 'ID_PRIORITE')->dropDownList(
-        ArrayHelper::map(PrioriteCourrier::find()->all(), 'ID_PRIORITE', 'NATURE_PRIORITE'),
+        ArrayHelper::map(PrioriteCourrier::find()->all(), 'ID_PRIORITE', 'NATURE_COURRIER'),
         ['prompt' => 'Priorité courrier', 'maxlength' => true]
     ) ?>
 
@@ -44,7 +44,7 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'OBJET_COURRIER')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'CONTENU_COURRIER')->textarea(['rows' => 10, 'maxlength' => true]) ?>
+    <?= $form->field($model, 'CONTENU_COURRIER')->textarea(['rows' => 10]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Enregistrer'), ['class' => 'btn btn-success']) ?>

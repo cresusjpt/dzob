@@ -7,18 +7,17 @@
 use app\models\Fonctionnalite;
 use app\models\FonctionUser;
 use app\models\Menu;
-use app\models\Utilisateur;
 use yii\helpers\Html;
 use app\assets\AppAsset;
 use yii\helpers\Url;
+use yii\web\NotFoundHttpException;
 
 $modelMenu = Menu::find()
     ->orderBy('NUM_ORDREMENU')
     ->all();
 $modelFonctionUser = null;
 $actuControllerInformation = null;
-$id = Yii::$app->user->id;
-if (!is_null($id)) {
+if (!Yii::$app->user->isGuest){
     /**
      * Connected user identity
      * Access control with user identity
@@ -26,12 +25,12 @@ if (!is_null($id)) {
      */
     $user = Yii::$app->user->identity;
     $actuControllerInformation = Fonctionnalite::find()->andFilterWhere(['like', 'FONCT_URL', Yii::$app->controller->id])->all();
-    if (!empty($actuControllerInformation)) {
+    if (!empty($actuControllerInformation)){
         $page_rigth = FonctionUser::find()
             ->where(['IDENTIFIANT' => $user->IDENTIFIANT, 'ID_FONCT' => $actuControllerInformation[0]->ID_FONCT])
             ->all();
-        if (!empty($page_rigth)) {
-
+        if ($page_rigth == null) {
+            throw new NotFoundHttpException('Vous n\'avez pas le droit de consulter cette page');
         }
     }
     $modelFonctionUser = FonctionUser::find()
@@ -39,7 +38,8 @@ if (!is_null($id)) {
         ->all();
 
 } else {
-    return Yii::$app->getResponse()->redirect(Url::to(['site/login']));
+    Yii::$app->getResponse()->redirect(['site/login'])->send();
+    return;
 }
 AppAsset::register($this);
 ?>
@@ -66,8 +66,6 @@ AppAsset::register($this);
         <!-- end: META -->
 
         <title><?= Html::encode($this->title) ?></title>
-        <!--<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,200,100,800' rel='stylesheet'
-              type='text/css'>-->
         <?php $this->head() ?>
     </head>
     <body>
@@ -231,46 +229,29 @@ AppAsset::register($this);
                             <h5 class="no-margin"> Bienvenue </h5>
                             <h4 class="no-margin"> <?= $user->PRENOM ?> <?= $user->NOM ?> </h4>
                             <a class="btn user-options sb_toggle">
-                                <i class="fa fa-cog"></i>
+                                <i class="fa fa-cog fa-spin"></i>
                             </a>
                         </div>
                     </div>
                     <!-- start: MAIN NAVIGATION MENU -->
                     <ul class="main-navigation-menu">
                         <li>
-                            <a href="index.html"><i class="fa fa-home"></i> <span class="title"> Tableau de bord </span><span
-                                        class="label label-default pull-right ">Voir</span> </a>
+                            <a href="<?= Url::to(['site/index'])?>"><i class="fa fa-home"></i>
+                                <span class="title"> Tableau de bord
+                                </span>
+                                <span class="label label-default pull-right ">
+                                    Voir
+                                </span>
+                            </a>
                         </li>
                         <?php
                         foreach ($modelMenu as $menu) {
                             ?>
                             <li>
-                                <a href="javascript:void(0)"><i class="fa fa-desktop"></i> <span
+                                <a href="javascript:void(0)"><i class="fa <?= $menu->ICONE_NAME_MENU ?>"></i> <span
                                             class="title"> <?= $menu->LIBEL_MENU ?> </span><i class="icon-arrow"></i>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li>
-                                        <a href="javascript:;">
-                                            Horizontal Menu <i class="icon-arrow"></i>
-                                        </a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="layouts_horizontal_menu.html">
-                                                    Horizontal Menu
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="layouts_horizontal_menu_fixed.html">
-                                                    Horizontal Menu Fixed
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="layouts_horizontal_sidebar_menu.html">
-                                                    Horizontal &amp; Sidebar Menu
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
                                     <?php
                                     if (!is_null($modelFonctionUser)) {
                                         foreach ($modelFonctionUser as $fonctionUser) {
@@ -322,7 +303,7 @@ AppAsset::register($this);
             <div class="right-wrapper">
                 <ul class="nav nav-tabs nav-justified" id="sidebar-tab">
                     <li>
-                        <a href="#settings" role="tab" data-toggle="tab"><i class="fa fa-gear"></i></a>
+                        <a href="#settings" role="tab" data-toggle="tab"><i class="fa fa-gear fa-spin"></i></a>
                     </li>
                 </ul>
                 <div class="hidden-xs" id="style_selector">
@@ -364,7 +345,7 @@ AppAsset::register($this);
                             </div>
                         </div>
                         <div class="box-title">
-                            Choose Your Footer Style
+                            Choisir le stule de pied de page
                         </div>
                         <div class="input-box">
                             <div class="input">
@@ -375,7 +356,7 @@ AppAsset::register($this);
                             </div>
                         </div>
                         <div class="box-title">
-                            10 Predefined Color Schemes
+                            <?= Yii::t('app','10 Schémas de couleurs prédéfinis')?>
                         </div>
                         <div class="images icons-color">
                             <a href="#" id="default"><img src="<?= Url::to('@web/T_assets/images/color-1.png'); ?>"
@@ -416,10 +397,10 @@ AppAsset::register($this);
                         </div>
                         <div class="style-options">
                             <a href="#" class="clear_style">
-                                Clear Styles
+                                Effacer les styles
                             </a>
                             <a href="#" class="save_style">
-                                Save Styles
+                                Enregistrer Styles
                             </a>
                         </div>
                     </div>
@@ -432,33 +413,6 @@ AppAsset::register($this);
         <div class="main-container inner">
             <!-- start: PAGE -->
             <div class="main-content">
-                <!-- start: PANEL CONFIGURATION MODAL FORM -->
-                <div class="modal fade" id="panel-config" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                    &times;
-                                </button>
-                                <h4 class="modal-title">Panel Configuration</h4>
-                            </div>
-                            <div class="modal-body">
-                                Here will be a configuration form
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="button" class="btn btn-primary">
-                                    Save changes
-                                </button>
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-                <!-- /.modal -->
                 <!-- end: SPANEL CONFIGURATION MODAL FORM -->
                 <div class="container">
                     <!-- start: PAGE HEADER -->
@@ -554,71 +508,6 @@ AppAsset::register($this);
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="dropdown">
-                                        <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle"
-                                           data-close-others="true" href="#">
-                                            <span class="messages-count badge badge-default hide">3</span> <i
-                                                    class="fa fa-envelope"></i> MESSAGES
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-light dropdown-messages">
-                                            <li>
-                                                <span class="dropdown-header"> You have 9 messages</span>
-                                            </li>
-                                            <li>
-                                                <div class="drop-down-wrapper ps-container">
-                                                    <ul>
-                                                        <li class="unread">
-                                                            <a href="javascript:;" class="unread">
-                                                                <div class="clearfix">
-                                                                    <div class="thread-image">
-                                                                        <img src="./assets/images/avatar-2.jpg" alt="">
-                                                                    </div>
-                                                                    <div class="thread-content">
-                                                                        <span class="author">Nicole Bell</span>
-                                                                        <span class="preview">Duis mollis, est non commodo luctus, nisi erat porttitor ligula...</span>
-                                                                        <span class="time"> Just Now</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:;" class="unread">
-                                                                <div class="clearfix">
-                                                                    <div class="thread-image">
-                                                                        <img src="./assets/images/avatar-3.jpg" alt="">
-                                                                    </div>
-                                                                    <div class="thread-content">
-                                                                        <span class="author">Steven Thompson</span>
-                                                                        <span class="preview">Duis mollis, est non commodo luctus, nisi erat porttitor ligula...</span>
-                                                                        <span class="time">8 hrs</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:;">
-                                                                <div class="clearfix">
-                                                                    <div class="thread-image">
-                                                                        <img src="./assets/images/avatar-5.jpg" alt="">
-                                                                    </div>
-                                                                    <div class="thread-content">
-                                                                        <span class="author">Kenneth Ross</span>
-                                                                        <span class="preview">Duis mollis, est non commodo luctus, nisi erat porttitor ligula...</span>
-                                                                        <span class="time">14 hrs</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                            <li class="view-all">
-                                                <a href="pages_messages.html">
-                                                    See All
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
                                     <li class="menu-search">
                                         <a href="#">
                                             <i class="fa fa-search"></i> SEARCH
@@ -655,7 +544,9 @@ AppAsset::register($this);
                         <div class="col-md-12">
                             <ol class="breadcrumb">
                                 <li>
-                                    <a href="<?= Url::to(['site/index']) ?>">
+                                    <a href="<?php if (empty($actuControllerInformation)) {
+                                        echo ' ';
+                                    } else echo Url::to([$actuControllerInformation[0]->FONCT_URL]) ?>">
                                         Acceuil
                                     </a>
                                 </li>
@@ -1253,7 +1144,6 @@ AppAsset::register($this);
 			</tr>
 			{% } %}
 
-
     </script>
     <!-- The template to display files available for download -->
     <script id="template-download" type="text/x-tmpl">
@@ -1298,12 +1188,10 @@ AppAsset::register($this);
 			</tr>
 			{% } %}
 
-
     </script>
     <script>
         jQuery(document).ready(function () {
             Main.init();
-            Login.init();
             SVExamples.init();
         });
     </script>

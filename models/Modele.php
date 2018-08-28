@@ -10,6 +10,8 @@ use Yii;
  * @property int $ID_MODELE
  * @property string $NOM_MODELE
  * @property string $SOURCE_MODELE
+ * @property string $CONTENU_MODELE
+ * @property int $NB_PARAMETRE
  */
 class Modele extends \yii\db\ActiveRecord
 {
@@ -27,11 +29,11 @@ class Modele extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_MODELE', 'NOM_MODELE', 'SOURCE_MODELE'], 'required'],
-            [['ID_MODELE'], 'integer'],
+            [['NOM_MODELE','CONTENU_MODELE','NB_PARAMETRE'], 'required'],
+            [['ID_MODELE','NB_PARAMETRE'], 'integer'],
             [['NOM_MODELE'], 'string', 'max' => 100],
             [['SOURCE_MODELE'], 'string', 'max' => 150],
-            [['ID_MODELE'], 'unique'],
+            [['ID_MODELE','SOURCE_MODELE','NOM_MODELE'], 'unique'],
         ];
     }
 
@@ -42,8 +44,10 @@ class Modele extends \yii\db\ActiveRecord
     {
         return [
             'ID_MODELE' => Yii::t('app', 'Id  Modele'),
-            'NOM_MODELE' => Yii::t('app', 'Nom  Modele'),
-            'SOURCE_MODELE' => Yii::t('app', 'Source  Modele'),
+            'NOM_MODELE' => Yii::t('app', 'Nom Modele'),
+            'SOURCE_MODELE' => Yii::t('app', 'Source Modele'),
+            'NB_PARAMETRE' => Yii::t('app', 'Nombre de parametre'),
+            'CONTENU_MODELE' => Yii::t('app', 'Contenu du modele'),
         ];
     }
 }

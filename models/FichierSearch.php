@@ -19,7 +19,7 @@ class FichierSearch extends Fichier
     {
         return [
             [['ID_FICHIER'], 'integer'],
-            [['REFERNCE', 'NOM_FICHIER', 'FORMAT_FICHIER'], 'safe'],
+            [['REFERENCE', 'NOM_FICHIER', 'FORMAT_FICHIER','DATE_EFFECTIVE','CREATEUR','SOURCE' ], 'safe'],
         ];
     }
 
@@ -62,9 +62,12 @@ class FichierSearch extends Fichier
             'ID_FICHIER' => $this->ID_FICHIER,
         ]);
 
-        $query->andFilterWhere(['like', 'REFERNCE', $this->REFERNCE])
+        $query->andFilterWhere(['like', 'REFERENCE', $this->REFERENCE])
             ->andFilterWhere(['like', 'NOM_FICHIER', $this->NOM_FICHIER])
-            ->andFilterWhere(['like', 'FORMAT_FICHIER', $this->FORMAT_FICHIER]);
+            ->andFilterWhere(['like', 'FORMAT_FICHIER', $this->FORMAT_FICHIER])
+            ->andFilterWhere(['like', 'DATE_EFFECTIVE', $this->DATE_EFFECTIVE])
+            ->andFilterWhere(['like', 'CREATEUR', $this->CREATEUR])
+            ->andFilterWhere(['like', 'SOURCE', $this->SOURCE]);
 
         return $dataProvider;
     }

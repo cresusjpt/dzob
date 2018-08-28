@@ -28,10 +28,11 @@ class TypeMetadonnee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_TYPEMETA', 'LIBELLE_TYPEMETA'], 'required'],
+            [['LIBELLE_TYPEMETA'], 'required'],
             [['ID_TYPEMETA'], 'integer'],
             [['LIBELLE_TYPEMETA'], 'string', 'max' => 50],
             [['ID_TYPEMETA'], 'unique'],
+            [['LIBELLE_TYPEMETA'], 'unique'],
         ];
     }
 
@@ -41,8 +42,8 @@ class TypeMetadonnee extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_TYPEMETA' => Yii::t('app', 'Id  Typemeta'),
-            'LIBELLE_TYPEMETA' => Yii::t('app', 'Libelle  Typemeta'),
+            'ID_TYPEMETA' => Yii::t('app', 'Type Metadonneesa'),
+            'LIBELLE_TYPEMETA' => Yii::t('app', 'Libelle Type metadonnée'),
         ];
     }
 

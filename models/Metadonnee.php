@@ -32,11 +32,12 @@ class Metadonnee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_META', 'ID_TYPEMETA', 'META_LIBELLE'], 'required'],
+            [['ID_TYPEMETA', 'META_LIBELLE'], 'required'],
             [['ID_META', 'ID_TYPEMETA'], 'integer'],
             [['META_LIBELLE'], 'string', 'max' => 50],
             [['META_CONTENU'], 'string', 'max' => 100],
             [['ID_META'], 'unique'],
+            [['META_LIBELLE'], 'unique'],
             [['ID_TYPEMETA'], 'exist', 'skipOnError' => true, 'targetClass' => TypeMetadonnee::className(), 'targetAttribute' => ['ID_TYPEMETA' => 'ID_TYPEMETA']],
         ];
     }
@@ -47,10 +48,10 @@ class Metadonnee extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_META' => Yii::t('app', 'Id  Meta'),
-            'ID_TYPEMETA' => Yii::t('app', 'Id  Typemeta'),
-            'META_LIBELLE' => Yii::t('app', 'Meta  Libelle'),
-            'META_CONTENU' => Yii::t('app', 'Meta  Contenu'),
+            'ID_META' => Yii::t('app', 'Metadonnée'),
+            'ID_TYPEMETA' => Yii::t('app', 'Type Metadonnees'),
+            'META_LIBELLE' => Yii::t('app', 'Libelle metadonée'),
+            'META_CONTENU' => Yii::t('app', 'Contenu metadonnée'),
         ];
     }
 

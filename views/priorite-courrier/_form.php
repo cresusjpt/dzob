@@ -12,14 +12,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ID_PRIORITE')->textInput() ?>
-
     <?= $form->field($model, 'NATURE_COURRIER')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'CLASSER')->textInput() ?>
+    <?= $form->field($model, 'CLASSER')->radioList(['0' => 'Non', '1' => 'Oui']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Enregistrer'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

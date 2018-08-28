@@ -20,15 +20,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ID_FICHIER') ?>
 
-    <?= $form->field($model, 'REFERNCE') ?>
+    <?= $form->field($model, 'REFERENCE') ?>
 
     <?= $form->field($model, 'NOM_FICHIER') ?>
 
     <?= $form->field($model, 'FORMAT_FICHIER') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Rechercher'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Annuler'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Action;
 use Yii;
 use app\models\SysLog;
 use app\models\SysLogSearch;
@@ -14,6 +15,10 @@ use yii\filters\VerbFilter;
  */
 class JournalController extends Controller
 {
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
     /**
      * @inheritdoc
      */
@@ -21,7 +26,7 @@ class JournalController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -52,8 +57,15 @@ class JournalController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = SysLog::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -125,5 +137,16 @@ class JournalController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
+    }
+
+    /**
+     *
+     */
+    protected function logger()
+    {
+        if ($this->_logging) {
+            $logManager = new SysLogManager();
+            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
+        }
     }
 }

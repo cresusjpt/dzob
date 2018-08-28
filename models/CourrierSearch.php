@@ -19,6 +19,7 @@ class CourrierSearch extends Courrier
     {
         return [
             [['REFERENCE', 'DATE', 'OBJET_COURRIER'], 'safe'],
+            [['CONTENU_COURRIER',], 'string'],
             [['ID_PERSONNE', 'ID_PRIORITE', 'ID_TYPECOURRIER'], 'integer'],
         ];
     }
@@ -66,6 +67,7 @@ class CourrierSearch extends Courrier
         ]);
 
         $query->andFilterWhere(['like', 'REFERENCE', $this->REFERENCE])
+            ->andFilterWhere(['like', 'CONTENU_COURRIER', $this->CONTENU_COURRIER])
             ->andFilterWhere(['like', 'OBJET_COURRIER', $this->OBJET_COURRIER]);
 
         return $dataProvider;

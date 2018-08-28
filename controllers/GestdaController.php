@@ -13,10 +13,12 @@ use yii\web\Controller;
  * Date: 21/08/2018
  * Time: 17:57
  */
-
-class GestdaController extends Controller{
-
-
+class GestdaController extends Controller
+{
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
     /**
      * @inheritdoc
      */
@@ -24,7 +26,7 @@ class GestdaController extends Controller{
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -32,10 +34,11 @@ class GestdaController extends Controller{
         ];
     }
 
-    public function actionIndex(){
+    public function actionIndex()
+    {
 
         $modelProfil = new Profil();
         $modelMenu = new Menu();
-        return $this->render('index',['modelsMenu'=>$modelMenu,'modelsProfil'=>$modelProfil]);
+        return $this->render('index', ['modelsMenu' => $modelMenu, 'modelsProfil' => $modelProfil]);
     }
 }

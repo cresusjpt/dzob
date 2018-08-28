@@ -25,6 +25,8 @@ use Yii;
  */
 class AyantDroit extends \yii\db\ActiveRecord
 {
+    public $_civilite;
+
     /**
      * @inheritdoc
      */
@@ -81,7 +83,7 @@ class AyantDroit extends \yii\db\ActiveRecord
      */
     public function getREFERENCEPATRIMOINEs()
     {
-        return $this->hasMany(Immobilier::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE'])->viaTable('avoir', ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
+        return $this->hasMany(Immobilier::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE'])->viaTable('avoir', ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
     }
 
     /**
@@ -89,7 +91,7 @@ class AyantDroit extends \yii\db\ActiveRecord
      */
     public function getREFERENCEPATRIMOINEs0()
     {
-        return $this->hasMany(Mobilier::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE'])->viaTable('avoir', ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
+        return $this->hasMany(Mobilier::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE'])->viaTable('avoir', ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
     }
 
     /**
@@ -97,7 +99,7 @@ class AyantDroit extends \yii\db\ActiveRecord
      */
     public function getCourriers()
     {
-        return $this->hasMany(Courrier::className(), ['ID_PERSONNE' => 'ID_PERSONNE']);
+        return $this->hasMany(Courrier::class, ['ID_PERSONNE' => 'ID_PERSONNE']);
     }
 
     /**
@@ -105,7 +107,7 @@ class AyantDroit extends \yii\db\ActiveRecord
      */
     public function getImmobiliers()
     {
-        return $this->hasMany(Immobilier::className(), ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
+        return $this->hasMany(Immobilier::class, ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
     }
 
     /**
@@ -113,7 +115,7 @@ class AyantDroit extends \yii\db\ActiveRecord
      */
     public function getMobiliers()
     {
-        return $this->hasMany(Mobilier::className(), ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
+        return $this->hasMany(Mobilier::class, ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
     }
 
     /**
@@ -129,4 +131,14 @@ class AyantDroit extends \yii\db\ActiveRecord
         }
         return $sexe;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCivilite()
+    {
+        return $this->NOM.' '.$this->PRENOM;
+    }
+
+
 }

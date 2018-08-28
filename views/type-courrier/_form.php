@@ -12,12 +12,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ID_TYPECOURRIER')->textInput() ?>
-
     <?= $form->field($model, 'NOM_TYPE')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Enregistrer'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

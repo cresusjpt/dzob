@@ -29,11 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'REFERENCE',
-            'ID_PERSONNE',
+            //'ID_PERSONNE',
+            'ACTEUR_COURRIER',
             'pRIORITE.NATURE_COURRIER',
             'tYPECOURRIER.NOM_TYPE',
             'DATE',
             'OBJET_COURRIER',
+            'CONTENU_COURRIER',
         ],
     ]) ?>
 

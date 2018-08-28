@@ -31,13 +31,12 @@ class Frais extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_FRAIS', 'ID_DOSSIER', 'MONTANT', 'NATURE_FRAIS'], 'required'],
+            [['ID_DOSSIER', 'MONTANT'], 'required'],
             [['ID_FRAIS', 'ID_DOSSIER'], 'integer'],
             [['MONTANT'], 'number'],
             [['DATE_REGLE'], 'safe'],
-            [['NATURE_FRAIS'], 'string', 'max' => 30],
             [['ID_FRAIS'], 'unique'],
-            [['ID_DOSSIER'], 'exist', 'skipOnError' => true, 'targetClass' => Dossier::className(), 'targetAttribute' => ['ID_DOSSIER' => 'ID_DOSSIER']],
+            [['ID_DOSSIER'], 'exist', 'skipOnError' => true, 'targetClass' => Dossier::class, 'targetAttribute' => ['ID_DOSSIER' => 'ID_DOSSIER']],
         ];
     }
 
@@ -47,11 +46,11 @@ class Frais extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_FRAIS' => Yii::t('app', 'Id  Frais'),
-            'ID_DOSSIER' => Yii::t('app', 'Id  Dossier'),
+            'ID_FRAIS' => Yii::t('app', 'Frais'),
+            'ID_DOSSIER' => Yii::t('app', 'Dossier'),
             'MONTANT' => Yii::t('app', 'Montant'),
-            'DATE_REGLE' => Yii::t('app', 'Date  Regle'),
-            'NATURE_FRAIS' => Yii::t('app', 'Nature  Frais'),
+            'DATE_REGLE' => Yii::t('app', 'Date Regle'),
+            'NATURE_FRAIS' => Yii::t('app', 'Nature Frais'),
         ];
     }
 

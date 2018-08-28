@@ -7,6 +7,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 $this->title = 'Dzob | Login';
 $this->params['breadcrumbs'][] = $this->title;
@@ -16,6 +17,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <!--<div class="logo">
             <img src="/basic/web/login_assets/images/logo.png">
         </div>-->
+        <?php
+        if (Yii::$app->session->hasFlash('warning')) {
+            ?>
+            <div class="alert alert-warning">
+                <button data-dismiss="alert" class="close">
+                </button>
+                <strong><?= Yii::$app->session->getFlash('warning') ?></strong>
+            </div>
+            <?php
+        }
+        ?>
+        <br/><br/>
         <div class="box-login">
             <h3>Connexion</h3>
             <p>
@@ -48,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="new-account">
                     Pas encore de compte ?
-                    <a href="register" class="register">
+                    <a href="<?= Url::to(['site/register'])?>" class="register">
                         Créer un compte
                     </a>
                 </div>

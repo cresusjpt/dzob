@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Fichier */
 
-$this->title = $model->ID_FICHIER;
+$this->title = $model->NOM_FICHIER;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Fichiers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->ID_FICHIER], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->ID_FICHIER], [
+        <?= Html::a(Yii::t('app', 'Modifier'), ['update', 'id' => $model->ID_FICHIER], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Supprimer'), ['delete', 'id' => $model->ID_FICHIER], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'Voulez vous vraiment supprimer l\'élément?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,9 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'ID_FICHIER',
-            'REFERNCE',
+            //'ID_FICHIER',
+            'REFERENCE',
             'NOM_FICHIER',
+            'DATE_EFFECTIVE',
+            'CREATEUR',
             'FORMAT_FICHIER',
         ],
     ]) ?>

@@ -66,7 +66,7 @@ class SysLog extends \yii\db\ActiveRecord
      */
     public function getCODEACTION()
     {
-        return $this->hasOne(Action::className(), ['CODE_ACTION' => 'CODE_ACTION']);
+        return $this->hasOne(Action::class, ['CODE_ACTION' => 'CODE_ACTION']);
     }
 
     /**
@@ -74,6 +74,6 @@ class SysLog extends \yii\db\ActiveRecord
      */
     public function getPERSONNE()
     {
-        return $this->hasOne(Utilisateur::className(), ['ID_PERSONNE' => 'ID_PERSONNE', 'IDENTIFIANT' => 'IDENTIFIANT']);
+        return $this->hasOne(Utilisateur::class, ['ID_PERSONNE' => 'ID_PERSONNE', 'IDENTIFIANT' => 'IDENTIFIANT']);
     }
 }

@@ -5,12 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\LivreTraitement */
 
-$this->title = Yii::t('app', 'Update Livre Traitement: {nameAttribute}', [
-    'nameAttribute' => $model->ID_LT,
+$this->title = Yii::t('app', 'Modifer Livre Traitement: {nameAttribute}', [
+    'nameAttribute' => $model->NOM_TRAITEMENT,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Livre Traitements'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->ID_LT, 'url' => ['view', 'id' => $model->ID_LT]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Modifier');
 ?>
 <div class="livre-traitement-update">
 

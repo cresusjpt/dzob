@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Utilisateur;
+use SebastianBergmann\CodeCoverage\Util;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -14,6 +15,10 @@ use app\models\UserForm;
 
 class SiteController extends Controller
 {
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
     /**
      * {@inheritdoc}
      */
@@ -21,7 +26,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout'],
                 'rules' => [
                     [
@@ -32,7 +37,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -68,7 +73,6 @@ class SiteController extends Controller
         } else {
             return $this->render('index');
         }
-
     }
 
     /**
@@ -110,7 +114,7 @@ class SiteController extends Controller
 
             if ($models->validate()) {
                 $models->save();
-                Yii::$app->session->setFlash('success', 'Sign up successfull');
+                Yii::$app->session->setFlash('success', 'Inscription reussie');
                 return $this->redirect('site/login');
             }
         }
@@ -200,12 +204,20 @@ class SiteController extends Controller
     public function actionLock()
     {
         $this->layout = 'loginLayout';
-        $id = Yii::$app->user->id;
-        if (!is_null($id)) {
+        if (!Yii::$app->user->isGuest) {
             $user = Yii::$app->user->identity;
             Yii::$app->user->logout();
-            return $this->render('lock', ['models' => $user]);
+            return $this->render('lock', ['model' => $user]);
         } else {
+            $model = new Utilisateur();
+            if ($model->load(Yii::$app->request->post())){
+                $loginForm = new LoginForm();
+                $loginForm->username = $model->USERNAME;
+                $loginForm->password = $model->rawpassword;
+                if ($loginForm->login()){
+                    return $this->goBack();
+                }
+            }
             $this->redirect('site/login');
         }
     }

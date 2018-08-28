@@ -2,18 +2,30 @@
 
 namespace app\controllers;
 
+use app\models\Action;
+use app\models\SysParam;
+use app\models\Utilisateur;
 use Yii;
 use app\models\Fichier;
 use app\models\FichierSearch;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use yii\helpers\StringHelper;
 
 /**
  * FichierController implements the CRUD actions for Fichier model.
  */
 class FichierController extends Controller
 {
+    private $_uploadId = 0;
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
+
     /**
      * @inheritdoc
      */
@@ -21,7 +33,7 @@ class FichierController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -52,8 +64,67 @@ class FichierController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Fichier::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * @throws \yii\base\InvalidConfigException
+     *
+     * @throws \yii\base\Exception
+     */
+    public function actionFile()
+    {
+        //using $action will perhaps be in confusion with the $action for SysLog Management
+        $method = '';
+
+        // action update or create
+        if ($this->_uploadId != 0) {
+            $model = $this->findModel($this->_uploadId);
+        } else {
+            $model = new Fichier();
+        }
+        if (StringHelper::endsWith(Yii::$app->request->getUrl(), 'create')) {
+            $method = 'create';
+        } else if (StringHelper::endsWith(Yii::$app->request->getUrl(), 'update')) {
+            $method = 'update';
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->REFERENCE == null || $model->NOM_FICHIER == null) {
+                Yii::$app->session->setFlash('required', 'Tous les champs sont obligatoire');
+                return $this->redirect($method, [
+                    'model' => $model,
+                ]);
+            } else {
+                $imageFile = UploadedFile::getInstance($model, 'file');
+                $directory = SysParam::findOne('UPLOADS_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR . SysParam::findOne('FILE_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR;
+                if (!is_dir($directory)) {
+                    FileHelper::createDirectory($directory);
+                }
+                if ($imageFile) {
+                    $fileName = uniqid(time(), true) . str_replace(' ', '_', $model->NOM_FICHIER) . '.' . $imageFile->extension;
+                    $filePath = $directory . $fileName;
+                    if ($imageFile->saveAs($filePath)) {
+                        $model->FORMAT_FICHIER = $imageFile->extension;
+                        $model->DATE_EFFECTIVE = date('Y-m-d');
+                        $model->CREATEUR = Yii::$app->user->identity->USERNAME;
+                        $model->SOURCE = $filePath;
+                        $model->save();
+                        return $this->redirect(['view', 'id' => $model->ID_FICHIER]);
+                    }
+                }
+            }
+        }
+        return $this->render($method, [
+            'model' => $model,
         ]);
     }
 
@@ -61,14 +132,11 @@ class FichierController extends Controller
      * Creates a new Fichier model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws \yii\base\Exception
      */
-    public function actionCreate()
+    public function actionCreate(Fichier $model = null)
     {
         $model = new Fichier();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_FICHIER]);
-        }
 
         return $this->render('create', [
             'model' => $model,
@@ -81,10 +149,12 @@ class FichierController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \yii\base\Exception
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $this->_uploadId = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID_FICHIER]);
@@ -101,6 +171,8 @@ class FichierController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -122,6 +194,18 @@ class FichierController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
     }
+
+    /**
+     *
+     */
+    protected function logger()
+    {
+        if ($this->_logging) {
+            $logManager = new SysLogManager();
+            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
+        }
+    }
+
 }

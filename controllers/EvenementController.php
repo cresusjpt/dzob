@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Action;
 use Yii;
 use app\models\Evenement;
 use app\models\EvenementSearch;
@@ -14,6 +15,11 @@ use yii\filters\VerbFilter;
  */
 class EvenementController extends Controller
 {
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
+
     /**
      * @inheritdoc
      */
@@ -21,7 +27,7 @@ class EvenementController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -52,8 +58,15 @@ class EvenementController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Evenement::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -101,6 +114,8 @@ class EvenementController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -122,6 +137,17 @@ class EvenementController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
+    }
+
+    /**
+     *
+     */
+    protected function logger()
+    {
+        if ($this->_logging) {
+            $logManager = new SysLogManager();
+            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
+        }
     }
 }

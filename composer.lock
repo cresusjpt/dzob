@@ -4,8 +4,65 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68a44fae3b9aeaecff7ef7e3c833ce72",
+    "content-hash": "a89293181365ad1b1dac96fc3766cb45",
     "packages": [
+        {
+            "name": "2amigos/yii2-ckeditor-widget",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-ckeditor-widget.git",
+                "reference": "2ba96ec670d0745b5616d2aa94d720cc7288bc08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-ckeditor-widget/zipball/2ba96ec670d0745b5616d2aa94d720cc7288bc08",
+                "reference": "2ba96ec670d0745b5616d2aa94d720cc7288bc08",
+                "shasum": ""
+            },
+            "require": {
+                "ckeditor/ckeditor": "~4.7.0+full",
+                "yiisoft/yii2": "^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\ckeditor\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "2amigOS! Consulting Group",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CKEditor widget for Yii2.",
+            "homepage": "http://yiiwheels.com/extension/ckeditor-widget",
+            "keywords": [
+                "2amigos",
+                "CKEditor",
+                "extension",
+                "widget",
+                "yii",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2017-06-12T18:51:26+00:00"
+        },
         {
             "name": "2amigos/yii2-date-picker-widget",
             "version": "1.0.7",
@@ -66,6 +123,214 @@
                 "yii2"
             ],
             "time": "2017-07-05T05:52:03+00:00"
+        },
+        {
+            "name": "2amigos/yii2-file-upload-widget",
+            "version": "1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-file-upload-widget.git",
+                "reference": "2fd078f589d4acdd2cbfb70eea88d526480b0102"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-file-upload-widget/zipball/2fd078f589d4acdd2cbfb70eea88d526480b0102",
+                "reference": "2fd078f589d4acdd2cbfb70eea88d526480b0102",
+                "shasum": ""
+            },
+            "require": {
+                "2amigos/yii2-gallery-widget": "~1.0",
+                "bower-asset/blueimp-file-upload": "~9.9",
+                "yiisoft/yii2": "~2.0.0",
+                "yiisoft/yii2-bootstrap": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\fileupload\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "2amigOS! Consulting Group",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Blueimp file upload widget for the Yii framework",
+            "homepage": "https://github.com/2amigos/yii2-file-upload-widget",
+            "keywords": [
+                "2amigos",
+                "upload",
+                "widget",
+                "yii",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2017-10-17T11:18:48+00:00"
+        },
+        {
+            "name": "2amigos/yii2-gallery-widget",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-gallery-widget.git",
+                "reference": "0ce7de28d05a4662da7698773993b5a0245a6136"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/0ce7de28d05a4662da7698773993b5a0245a6136",
+                "reference": "0ce7de28d05a4662da7698773993b5a0245a6136",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/blueimp-gallery": "~2.17.0",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                },
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\gallery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "2amigOS! Consulting Group",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Blueimp gallery widget for the Yii framework",
+            "homepage": "https://github.com/2amigos/yii2-gallery-widget",
+            "keywords": [
+                "2amigos",
+                "gallery",
+                "widget",
+                "yii",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2017-09-09T16:01:44+00:00"
+        },
+        {
+            "name": "bower-asset/blueimp-canvas-to-blob",
+            "version": "v3.14.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:blueimp/JavaScript-Canvas-to-Blob.git",
+                "reference": "9f3deb2e710d39c72a988559609d9dc9a319de0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Canvas-to-Blob/zipball/9f3deb2e710d39c72a988559609d9dc9a319de0b",
+                "reference": "9f3deb2e710d39c72a988559609d9dc9a319de0b",
+                "shasum": null
+            },
+            "type": "bower-asset"
+        },
+        {
+            "name": "bower-asset/blueimp-file-upload",
+            "version": "v9.22.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/blueimp/jQuery-File-Upload.git",
+                "reference": "39607fdaaba0dc11ba8c116ac2968e28e796f153"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blueimp/jQuery-File-Upload/zipball/39607fdaaba0dc11ba8c116ac2968e28e796f153",
+                "reference": "39607fdaaba0dc11ba8c116ac2968e28e796f153",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/blueimp-canvas-to-blob": ">=2.1.1",
+                "bower-asset/blueimp-load-image": ">=1.13.0",
+                "bower-asset/blueimp-tmpl": ">=2.5.4",
+                "bower-asset/jquery": ">=1.6"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/blueimp-gallery",
+            "version": "v2.17.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:blueimp/Gallery.git",
+                "reference": "8336bb5934cb623608808601129db3fbf9201a09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blueimp/Gallery/zipball/8336bb5934cb623608808601129db3fbf9201a09",
+                "reference": "8336bb5934cb623608808601129db3fbf9201a09",
+                "shasum": null
+            },
+            "type": "bower-asset"
+        },
+        {
+            "name": "bower-asset/blueimp-load-image",
+            "version": "v2.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/blueimp/JavaScript-Load-Image.git",
+                "reference": "5660ef0f68a34352f4574351ab86f3ecf82240f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Load-Image/zipball/5660ef0f68a34352f4574351ab86f3ecf82240f2",
+                "reference": "5660ef0f68a34352f4574351ab86f3ecf82240f2",
+                "shasum": null
+            },
+            "type": "bower-asset"
+        },
+        {
+            "name": "bower-asset/blueimp-tmpl",
+            "version": "v3.11.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:blueimp/JavaScript-Templates.git",
+                "reference": "da7647cb93fff2030e73a701db22c66de76a9919"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Templates/zipball/da7647cb93fff2030e73a701db22c66de76a9919",
+                "reference": "da7647cb93fff2030e73a701db22c66de76a9919",
+                "shasum": null
+            },
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/bootstrap",
@@ -273,6 +538,47 @@
             "time": "2017-07-16T21:13:23+00:00"
         },
         {
+            "name": "ckeditor/ckeditor",
+            "version": "4.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ckeditor/ckeditor-releases.git",
+                "reference": "97b8f412f6b36985c734daf0717e81009a885dba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/97b8f412f6b36985c734daf0717e81009a885dba",
+                "reference": "97b8f412f6b36985c734daf0717e81009a885dba",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+",
+                "LGPL-2.1+",
+                "MPL-1.1+"
+            ],
+            "authors": [
+                {
+                    "name": "CKSource",
+                    "homepage": "http://cksource.com"
+                }
+            ],
+            "description": "JavaScript WYSIWYG web text editor.",
+            "homepage": "http://ckeditor.com",
+            "keywords": [
+                "CKEditor",
+                "editor",
+                "fckeditor",
+                "html",
+                "javascript",
+                "richtext",
+                "text",
+                "wysiwyg"
+            ],
+            "time": "2017-09-13T13:09:47+00:00"
+        },
+        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.10.0",
             "source": {
@@ -318,6 +624,147 @@
                 "html"
             ],
             "time": "2018-02-23T01:58:20+00:00"
+        },
+        {
+            "name": "imxiangli/yii2-jquery-file-upload",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imxiangli/yii2-jquery-file-upload.git",
+                "reference": "f5006e8037b05349809bfb840461c942e26ed6b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imxiangli/yii2-jquery-file-upload/zipball/f5006e8037b05349809bfb840461c942e26ed6b3",
+                "reference": "f5006e8037b05349809bfb840461c942e26ed6b3",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/blueimp-file-upload": "^9.12",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "imxiangli\\upload\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "lixiang",
+                    "email": "imxiangli@qq.com"
+                }
+            ],
+            "description": "yii2-jquery-file-upload",
+            "keywords": [
+                "extension",
+                "yii2"
+            ],
+            "time": "2017-04-08T07:35:27+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-grid",
+            "version": "v3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-grid.git",
+                "reference": "fe29bcf8f46bde42aa3eb067851b38dc07cd4d8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/fe29bcf8f46bde42aa3eb067851b38dc07cd4d8a",
+                "reference": "fe29bcf8f46bde42aa3eb067851b38dc07cd4d8a",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": "~1.7"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\grid\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Yii 2 GridView on steroids. Various enhancements and utilities for the Yii 2.0 GridView widget.",
+            "homepage": "https://github.com/kartik-v/yii2-grid",
+            "keywords": [
+                "extension",
+                "grid",
+                "widget",
+                "yii2"
+            ],
+            "time": "2016-04-09T20:31:20+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-krajee-base",
+            "version": "v1.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-krajee-base.git",
+                "reference": "2c007b06602d4af59c7d3e708921d539bc81bc40"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/2c007b06602d4af59c7d3e708921d539bc81bc40",
+                "reference": "2c007b06602d4af59c7d3e708921d539bc81bc40",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2-bootstrap": "@dev"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\base\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Base library and foundation components for all Yii2 Krajee extensions.",
+            "homepage": "https://github.com/kartik-v/yii2-krajee-base",
+            "keywords": [
+                "base",
+                "extension",
+                "foundation",
+                "krajee",
+                "widget",
+                "yii2"
+            ],
+            "time": "2018-08-20T18:10:23+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -372,6 +819,46 @@
                 "mailer"
             ],
             "time": "2018-07-31T09:26:32+00:00"
+        },
+        {
+            "name": "wadeshuler/yii2-ckeditor-cdn",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WadeShuler/yii2-ckeditor-cdn.git",
+                "reference": "86fc388023fc8f4f2be13fcd0da7410b1375386b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WadeShuler/yii2-ckeditor-cdn/zipball/86fc388023fc8f4f2be13fcd0da7410b1375386b",
+                "reference": "86fc388023fc8f4f2be13fcd0da7410b1375386b",
+                "shasum": ""
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "wadeshuler\\ckeditor\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wade Shuler",
+                    "email": "wadeshuler@users.noreply.github.com"
+                }
+            ],
+            "description": "My restriction free version of a CKEditor CDN extension for Yii2",
+            "keywords": [
+                "CKEditor",
+                "cdn",
+                "extension",
+                "widget",
+                "yii2"
+            ],
+            "time": "2016-08-21T05:12:36+00:00"
         },
         {
             "name": "yiisoft/yii2",

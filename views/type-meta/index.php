@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Type Metadonnee'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Ajouter Type Metadonnee'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'ID_TYPEMETA',
+            //'ID_TYPEMETA',
             'LIBELLE_TYPEMETA',
 
             ['class' => 'yii\grid\ActionColumn'],

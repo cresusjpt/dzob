@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\TypeCourrier */
 
-$this->title = Yii::t('app', 'Create Type Courrier');
+$this->title = Yii::t('app', 'Créer Type Courrier');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Type Courriers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

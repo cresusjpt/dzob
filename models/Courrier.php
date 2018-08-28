@@ -7,12 +7,14 @@ use Yii;
 /**
  * This is the model class for table "courrier".
  *
- * @property string $REFERNCE
+ * @property string $REFERENCE
  * @property int $ID_PERSONNE
  * @property int $ID_PRIORITE
  * @property int $ID_TYPECOURRIER
  * @property string $DATE
  * @property string $OBJET_COURRIER
+ * @property string $CONTENU_COURRIER
+ * @property string $ACTEUR_COURRIER
  *
  * @property PrioriteCourrier $pRIORITE
  * @property Utilisateur $pERSONNE
@@ -23,6 +25,8 @@ use Yii;
  */
 class Courrier extends \yii\db\ActiveRecord
 {
+    private $_displayName;
+
     /**
      * @inheritdoc
      */
@@ -43,12 +47,13 @@ class Courrier extends \yii\db\ActiveRecord
             [['REFERENCE'], 'string', 'max' => 11],
             [['ACTEUR_COURRIER'], 'string', 'max' => 250],
             [['OBJET_COURRIER'], 'string', 'max' => 200],
+            [['CONTENU_COURRIER'], 'string'],
             [['REFERENCE'], 'unique'],
-            [['ID_PRIORITE'], 'exist', 'skipOnError' => true, 'targetClass' => PrioriteCourrier::className(), 'targetAttribute' => ['ID_PRIORITE' => 'ID_PRIORITE']],
-            [['ID_PERSONNE'], 'exist', 'skipOnError' => true, 'targetClass' => Utilisateur::className(), 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE']],
-            [['ID_PERSONNE'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE']],
-            [['ID_PERSONNE'], 'exist', 'skipOnError' => true, 'targetClass' => AyantDroit::className(), 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE']],
-            [['ID_TYPECOURRIER'], 'exist', 'skipOnError' => true, 'targetClass' => TypeCourrier::className(), 'targetAttribute' => ['ID_TYPECOURRIER' => 'ID_TYPECOURRIER']],
+            [['ID_PRIORITE'], 'exist', 'skipOnError' => true, 'targetClass' => PrioriteCourrier::class, 'targetAttribute' => ['ID_PRIORITE' => 'ID_PRIORITE']],
+            [['ID_PERSONNE'], 'exist', 'skipOnError' => true, 'targetClass' => Utilisateur::class, 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE']],
+            [['ID_PERSONNE'], 'exist', 'skipOnError' => true, 'targetClass' => Client::class, 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE']],
+            [['ID_PERSONNE'], 'exist', 'skipOnError' => true, 'targetClass' => AyantDroit::class, 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE']],
+            [['ID_TYPECOURRIER'], 'exist', 'skipOnError' => true, 'targetClass' => TypeCourrier::class, 'targetAttribute' => ['ID_TYPECOURRIER' => 'ID_TYPECOURRIER']],
         ];
     }
 
@@ -60,6 +65,7 @@ class Courrier extends \yii\db\ActiveRecord
         return [
             'REFERENCE' => Yii::t('app', 'Reference'),
             'ACTEUR_COURRIER' => Yii::t('app', 'Acteur'),
+            'CONTENU_COURRIER' => Yii::t('app', 'Contenu du courrier'),
             'ID_PERSONNE' => Yii::t('app', 'Personne'),
             'ID_PRIORITE' => Yii::t('app', 'Priorite'),
             'ID_TYPECOURRIER' => Yii::t('app', 'Type courrier'),
@@ -73,7 +79,7 @@ class Courrier extends \yii\db\ActiveRecord
      */
     public function getPRIORITE()
     {
-        return $this->hasOne(PrioriteCourrier::className(), ['ID_PRIORITE' => 'ID_PRIORITE']);
+        return $this->hasOne(PrioriteCourrier::class, ['ID_PRIORITE' => 'ID_PRIORITE']);
     }
 
     /**
@@ -81,7 +87,7 @@ class Courrier extends \yii\db\ActiveRecord
      */
     public function getPERSONNE()
     {
-        return $this->hasOne(Utilisateur::className(), ['ID_PERSONNE' => 'ID_PERSONNE']);
+        return $this->hasOne(Utilisateur::class, ['ID_PERSONNE' => 'ID_PERSONNE']);
     }
 
     /**
@@ -89,7 +95,7 @@ class Courrier extends \yii\db\ActiveRecord
      */
     public function getPERSONNE0()
     {
-        return $this->hasOne(Client::className(), ['ID_PERSONNE' => 'ID_PERSONNE']);
+        return $this->hasOne(Client::class, ['ID_PERSONNE' => 'ID_PERSONNE']);
     }
 
     /**
@@ -97,7 +103,7 @@ class Courrier extends \yii\db\ActiveRecord
      */
     public function getPERSONNE1()
     {
-        return $this->hasOne(AyantDroit::className(), ['ID_PERSONNE' => 'ID_PERSONNE']);
+        return $this->hasOne(AyantDroit::class, ['ID_PERSONNE' => 'ID_PERSONNE']);
     }
 
     /**
@@ -105,7 +111,7 @@ class Courrier extends \yii\db\ActiveRecord
      */
     public function getTYPECOURRIER()
     {
-        return $this->hasOne(TypeCourrier::className(), ['ID_TYPECOURRIER' => 'ID_TYPECOURRIER']);
+        return $this->hasOne(TypeCourrier::class, ['ID_TYPECOURRIER' => 'ID_TYPECOURRIER']);
     }
 
     /**
@@ -113,6 +119,11 @@ class Courrier extends \yii\db\ActiveRecord
      */
     public function getFichiers()
     {
-        return $this->hasMany(Fichier::className(), ['REFERENCE' => 'REFERENCE']);
+        return $this->hasMany(Fichier::class, ['REFERENCE' => 'REFERENCE']);
+    }
+
+    public function getDisplayName()
+    {
+        return $this->REFERENCE.'/'.$this->ACTEUR_COURRIER.'/'.$this->DATE;
     }
 }

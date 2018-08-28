@@ -17,10 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin()?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Créer Journal'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -30,7 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //'ID_LOG',
             'CODE_ACTION',
             //'ID_PERSONNE',
-            'IDENTIFIANT',
+            'pERSONNE.NOM',
+            'pERSONNE.PRENOM',
             'DATE_LOG',
             'TABLE_LOG',
             'LIB_LOG',

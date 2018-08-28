@@ -18,8 +18,9 @@ class ModeleSearch extends Modele
     public function rules()
     {
         return [
-            [['ID_MODELE'], 'integer'],
+            [['ID_MODELE','NB_PARAMETRE'], 'integer'],
             [['NOM_MODELE', 'SOURCE_MODELE'], 'safe'],
+            [['CONTENU_MODELE'], 'string'],
         ];
     }
 
@@ -63,7 +64,9 @@ class ModeleSearch extends Modele
         ]);
 
         $query->andFilterWhere(['like', 'NOM_MODELE', $this->NOM_MODELE])
-            ->andFilterWhere(['like', 'SOURCE_MODELE', $this->SOURCE_MODELE]);
+            ->andFilterWhere(['like', 'SOURCE_MODELE', $this->SOURCE_MODELE])
+            ->andFilterWhere(['like', 'CONTENU_MODELE', $this->CONTENU_MODELE])
+            ->andFilterWhere(['like', 'NB_PARAMETRE', $this->NB_PARAMETRE]);
 
         return $dataProvider;
     }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Action;
 use Yii;
 use app\models\Client;
 use app\models\ClientSearch;
@@ -14,6 +15,10 @@ use yii\filters\VerbFilter;
  */
 class ClientController extends Controller
 {
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
     /**
      * @inheritdoc
      */
@@ -21,7 +26,7 @@ class ClientController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -53,8 +58,15 @@ class ClientController extends Controller
      */
     public function actionView($ID_PERSONNE=0, $ID_CLIENT)
     {
+        $model = $this->findModel($ID_PERSONNE,$ID_CLIENT);
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Client::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
         return $this->render('view', [
-            'model' => $this->findModel($ID_PERSONNE, $ID_CLIENT),
+            'model' => $model,
         ]);
     }
 
@@ -130,5 +142,16 @@ class ClientController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
+    }
+
+    /**
+     *
+     */
+    protected function logger()
+    {
+        if ($this->_logging) {
+            $logManager = new SysLogManager();
+            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
+        }
     }
 }

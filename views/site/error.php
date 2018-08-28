@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $name string */
 /* @var $message string */
+
 /* @var $exception Exception */
 
 use yii\helpers\Html;
@@ -11,17 +12,39 @@ $this->title = $name;
 ?>
 <div class="site-error">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php
+    if ($message == 'Vous n\'avez pas le droit de consulter cette page') {
+        $this->title = Yii::t('app', 'Forbidden (#403)');
+    }
+    ?>
 
-    <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
+    <!-- start: PAGE CONTENT -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-error animated shake">
+                <div class="error-number text-azure">
+                    Erreur
+                </div>
+                <div class="error-details col-sm-6 col-sm-offset-3">
+                    <h3>Oops! <?= Html::encode($this->title) ?></h3>
+                    <p>
+                        <br>
+                        <a href="<?= \yii\helpers\Url::to(['site/index']) ?>" class="btn btn-dark-grey btn-return">
+                            Acceuil
+                        </a>
+                        <br>
+                        <br>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <p>
-        The above error occurred while the Web server was processing your request.
-    </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
+    <div class="alert alert-danger">
+        <button data-dismiss="alert" class="close">
+            &times;
+        </button>
+        <?= nl2br(Html::encode($message)) ?>
+    </div>
 
 </div>

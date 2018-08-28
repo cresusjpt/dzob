@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Action;
 use Yii;
 use app\models\Courrier;
 use app\models\CourrierSearch;
@@ -14,6 +15,10 @@ use yii\filters\VerbFilter;
  */
 class CourrierController extends Controller
 {
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
     /**
      * @inheritdoc
      */
@@ -21,7 +26,7 @@ class CourrierController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -52,8 +57,15 @@ class CourrierController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Courrier::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -67,7 +79,7 @@ class CourrierController extends Controller
         $model = new Courrier();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->REFERNCE]);
+            return $this->redirect(['view', 'id' => $model->REFERENCE]);
         }
 
         return $this->render('create', [
@@ -87,7 +99,7 @@ class CourrierController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->REFERNCE]);
+            return $this->redirect(['view', 'id' => $model->REFERENCE]);
         }
 
         return $this->render('update', [
@@ -125,5 +137,16 @@ class CourrierController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
+    }
+
+    /**
+     *
+     */
+    protected function logger()
+    {
+        if ($this->_logging) {
+            $logManager = new SysLogManager();
+            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
+        }
     }
 }

@@ -36,7 +36,7 @@ class Mobilier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['REFERENCE_PATRIMOINE', 'ID_MOBILIER'], 'required'],
+            [['REFERENCE_PATRIMOINE','ID_PERSONNE','ID_AYANTDROIT'], 'required'],
             [['ID_MOBILIER', 'ID_PERSONNE', 'ID_AYANTDROIT'], 'integer'],
             [['REFERENCE_PATRIMOINE'], 'string', 'max' => 10],
             [['DESCRIPTION_MO'], 'string', 'max' => 150],
@@ -54,7 +54,7 @@ class Mobilier extends \yii\db\ActiveRecord
             'REFERENCE_PATRIMOINE' => Yii::t('app', 'Reference  Patrimoine'),
             'ID_MOBILIER' => Yii::t('app', 'Id  Mobilier'),
             'ID_PERSONNE' => Yii::t('app', 'Id  Personne'),
-            'ID_AYANTDROIT' => Yii::t('app', 'Id  Ayantdroit'),
+            'ID_AYANTDROIT' => Yii::t('app', 'Responsable'),
             'DESCRIPTION_MO' => Yii::t('app', 'Description  Mo'),
         ];
     }

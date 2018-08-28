@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\LivreTraitement */
 
-$this->title = Yii::t('app', 'Create Livre Traitement');
+$this->title = Yii::t('app', 'Ajouter au Livre des Traitements');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Livre Traitements'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Immobilier'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Créer Immobilier'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,13 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'REFERENCE_PATRIMOINE',
-            'ID_IMMOBILIER',
-            'ID_PERSONNE',
-            'ID_AYANTDROIT',
+            //'ID_IMMOBILIER',
+            //'ID_PERSONNE',
+            //'ID_AYANTDROIT',
             'DESCRIPTION_IMMO',
-            //'ADRESSE',
-            //'LATITUDE',
-            //'LONGITUDE',
+            'ADRESSE',
+            'LATITUDE',
+            'LONGITUDE',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

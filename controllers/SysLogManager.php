@@ -34,9 +34,10 @@ class SysLogManager
         $lib = $this->writeLibLog($model);
         $syslog = new SysLog();
         $syslog->CODE_ACTION = $action;
+        $syslog->ID_PERSONNE = $this->_user->ID_PERSONNE;
         $syslog->IDENTIFIANT = $this->_user->IDENTIFIANT;
         $syslog->DATE_LOG = date('Y-m-d H:i:s');
-        $syslog->TABLE_LOG = $table;
+        $syslog->TABLE_LOG = strtoupper($table);
         $syslog->LIB_LOG = $lib;
         $syslog->save();
     }
@@ -44,9 +45,9 @@ class SysLogManager
     private function writeLibLog($model)
     {
         $lib = '';
-        if (!is_null($model)){
+        if (!is_null($model)) {
             foreach ($model as $item => $value) {
-                $lib .= '::' . strtoupper($item) . ' = ' .$value.' ';
+                $lib .= '::' . strtoupper($item) . ' = ' . $value . ' ';
             }
         }
         //var_dump($lib);

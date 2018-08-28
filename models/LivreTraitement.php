@@ -29,10 +29,11 @@ class LivreTraitement extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_LT', 'NOM_TRAITEMENT'], 'required'],
+            [['NOM_TRAITEMENT'], 'required'],
             [['ID_LT'], 'integer'],
             [['NOM_TRAITEMENT'], 'string', 'max' => 100],
             [['ID_LT'], 'unique'],
+            [['NOM_TRAITEMENT'], 'unique'],
         ];
     }
 
@@ -42,8 +43,8 @@ class LivreTraitement extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_LT' => Yii::t('app', 'Id  Lt'),
-            'NOM_TRAITEMENT' => Yii::t('app', 'Nom  Traitement'),
+            'ID_LT' => Yii::t('app', 'Livre des traitements'),
+            'NOM_TRAITEMENT' => Yii::t('app', 'Nom Traitement'),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Action;
 use app\models\SysParam;
 use Yii;
 use app\models\Document;
@@ -16,7 +17,10 @@ use yii\web\UploadedFile;
  */
 class DocumentController extends Controller
 {
-
+    public $_user_actions;
+    public $_tablename;
+    public $_models;
+    public $_logging;
     /**
      * @inheritdoc
      */
@@ -24,7 +28,7 @@ class DocumentController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -55,8 +59,15 @@ class DocumentController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Document::tableName();
+        $this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -74,7 +85,7 @@ class DocumentController extends Controller
                 $model->DATE_EFFECTIVE = date("Y-m-d");
                 $upload_dir = SysParam::findOne('UPLOADS_DIR_NAME');
                 $doc_dir = SysParam::findOne('DOCUMENTS_DIR_NAME');
-                $source =  $upload_dir->PARAM_VALUE.'/'.$doc_dir->PARAM_VALUE.'/'.$model->TITRE_DOC.'_'.$model->DATE_EFFECTIVE.'.'.$model->file->extension;
+                $source =  $upload_dir->PARAM_VALUE.'/'.$doc_dir->PARAM_VALUE.'/'.str_replace(' ', '_',$model->TITRE_DOC ).'_'.$model->DATE_EFFECTIVE.'.'.$model->file->extension;
                 $model->SOURCE = $source;
                 $model->CREATEUR = Yii::$app->user->identity->USERNAME;
                 $model->file->saveAs($source);
@@ -153,5 +164,16 @@ class DocumentController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
+    }
+
+    /**
+     *
+     */
+    protected function logger()
+    {
+        if ($this->_logging) {
+            $logManager = new SysLogManager();
+            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
+        }
     }
 }

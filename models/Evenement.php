@@ -34,7 +34,7 @@ class Evenement extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['REFERENCE_PATRIMOINE', 'LIBELLE_EVENEMENT', 'DATE_EVENEMENT', 'ETAT_EVENEMENT'], 'required'],
+            [['ID_EVENEMENT', 'REFERENCE_PATRIMOINE', 'LIBELLE_EVENEMENT', 'DATE_EVENEMENT', 'ETAT_EVENEMENT'], 'required'],
             [['ID_EVENEMENT'], 'integer'],
             [['DATE_EVENEMENT', 'DATE_REALISATION'], 'safe'],
             [['REFERENCE_PATRIMOINE'], 'string', 'max' => 10],
@@ -43,6 +43,8 @@ class Evenement extends \yii\db\ActiveRecord
             [['ETAT_EVENEMENT'], 'string', 'max' => 1],
             [['ID_EVENEMENT'], 'unique'],
             [['REFERENCE_PATRIMOINE'], 'unique'],
+            [['REFERENCE_PATRIMOINE'], 'exist', 'skipOnError' => true, 'targetClass' => Immobilier::className(), 'targetAttribute' => ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']],
+            [['REFERENCE_PATRIMOINE'], 'exist', 'skipOnError' => true, 'targetClass' => Mobilier::className(), 'targetAttribute' => ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']],
         ];
     }
 
@@ -52,13 +54,13 @@ class Evenement extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_EVENEMENT' => Yii::t('app', 'Evenement'),
+            'ID_EVENEMENT' => Yii::t('app', 'Id  Evenement'),
             'REFERENCE_PATRIMOINE' => Yii::t('app', 'Reference  Patrimoine'),
-            'LIBELLE_EVENEMENT' => Yii::t('app', 'Libelle Evenement'),
-            'COMMENTAIRE_EVENEMENT' => Yii::t('app', 'Commentaire Evenement'),
-            'DATE_EVENEMENT' => Yii::t('app', 'Date Evenement'),
-            'ETAT_EVENEMENT' => Yii::t('app', 'Etat Evenement'),
-            'DATE_REALISATION' => Yii::t('app', 'Date de Realisation'),
+            'LIBELLE_EVENEMENT' => Yii::t('app', 'Libelle  Evenement'),
+            'COMMENTAIRE_EVENEMENT' => Yii::t('app', 'Commentaire  Evenement'),
+            'DATE_EVENEMENT' => Yii::t('app', 'Date  Evenement'),
+            'ETAT_EVENEMENT' => Yii::t('app', 'Etat  Evenement'),
+            'DATE_REALISATION' => Yii::t('app', 'Date  Realisation'),
         ];
     }
 
@@ -67,22 +69,14 @@ class Evenement extends \yii\db\ActiveRecord
      */
     public function getREFERENCEPATRIMOINE()
     {
-        return $this->hasOne(Patrimoine::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
+        return $this->hasOne(Immobilier::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getREFERENCEPATRIMOINEI()
+    public function getREFERENCEPATRIMOINE0()
     {
-        return $this->hasOne(Immobilier::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getREFERENCEPATRIMOINEM()
-    {
-        return $this->hasOne(Mobilier::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
+        return $this->hasOne(Mobilier::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
     }
 }

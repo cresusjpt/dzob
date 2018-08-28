@@ -106,7 +106,6 @@ class Utilisateur extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-
         //return true;
         return Yii::$app->security->validatePassword($password, $this->PASSWORD);
     }
@@ -164,7 +163,7 @@ class Utilisateur extends ActiveRecord implements IdentityInterface
     {
         return [
             'identifiant' => 'Identifiant',
-            'username' => 'Nom d\'utilisateur',
+            'USERNAME' => 'Nom d\'utilisateur',
             'PASSWORD' => 'Mot de passe',
             'rawpassword' => 'Mot de passe encore',
             'AUTH_KEY' => 'Authentification Key',

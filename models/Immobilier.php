@@ -39,14 +39,14 @@ class Immobilier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['REFERENCE_PATRIMOINE', 'ID_IMMOBILIER', 'DESCRIPTION_IMMO', 'ADRESSE', 'LATITUDE', 'LONGITUDE'], 'required'],
+            [['REFERENCE_PATRIMOINE', 'DESCRIPTION_IMMO', 'ADRESSE'], 'required'],
             [['ID_IMMOBILIER', 'ID_PERSONNE', 'ID_AYANTDROIT'], 'integer'],
             [['LATITUDE', 'LONGITUDE'], 'number'],
             [['REFERENCE_PATRIMOINE'], 'string', 'max' => 10],
             [['DESCRIPTION_IMMO'], 'string', 'max' => 250],
             [['ADRESSE'], 'string', 'max' => 200],
             [['REFERENCE_PATRIMOINE', 'ID_IMMOBILIER'], 'unique', 'targetAttribute' => ['REFERENCE_PATRIMOINE', 'ID_IMMOBILIER']],
-            [['ID_PERSONNE', 'ID_AYANTDROIT'], 'exist', 'skipOnError' => true, 'targetClass' => AyantDroit::className(), 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']],
+            [['ID_PERSONNE', 'ID_AYANTDROIT'], 'exist', 'skipOnError' => true, 'targetClass' => AyantDroit::class, 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']],
         ];
     }
 
@@ -56,11 +56,11 @@ class Immobilier extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'REFERENCE_PATRIMOINE' => Yii::t('app', 'Reference  Patrimoine'),
-            'ID_IMMOBILIER' => Yii::t('app', 'Id  Immobilier'),
-            'ID_PERSONNE' => Yii::t('app', 'Id  Personne'),
-            'ID_AYANTDROIT' => Yii::t('app', 'Id  Ayantdroit'),
-            'DESCRIPTION_IMMO' => Yii::t('app', 'Description  Immo'),
+            'REFERENCE_PATRIMOINE' => Yii::t('app', 'Reference Patrimoine'),
+            'ID_IMMOBILIER' => Yii::t('app', 'Immobilier'),
+            'ID_PERSONNE' => Yii::t('app', 'Personne'),
+            'ID_AYANTDROIT' => Yii::t('app', 'Responsable Immobilier'),
+            'DESCRIPTION_IMMO' => Yii::t('app', 'Description Immobiler'),
             'ADRESSE' => Yii::t('app', 'Adresse'),
             'LATITUDE' => Yii::t('app', 'Latitude'),
             'LONGITUDE' => Yii::t('app', 'Longitude'),

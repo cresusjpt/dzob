@@ -20,7 +20,7 @@ class FraisSearch extends Frais
         return [
             [['ID_FRAIS', 'ID_DOSSIER'], 'integer'],
             [['MONTANT'], 'number'],
-            [['DATE_REGLE', 'NATURE_FRAIS'], 'safe'],
+            [['DATE_REGLE'], 'safe'],
         ];
     }
 
@@ -65,8 +65,6 @@ class FraisSearch extends Frais
             'MONTANT' => $this->MONTANT,
             'DATE_REGLE' => $this->DATE_REGLE,
         ]);
-
-        $query->andFilterWhere(['like', 'NATURE_FRAIS', $this->NATURE_FRAIS]);
 
         return $dataProvider;
     }

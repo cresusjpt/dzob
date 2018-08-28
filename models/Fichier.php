@@ -8,14 +8,19 @@ use Yii;
  * This is the model class for table "fichier".
  *
  * @property int $ID_FICHIER
- * @property string $REFERNCE
+ * @property string $REFERENCE
  * @property string $NOM_FICHIER
  * @property string $FORMAT_FICHIER
+ * @property string $DATE_EFFECTIVE
+ * @property string $CREATEUR
+ * @property string $SOURCE
  *
- * @property Courrier $rEFERNCE
+ * @property Courrier $rEFERENCE
  */
 class Fichier extends \yii\db\ActiveRecord
 {
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -30,13 +35,16 @@ class Fichier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_FICHIER', 'REFERNCE', 'NOM_FICHIER'], 'required'],
+            [['REFERENCE', 'NOM_FICHIER','CREATEUR','SOURCE'], 'required'],
             [['ID_FICHIER'], 'integer'],
-            [['REFERNCE'], 'string', 'max' => 11],
+            [['file'], 'file'],
+            [['DATE_EFFECTIVE'], 'safe'],
+            [['REFERENCE'], 'string', 'max' => 11],
             [['NOM_FICHIER'], 'string', 'max' => 30],
+            [['CREATEUR','SOURCE'], 'string', 'max' => 500],
             [['FORMAT_FICHIER'], 'string', 'max' => 10],
             [['ID_FICHIER'], 'unique'],
-            [['REFERNCE'], 'exist', 'skipOnError' => true, 'targetClass' => Courrier::className(), 'targetAttribute' => ['REFERNCE' => 'REFERNCE']],
+            [['REFERENCE'], 'exist', 'skipOnError' => true, 'targetClass' => Courrier::class, 'targetAttribute' => ['REFERENCE' => 'REFERENCE']],
         ];
     }
 
@@ -46,18 +54,21 @@ class Fichier extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_FICHIER' => Yii::t('app', 'Id  Fichier'),
-            'REFERNCE' => Yii::t('app', 'Refernce'),
-            'NOM_FICHIER' => Yii::t('app', 'Nom  Fichier'),
-            'FORMAT_FICHIER' => Yii::t('app', 'Format  Fichier'),
+            'ID_FICHIER' => Yii::t('app', 'Fichier'),
+            'REFERENCE' => Yii::t('app', 'Reference Courrier'),
+            'NOM_FICHIER' => Yii::t('app', 'Nom Fichier'),
+            'FORMAT_FICHIER' => Yii::t('app', 'Format Fichier'),
+            'DATE_EFFECTIVE' => Yii::t('app', 'Date effective'),
+            'CREATEUR' => Yii::t('app', 'Créateur'),
+            'SOURCE' => Yii::t('app', 'Source'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getREFERNCE()
+    public function getREFERENCE()
     {
-        return $this->hasOne(Courrier::className(), ['REFERNCE' => 'REFERNCE']);
+        return $this->hasOne(Courrier::class, ['REFERENCE' => 'REFERENCE']);
     }
 }
