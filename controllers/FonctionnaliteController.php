@@ -3,9 +3,12 @@
 namespace app\controllers;
 
 use app\models\Action;
+use kartik\builder\TabularForm;
+use function PHPSTORM_META\type;
 use Yii;
 use app\models\Fonctionnalite;
 use app\models\FonctionnaliteSearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -148,5 +151,28 @@ class FonctionnaliteController extends Controller
             $logManager = new SysLogManager();
             $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
         }
+    }
+
+    /**
+     * Finds the Fonctionnality relative to selected menu
+     * If the find is successful the browser will bind table body
+     * @param integer $id_menu
+     *
+     */
+    public function actionGetFonctionnalite($id_menu)
+    {
+        // find the fonctionnality from the menu
+
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Fonctionnalite::tableName();
+        //$this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
+
+        $fonctionnalities = Fonctionnalite::find()->where(['ID_MENU'=>$id_menu])->all();
+        echo Json::encode($fonctionnalities);
+
+
     }
 }

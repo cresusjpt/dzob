@@ -19,6 +19,7 @@ class MenuController extends Controller
     public $_tablename;
     public $_models;
     public $_logging;
+
     /**
      * @inheritdoc
      */
@@ -140,6 +141,7 @@ class MenuController extends Controller
     }
 
     /**
+     * Write the user action into the applocation Log (SysLog).
      *
      */
     protected function logger()

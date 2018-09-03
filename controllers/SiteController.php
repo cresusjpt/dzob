@@ -19,6 +19,7 @@ class SiteController extends Controller
     public $_tablename;
     public $_models;
     public $_logging;
+
     /**
      * {@inheritdoc}
      */
@@ -69,7 +70,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            $this->redirect('site/login');
+            return $this->redirect('site/login');
         } else {
             return $this->render('index');
         }
@@ -181,16 +182,6 @@ class SiteController extends Controller
         return $this->render('hello', array('name' => $test));
     }
 
-    public function actionUser()
-    {
-        $model = new UserForm;
-        if ($model->load(Yii::$app->request->post() && $model->validate())) {
-            // code...
-        } else {
-            return $this->render('userForm', ['model' => $model]);
-        }
-    }
-
     /**
      * Displays profile page.
      *
@@ -210,11 +201,11 @@ class SiteController extends Controller
             return $this->render('lock', ['model' => $user]);
         } else {
             $model = new Utilisateur();
-            if ($model->load(Yii::$app->request->post())){
+            if ($model->load(Yii::$app->request->post())) {
                 $loginForm = new LoginForm();
                 $loginForm->username = $model->USERNAME;
                 $loginForm->password = $model->rawpassword;
-                if ($loginForm->login()){
+                if ($loginForm->login()) {
                     return $this->goBack();
                 }
             }

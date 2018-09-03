@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
+use kartik\form\ActiveForm;
+use kartik\builder\TabularForm;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LivreTraitementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */

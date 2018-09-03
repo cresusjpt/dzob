@@ -153,7 +153,7 @@ class UtilisateurController extends Controller
     {
         $model = $this->findModel($ID_PERSONNE, $IDENTIFIANT);
 
-        $action = Action::findOne('CREATE');
+        $action = Action::findOne('DELETE');
         $this->_user_actions = $action->CODE_ACTION;
         $this->_tablename = Utilisateur::tableName();
         $this->_models = $model;

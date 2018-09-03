@@ -185,4 +185,12 @@ class Utilisateur extends ActiveRecord implements IdentityInterface
         }
         return $sexe;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCivilite()
+    {
+        return $this->NOM.' '.$this->PRENOM;
+    }
 }

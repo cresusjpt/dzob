@@ -30,6 +30,8 @@ use app\models\Patrimoine;
         //'template' => '<div class="well well-sm" style="background-color: #fff;">{input}</div>',
         'clientOptions' => [
             'autoclose' => true,
+            'endDate'=>date('Y-m-d'),
+            'todayHighlight' => true,
             'format' => 'yyyy-mm-dd'
         ]
     ]); ?>

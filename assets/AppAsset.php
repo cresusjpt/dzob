@@ -46,11 +46,14 @@ class AppAsset extends AssetBundle
         'T_assets/plugins/nvd3/nv.d3.min.css',
         'T_assets/plugins/jQuery-File-Upload/css/jquery.fileupload-ui.css',
 
+        /*Tree view style*/
+        'T_assets/plugins/jstree/dist/themes/default/style.css',
+
         /*CORE CSS*/
         'T_assets/css/styles.css',
         'T_assets/css/styles-responsive.css',
         'T_assets/css/plugins.css',
-        ['T_assets/css/themes/theme-style9.css','type'=>'text/css','id'=>'skin_color'],
+        ['T_assets/css/themes/theme-style5.css','type'=>'text/css','id'=>'skin_color'],
         ['T_assets/css/print.css','type'=>'text/css','media'=>'print'],
         ['T_assets/favicon.ico', 'rel' => 'shortcut icon'],
     ];
@@ -104,6 +107,8 @@ class AppAsset extends AssetBundle
         'T_assets/js/index.js',
         'T_assets/plugins/jquery.pulsate/jquery.pulsate.min.js',
 		'T_assets/js/pages-user-profile.js',
+
+        //file upload
         'T_assets/plugins/jQuery-File-Upload/js/vendor/jquery.ui.widget.js',
         'http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js',
         'T_assets/plugins/javascript-Load-Image/js/load-image.all.min.js',
@@ -118,6 +123,10 @@ class AppAsset extends AssetBundle
         'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-validate.js',
         'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-ui.js',
         'T_assets/plugins/jQuery-File-Upload/js/main.js',
+
+        //dfdfdfdf
+        'T_assets/plugins/jstree/dist/jstree.min.js',
+		'T_assets/js/ui-treeview.js',
 
         /*CORE JAVASCRIPTS*/
         'T_assets/js/main.js',

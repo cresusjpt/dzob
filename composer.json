@@ -24,7 +24,11 @@
         "2amigos/yii2-file-upload-widget": "~1.0",
         "2amigos/yii2-ckeditor-widget": "^2.1",
         "wadeshuler/yii2-ckeditor-cdn": "~1.0",
-        "kartik-v/yii2-grid": "*"
+        "kartik-v/yii2-grid": "*",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-builder": "@dev",
+        "wbraganca/yii2-dynamicform": "*",
+        "kidzen/yii2-dynamicform": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

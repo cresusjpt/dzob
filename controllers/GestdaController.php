@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\Menu;
 use app\models\Profil;
+use app\models\Utilisateur;
+use kartik\builder\TabularForm;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
@@ -36,9 +38,23 @@ class GestdaController extends Controller
 
     public function actionIndex()
     {
-
+        //$model = GestdaController::getFormAttribs();
+        $modelUser =new Utilisateur();
         $modelProfil = new Profil();
         $modelMenu = new Menu();
-        return $this->render('index', ['modelsMenu' => $modelMenu, 'modelsProfil' => $modelProfil]);
+        return $this->render('index', ['modelUser'=>$modelUser,'modelsMenu' => $modelMenu, 'modelsProfil' => $modelProfil]);
+    }
+
+    public function getFormAttribs(){
+        return [
+            'ID_FONCT'=>[
+                'type'=>TabularForm::INPUT_HIDDEN,
+                'columnOptions'=>['hidden'=>true]
+            ],
+            'NAME_FONCT'=>['type'=>TabularForm::INPUT_TEXT],
+            'LIBEL_FONCT'=>['type'=>TabularForm::INPUT_TEXT],
+            'DESCRIPTION_FONCT'=>['type'=>TabularForm::INPUT_TEXTAREA],
+
+        ];
     }
 }

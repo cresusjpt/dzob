@@ -33,8 +33,8 @@ class FonctionProfil extends \yii\db\ActiveRecord
             [['ID_FONCT'], 'integer'],
             [['CODE_PROFIL'], 'string', 'max' => 100],
             [['CODE_PROFIL', 'ID_FONCT'], 'unique', 'targetAttribute' => ['CODE_PROFIL', 'ID_FONCT']],
-            [['ID_FONCT'], 'exist', 'skipOnError' => true, 'targetClass' => Fonctionnalite::className(), 'targetAttribute' => ['ID_FONCT' => 'ID_FONCT']],
-            [['CODE_PROFIL'], 'exist', 'skipOnError' => true, 'targetClass' => Profil::className(), 'targetAttribute' => ['CODE_PROFIL' => 'CODE_PROFIL']],
+            [['ID_FONCT'], 'exist', 'skipOnError' => true, 'targetClass' => Fonctionnalite::class, 'targetAttribute' => ['ID_FONCT' => 'ID_FONCT']],
+            [['CODE_PROFIL'], 'exist', 'skipOnError' => true, 'targetClass' => Profil::class, 'targetAttribute' => ['CODE_PROFIL' => 'CODE_PROFIL']],
         ];
     }
 
@@ -44,8 +44,8 @@ class FonctionProfil extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'CODE_PROFIL' => Yii::t('app', 'Code  Profil'),
-            'ID_FONCT' => Yii::t('app', 'Identifiant Fonctionnalité'),
+            'CODE_PROFIL' => Yii::t('app', 'Profil'),
+            'ID_FONCT' => Yii::t('app', 'Fonctionnalité'),
         ];
     }
 

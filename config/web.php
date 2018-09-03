@@ -47,6 +47,9 @@ $config = [
                 'filebrowserImageUploadUrl' => '/ckeditor/default/image-upload',
             ]
         ],
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+        ],
     ],
     'components' => [
         'view' => [

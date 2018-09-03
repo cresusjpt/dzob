@@ -50,6 +50,15 @@ class DossierController extends Controller
     }
 
     /**
+     * Lists all Dossier models.
+     * @return mixed
+     */
+    public function actionDossier()
+    {
+        return $this->render('dossier');
+    }
+
+    /**
      * Displays a single Dossier model.
      * @param integer $id
      * @return mixed

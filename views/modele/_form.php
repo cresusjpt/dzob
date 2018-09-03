@@ -17,7 +17,7 @@ use wadeshuler\ckeditor\widgets\CKEditor;
 
     <?= $form->field($model, 'NB_PARAMETRE')->input('number') ?>
 
-    <?= $form->field($model, 'CONTENU_MODELE')->widget(CKEditor::class,['options' => ['rows' => 50],]) ?>
+    <?= $form->field($model, 'CONTENU_MODELE')->widget(CKEditor::class, ['options' => ['rows' => 50],]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Enregistrer'), ['class' => 'btn btn-blue']) ?>

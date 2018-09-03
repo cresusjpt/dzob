@@ -6,14 +6,14 @@
  * Time: 18:10
  */
 
+use app\models\Profil;
+
 $this->title = 'Dzob | Profile';
 $id = Yii::$app->user->id;
-if (!is_null($id)) {
+if (!Yii::$app->user->isGuest) {
     $user = Yii::$app->user->identity;
 } else {
-    Yii::$app->getResponse()->redirect('site/login');
-    die('Vous n\'etes pas connecté');
-    /*Yii::$app->getResponse()->redirect(['login','id' => $id])->send();*/
+    return Yii::$app->getResponse()->redirect('site/login');
 }
 ?>
 <div class="row">
@@ -122,7 +122,6 @@ if (!is_null($id)) {
                                     <tr>
                                         <td>Profil</td>
                                         <td><span class="label label-sm label-info">Administrator</span></td>
-                                        <td><a href="#panel_edit_account" class="show-tab"><i class="fa fa-pencil edit-user-info"></i></a></td>
                                     </tr>
                                     </tbody>
                                 </table>

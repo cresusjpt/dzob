@@ -15,10 +15,10 @@ use app\models\TypeMetadonnee;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'ID_TYPEMETA')->dropDownList(
-            ArrayHelper::map(TypeMetadonnee::find()->all(),'ID_TYPEMETA','LIBELLE_TYPEMETA'),
-            [
-                    'prompt'=>'Selectionner Type métadonnee'
-            ]
+        ArrayHelper::map(TypeMetadonnee::find()->all(), 'ID_TYPEMETA', 'LIBELLE_TYPEMETA'),
+        [
+            'prompt' => 'Selectionner Type métadonnee'
+        ]
     ) ?>
 
     <?= $form->field($model, 'META_LIBELLE')->textInput(['maxlength' => true]) ?>

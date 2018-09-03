@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Utilisateur;
+use yii\db\Query;
 
 /**
  * UtilisateurSearch represents the model behind the search form of `app\models\Utilisateur`.
@@ -77,6 +78,56 @@ class UtilisateurSearch extends Utilisateur
             ->andFilterWhere(['like', 'ACCESS_TOKEN', $this->ACCESS_TOKEN])
             ->andFilterWhere(['like', 'ETAT', $this->ETAT]);
 
+        return $dataProvider;
+    }
+
+    public function searchBYGR($gr_libelle, $params)
+    {
+
+
+        $query = (new Query())->select('*');
+
+
+        $query->from(['u' => 'utilisateur', 'g' => 'gr_usager'])
+            ->where(['u.IDENTIFIANT'=>'g.IDENTIFIANT','g.GR_LIBELLE'=>$gr_libelle])
+        ->all();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+             //$query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'ID_PERSONNE' => $this->ID_PERSONNE,
+            'IDENTIFIANT' => $this->IDENTIFIANT,
+            'DATE_NAISSANCE' => $this->DATE_NAISSANCE,
+            'DM_MODIFICATION' => $this->DM_MODIFICATION,
+        ]);
+
+        $query->andFilterWhere(['like', 'NOM', $this->NOM])
+            ->andFilterWhere(['like', 'PRENOM', $this->PRENOM])
+            ->andFilterWhere(['like', 'SEXE', $this->SEXE])
+            ->andFilterWhere(['like', 'TELEPHONE', $this->TELEPHONE])
+            ->andFilterWhere(['like', 'ADRESSE', $this->ADRESSE])
+            ->andFilterWhere(['like', 'EMAIL', $this->EMAIL])
+            ->andFilterWhere(['like', 'USERNAME', $this->USERNAME])
+            ->andFilterWhere(['like', 'PASSWORD', $this->PASSWORD])
+            ->andFilterWhere(['like', 'AUTH_KEY', $this->AUTH_KEY])
+            ->andFilterWhere(['like', 'ACCESS_TOKEN', $this->ACCESS_TOKEN])
+            ->andFilterWhere(['like', 'ETAT', $this->ETAT]);
+
+        //var_dump($dataProvider);
+        //die();
         return $dataProvider;
     }
 }

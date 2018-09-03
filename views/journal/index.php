@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'TABLE_LOG',
             'LIB_LOG',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
     <?php Pjax::end()?>
