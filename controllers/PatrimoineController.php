@@ -2,32 +2,20 @@
 
 namespace app\controllers;
 
-use app\models\Action;
-use app\models\Classeur;
-use app\models\Courrier;
-use app\models\Document;
-use app\models\Droits;
-use app\models\Fichier;
-use app\models\GrUsager;
 use Yii;
-use app\models\Dossier;
-use app\models\DossierSearch;
+use app\models\Patrimoine;
+use app\models\PatrimoineSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DossierController implements the CRUD actions for Dossier model.
+ * PatrimoineController implements the CRUD actions for Patrimoine model.
  */
-class DossierController extends Controller
+class PatrimoineController extends Controller
 {
-    public $_user_actions;
-    public $_tablename;
-    public $_models;
-    public $_logging;
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -42,12 +30,12 @@ class DossierController extends Controller
     }
 
     /**
-     * Lists all Dossier models.
+     * Lists all Patrimoine models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DossierSearch();
+        $searchModel = new PatrimoineSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -57,57 +45,29 @@ class DossierController extends Controller
     }
 
     /**
-     * Lists all Dossier models.
-     * @return mixed
-     */
-    public function actionDossier()
-    {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect('site/login');
-        }
-
-        $modelClasseur = Classeur::find()->all();
-        $modelDosssier = Dossier::find()->all();
-        $modelDocument = Document::find()->all();
-        $modelDroit = Droits::find()->all();
-        $modelGrUsager =GrUsager::find()->where(['IDENTIFIANT'=>Yii::$app->user->IDENTIFIANT])->all();
-
-
-
-        return $this->render('dossier');
-    }
-
-    /**
-     * Displays a single Dossier model.
+     * Displays a single Patrimoine model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        $action = Action::findOne('SELECT');
-        $this->_user_actions = $action->CODE_ACTION;
-        $this->_tablename = Dossier::tableName();
-        $this->_models = $model;
-        $this->_logging = true;
-        $this->logger();
         return $this->render('view', [
-            'model' => $model,
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Dossier model.
+     * Creates a new Patrimoine model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Dossier();
+        $model = new Patrimoine();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_DOSSIER]);
+            return $this->redirect(['view', 'id' => $model->ID_PATRIMOINE]);
         }
 
         return $this->render('create', [
@@ -116,7 +76,7 @@ class DossierController extends Controller
     }
 
     /**
-     * Updates an existing Dossier model.
+     * Updates an existing Patrimoine model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -126,10 +86,8 @@ class DossierController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->DATE_DMDOSSIER = date("Y-m-d H:i:s");
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->ID_DOSSIER]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->ID_PATRIMOINE]);
         }
 
         return $this->render('update', [
@@ -138,7 +96,7 @@ class DossierController extends Controller
     }
 
     /**
-     * Deletes an existing Dossier model.
+     * Deletes an existing Patrimoine model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -154,29 +112,18 @@ class DossierController extends Controller
     }
 
     /**
-     * Finds the Dossier model based on its primary key value.
+     * Finds the Patrimoine model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Dossier the loaded model
+     * @return Patrimoine the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Dossier::findOne(['ID_DOSSIER' => $id])) !== null) {
+        if (($model = Patrimoine::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'La page que vous demandez n\'existe pas.'));
-    }
-
-    /**
-     *
-     */
-    protected function logger()
-    {
-        if ($this->_logging) {
-            $logManager = new SysLogManager();
-            $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
-        }
     }
 }

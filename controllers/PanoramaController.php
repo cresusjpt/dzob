@@ -11,4 +11,7 @@ use yii\web\Controller;
 
 class PanoramaController extends Controller{
 
+    public function actionIndex(){
+        return $this->render('_form');
+    }
 }

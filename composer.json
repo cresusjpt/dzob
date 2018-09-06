@@ -28,7 +28,13 @@
         "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-builder": "@dev",
         "wbraganca/yii2-dynamicform": "*",
-        "kidzen/yii2-dynamicform": "*"
+        "kidzen/yii2-dynamicform": "*",
+        "2amigos/yii2-google-maps-library": "*",
+        "ibrarturi/yii2-latlng-finder": "dev-master",
+        "extpoint/yii2-megamenu": "^1.7",
+        "yii2mod/yii2-google-maps-markers": "*",
+        "yii2tech/sitemap": "^1.0",
+        "kalyabin/yii2-select-google-map-location": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

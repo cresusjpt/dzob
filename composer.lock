@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb0d929623bdac21a4299e7ef069ab88",
+    "content-hash": "d55279b0d52360dd55dfd7086663fa6b",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -242,6 +242,56 @@
                 "yii2"
             ],
             "time": "2017-09-09T16:01:44+00:00"
+        },
+        {
+            "name": "2amigos/yii2-google-maps-library",
+            "version": "1.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-google-maps-library.git",
+                "reference": "25211fd9ceff30bbbeda6290220f629179b6eefe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-google-maps-library/zipball/25211fd9ceff30bbbeda6290220f629179b6eefe",
+                "reference": "25211fd9ceff30bbbeda6290220f629179b6eefe",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "6.*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\google\\maps\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "ramirez.cobos@gmail.com",
+                    "homepage": "http://www.ramirezcobos.com"
+                },
+                {
+                    "name": "2amigOS! Consulting LLC",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us"
+                }
+            ],
+            "description": "Google Maps API library for Yii2.",
+            "keywords": [
+                "extension",
+                "google",
+                "library",
+                "maps",
+                "yii"
+            ],
+            "time": "2018-03-26T11:07:12+00:00"
         },
         {
             "name": "bower-asset/blueimp-canvas-to-blob",
@@ -579,6 +629,59 @@
             "time": "2017-09-13T13:09:47+00:00"
         },
         {
+            "name": "extpoint/yii2-megamenu",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ExtPoint/yii2-megamenu.git",
+                "reference": "d5ce4e34787d77244022c677a3158c97a1c3c480"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ExtPoint/yii2-megamenu/zipball/d5ce4e34787d77244022c677a3158c97a1c3c480",
+                "reference": "d5ce4e34787d77244022c677a3158c97a1c3c480",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "2.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "extpoint\\megamenu\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kozhin Vladimir",
+                    "email": "affka@affka.ru"
+                }
+            ],
+            "description": "Configurable site map with auto generate page title, breadcrumbs and navigation",
+            "keywords": [
+                "breadcrumbs",
+                "menu",
+                "navigation",
+                "yii2"
+            ],
+            "time": "2018-07-19T16:15:23+00:00"
+        },
+        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.10.0",
             "source": {
@@ -626,6 +729,233 @@
             "time": "2018-02-23T01:58:20+00:00"
         },
         {
+            "name": "guzzlehttp/guzzle",
+            "version": "6.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/promises": "^1.0",
+                "guzzlehttp/psr7": "^1.4",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
+                "psr/log": "^1.0"
+            },
+            "suggest": {
+                "psr/log": "Required for using the Log middleware"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.3-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions_include.php"
+                ],
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2018-04-22T15:46:56+00:00"
+        },
+        {
+            "name": "guzzlehttp/promises",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/promises.git",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Promise\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle promises library",
+            "keywords": [
+                "promise"
+            ],
+            "time": "2016-12-20T10:07:11+00:00"
+        },
+        {
+            "name": "guzzlehttp/psr7",
+            "version": "1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "psr/http-message": "~1.0"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Psr7\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "homepage": "https://github.com/Tobion"
+                }
+            ],
+            "description": "PSR-7 message implementation that also provides common utility methods",
+            "keywords": [
+                "http",
+                "message",
+                "request",
+                "response",
+                "stream",
+                "uri",
+                "url"
+            ],
+            "time": "2017-03-20T17:10:46+00:00"
+        },
+        {
+            "name": "ibrarturi/yii2-latlng-finder",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ibrarturi/yii2-latlon-finder.git",
+                "reference": "7c6b0bafdf16d42bbdf294a83eb3df1d5f1ca134"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ibrarturi/yii2-latlon-finder/zipball/7c6b0bafdf16d42bbdf294a83eb3df1d5f1ca134",
+                "reference": "7c6b0bafdf16d42bbdf294a83eb3df1d5f1ca134",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "ibrarturi\\latlngfinder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ibrar Turi",
+                    "email": "ibrarturi@gmail.com"
+                }
+            ],
+            "description": "Find Latitude and Longitude using google maps",
+            "keywords": [
+                "coordinates",
+                "extension",
+                "finder",
+                "google map",
+                "latitude",
+                "longitude",
+                "picker",
+                "yii2"
+            ],
+            "time": "2015-12-17T10:25:24+00:00"
+        },
+        {
             "name": "imxiangli/yii2-jquery-file-upload",
             "version": "1.0.2",
             "source": {
@@ -665,6 +995,60 @@
                 "yii2"
             ],
             "time": "2017-04-08T07:35:27+00:00"
+        },
+        {
+            "name": "kalyabin/yii2-select-google-map-location",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kalyabin/yii2-select-google-map-location.git",
+                "reference": "ed34105d783f6db07bd22d0423c8ccb5c7782627"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kalyabin/yii2-select-google-map-location/zipball/ed34105d783f6db07bd22d0423c8ccb5c7782627",
+                "reference": "ed34105d783f6db07bd22d0423c8ccb5c7782627",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "2.*"
+            },
+            "type": "package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kalyabin\\maplocation\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Max Kalyabin",
+                    "email": "maksim@kalyabin.ru"
+                },
+                {
+                    "name": "Kirill Arutyunov",
+                    "email": "kirill@arutyunov.me"
+                }
+            ],
+            "description": "Yii2 widget to select location at map and choose map coordinates",
+            "keywords": [
+                "framework",
+                "input widget",
+                "location",
+                "map",
+                "widgets",
+                "yii2"
+            ],
+            "time": "2018-06-26T15:20:51+00:00"
         },
         {
             "name": "kartik-v/yii2-builder",
@@ -1021,6 +1405,56 @@
                 "yii2-dynamicform"
             ],
             "time": "2017-08-31T16:31:37+00:00"
+        },
+        {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1388,6 +1822,105 @@
                 "yii2-dynamicform"
             ],
             "time": "2015-02-25T15:31:24+00:00"
+        },
+        {
+            "name": "yii2mod/yii2-google-maps-markers",
+            "version": "1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2mod/yii2-google-maps-markers.git",
+                "reference": "d776b0b176302c4d6cd4ee52044d1a620af29a46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2mod/yii2-google-maps-markers/zipball/d776b0b176302c4d6cd4ee52044d1a620af29a46",
+                "reference": "d776b0b176302c4d6cd4ee52044d1a620af29a46",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\google\\maps\\markers\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Semenov",
+                    "email": "disemx@gmail.com"
+                },
+                {
+                    "name": "Igor Chepurnoy",
+                    "email": "igorzfort@gmail.com"
+                },
+                {
+                    "name": "Alexander Harchenko",
+                    "email": "morontt@gmail.com",
+                    "homepage": "https://morontt.info"
+                }
+            ],
+            "description": "Google Maps Markers displays a set of user addresses as markers on the map.",
+            "keywords": [
+                "extension",
+                "google maps",
+                "google maps markers",
+                "yii2"
+            ],
+            "time": "2017-08-26T10:21:55+00:00"
+        },
+        {
+            "name": "yii2tech/sitemap",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2tech/sitemap.git",
+                "reference": "e6fc00474b83755a6f826a22ded1988aa5c54d45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2tech/sitemap/zipball/e6fc00474b83755a6f826a22ded1988aa5c54d45",
+                "reference": "e6fc00474b83755a6f826a22ded1988aa5c54d45",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.13"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii2tech\\sitemap\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                }
+            ],
+            "description": "Provides support for site map creation",
+            "keywords": [
+                "Sitemap",
+                "yii2"
+            ],
+            "time": "2017-11-03T15:00:26+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -2125,71 +2658,6 @@
             "time": "2018-07-12T10:23:15+00:00"
         },
         {
-            "name": "guzzlehttp/psr7",
-            "version": "1.4.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
-                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "psr/http-message": "~1.0"
-            },
-            "provide": {
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Tobias Schultze",
-                    "homepage": "https://github.com/Tobion"
-                }
-            ],
-            "description": "PSR-7 message implementation that also provides common utility methods",
-            "keywords": [
-                "http",
-                "message",
-                "request",
-                "response",
-                "stream",
-                "uri",
-                "url"
-            ],
-            "time": "2017-03-20T17:10:46+00:00"
-        },
-        {
             "name": "myclabs/deep-copy",
             "version": "1.7.0",
             "source": {
@@ -2870,56 +3338,6 @@
                 "xunit"
             ],
             "time": "2017-06-30T09:13:00+00:00"
-        },
-        {
-            "name": "psr/http-message",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP messages",
-            "homepage": "https://github.com/php-fig/http-message",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -4036,7 +4454,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "kartik-v/yii2-widget-select2": 20,
-        "kartik-v/yii2-builder": 20
+        "kartik-v/yii2-builder": 20,
+        "ibrarturi/yii2-latlng-finder": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

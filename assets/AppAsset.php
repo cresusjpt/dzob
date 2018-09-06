@@ -108,6 +108,10 @@ class AppAsset extends AssetBundle
         'T_assets/plugins/jquery.pulsate/jquery.pulsate.min.js',
 		'T_assets/js/pages-user-profile.js',
 
+        //dfdfdfdf
+        'T_assets/plugins/jstree/dist/jstree.min.js',
+        'T_assets/js/ui-treeview.js',
+
         //file upload
         'T_assets/plugins/jQuery-File-Upload/js/vendor/jquery.ui.widget.js',
         'http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js',
@@ -123,10 +127,6 @@ class AppAsset extends AssetBundle
         'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-validate.js',
         'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-ui.js',
         'T_assets/plugins/jQuery-File-Upload/js/main.js',
-
-        //dfdfdfdf
-        'T_assets/plugins/jstree/dist/jstree.min.js',
-		'T_assets/js/ui-treeview.js',
 
         /*CORE JAVASCRIPTS*/
         'T_assets/js/main.js',

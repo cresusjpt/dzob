@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Profil;
+use app\models\SysLog;
+use app\models\UserProfil;
 use app\models\Utilisateur;
 use SebastianBergmann\CodeCoverage\Util;
 use Yii;
@@ -189,7 +192,19 @@ class SiteController extends Controller
      */
     public function actionProfile()
     {
-        return $this->render('myprofile');
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('site/login');
+        }
+        $user_profil = UserProfil::findOne(['IDENTIFIANT' => Yii::$app->user->identity->IDENTIFIANT]);
+        $profile_name = Profil::findOne(['CODE_PROFIL' => $user_profil->CODE_PROFIL]);
+        $log = SysLog::find()->where(['IDENTIFIANT' => $user_profil->IDENTIFIANT])->orderBy(['DATE_LOG' => 'DESC'])->limit(20)->all();
+
+        return $this->render('myprofile', [
+                'log' => $log,
+                'profile_name' => $profile_name,
+                'user' => Yii::$app->user->identity,
+            ]
+        );
     }
 
     public function actionLock()

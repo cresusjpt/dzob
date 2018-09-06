@@ -82,7 +82,8 @@ class Dossier extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getEtatDossier(){
+    public function getEtatDossier()
+    {
         return $this->ETAT_DOSSIER_TRAITEMENT == 0 ? 'En cours' : 'Terminé';
     }
 
@@ -172,5 +173,14 @@ class Dossier extends \yii\db\ActiveRecord
     public function getTRAITEMENTs()
     {
         return $this->hasMany(Traitement::className(), ['ID_TRAITEMENT' => 'ID_TRAITEMENT'])->viaTable('subir', ['ID_DOSSIER' => 'ID_DOSSIER']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return DossierQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new DossierQuery(get_called_class());
     }
 }

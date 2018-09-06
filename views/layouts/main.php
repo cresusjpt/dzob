@@ -981,13 +981,13 @@ AppAsset::register($this);
 			</td>
 			</tr>
 			{% } %}
-
     </script>
     <script>
         jQuery(document).ready(function () {
             Main.init();
-            SVExamples.init();
             UITreeview.init();
+            PagesUserProfile.init();
+            SVExamples.init();
         });
     </script>
     </body>

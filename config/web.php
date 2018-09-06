@@ -32,7 +32,7 @@ $config = [
 
             // passes html options to the text area tag itself. Mostly useless as CKEditor hides the <textarea> and uses it's own div
             'widgetOptions' => [
-               'rows' => '100',
+                'rows' => '100',
             ],
 
             // These are basically passed to the `CKEDITOR.replace()`
@@ -47,63 +47,77 @@ $config = [
                 'filebrowserImageUploadUrl' => '/ckeditor/default/image-upload',
             ]
         ],
-        'gridview' =>  [
+        'gridview' => [
             'class' => '\kartik\grid\Module'
         ],
     ],
+
     'components' => [
-        'view' => [
-            'theme' => [
-                'pathMap' => [
-                    '@dosamigos/fileupload/views'=>'@app/views/fileupload'
+    'assetManager' => [
+        'bundles' => [
+            'dosamigos\google\maps\MapAsset' => [
+                'options' => [
+                    //AIzaSyBzEU5o4tu97TNBEKflPQiDM5OkcB6xX1k
+                    'key' => '',
+                    'libraries' => 'places',
+                    'language'=>'fr',
+                    'v' => '3.exp',
                 ]
             ]
-        ],
-        'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'IAIGL3',
-        ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
-        'user' => [
-            'identityClass' => 'app\models\Utilisateur',
-            'enableAutoLogin' => true,
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
-        ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
-        'db' => $db,
-
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                '<alias:\w+>' => 'site/<alias>',
-            ],
-        ],
-
-        /*'as beforeRequest'=>[
-            'class'=>'app\components\CheckIfLoggedIn',
-        ],*/
-
+        ]
     ],
+    'view' => [
+        'theme' => [
+            'pathMap' => [
+                '@dosamigos/fileupload/views' => '@app/views/fileupload'
+            ]
+        ]
+    ],
+    'request' => [
+        // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+        'cookieValidationKey' => 'IAIGL3',
+    ],
+    'cache' => [
+        'class' => 'yii\caching\FileCache',
+    ],
+    'user' => [
+        'identityClass' => 'app\models\Utilisateur',
+        'enableAutoLogin' => true,
+    ],
+    'errorHandler' => [
+        'errorAction' => 'site/error',
+    ],
+    'mailer' => [
+        'class' => 'yii\swiftmailer\Mailer',
+        // send all mails to a file by default. You have to set
+        // 'useFileTransport' to false and configure a transport
+        // for the mailer to send real emails.
+        'useFileTransport' => true,
+    ],
+    'log' => [
+        'traceLevel' => YII_DEBUG ? 3 : 0,
+        'targets' => [
+            [
+                'class' => 'yii\log\FileTarget',
+                'levels' => ['error', 'warning'],
+            ],
+        ],
+    ],
+    'db' => $db,
+
+    'urlManager' => [
+        'enablePrettyUrl' => true,
+        'showScriptName' => false,
+        'rules' => [
+            '<alias:\w+>' => 'site/<alias>',
+        ],
+    ],
+
+    /*'as beforeRequest'=>[
+        'class'=>'app\components\CheckIfLoggedIn',
+    ],*/
+
+],
     'params' => $params,
 ];
 

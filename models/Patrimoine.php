@@ -29,6 +29,7 @@ class Patrimoine extends \yii\db\ActiveRecord
         return [
             [['REFERENCE_PATRIMOINE', 'NOM_PATRIMOINE'], 'required'],
             [['REFERENCE_PATRIMOINE'], 'string', 'max' => 50],
+            [['NOM_PATRIMOINE'], 'unique'],
             [['NOM_PATRIMOINE'], 'string', 'max' => 300],
         ];
     }

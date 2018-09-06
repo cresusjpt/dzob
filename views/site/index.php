@@ -7,11 +7,11 @@ $this->title = 'Dzob';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Saltech Digital</h1>
+        <h1>NotaDzob</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <p class="lead">Nous parlons d'automatisation et la facilitaion des tâches répetitives du métier du notaire.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Lire la documentation</a></p>
     </div>
 
     <div class="body-content">
