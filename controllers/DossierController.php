@@ -7,11 +7,18 @@ use app\models\Classeur;
 use app\models\Courrier;
 use app\models\Document;
 use app\models\Droits;
+use app\models\DroitsSearch;
 use app\models\Fichier;
 use app\models\GrUsager;
+use app\models\Traitement;
+use app\models\TraitementQuery;
+use app\models\TraitementSearch;
 use Yii;
 use app\models\Dossier;
 use app\models\DossierSearch;
+use yii\db\ActiveQuery;
+use yii\db\Query;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -57,6 +64,52 @@ class DossierController extends Controller
     }
 
     /**
+     * @param $libelle_document
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionEdit($libelle_document)
+    {
+
+        $modelDocument = Document::findOne(['TITRE_DOC' => $libelle_document]);
+        $droits = new DroitsSearch();
+        $droits = $droits->searchBYDOCAndIDENTIFIANT(Yii::$app->user->identity->IDENTIFIANT, $modelDocument->ID_DOC);
+        $droits = Json::encode($droits);
+        return $this->render('edit', [
+            'modelDocument' => $modelDocument,
+            'modelDroit' => $droits,
+        ]);
+    }
+
+    public function actionGetDossierClick($libelle_document)
+    {
+        return $this->redirect('edit?libelle_document=' . $libelle_document);
+    }
+
+    /**
+     * Finds the Traitement relative to selected Dossier
+     * If the find is successful the browser will bind table body
+     * @param integer $id_dossier
+     *
+     */
+    public function actionGetTraitement($libelle_dossier)
+    {
+        // find the fonctionnality from the menu
+
+        $action = Action::findOne('SELECT');
+        $this->_user_actions = $action->CODE_ACTION;
+        $this->_tablename = Dossier::tableName();
+        //$this->_models = $model;
+        $this->_logging = true;
+        $this->logger();
+
+        $id_dossier = Dossier::findOne(['LIBELLE_DOSSIER' => $libelle_dossier])->ID_DOSSIER;
+        $traitements = new TraitementSearch();
+        $result = $traitements->searchBYDossier($id_dossier);
+        echo Json::encode($result);
+    }
+
+    /**
      * Lists all Dossier models.
      * @return mixed
      */
@@ -67,14 +120,16 @@ class DossierController extends Controller
         }
 
         $modelClasseur = Classeur::find()->all();
-        $modelDosssier = Dossier::find()->all();
+        $modelDossier = Dossier::find()->all();
         $modelDocument = Document::find()->all();
-        $modelDroit = Droits::find()->all();
-        $modelGrUsager =GrUsager::find()->where(['IDENTIFIANT'=>Yii::$app->user->IDENTIFIANT])->all();
+        $modelGrUsager = GrUsager::find()->where(['IDENTIFIANT' => Yii::$app->user->identity->IDENTIFIANT])->all();
 
-
-
-        return $this->render('dossier');
+        return $this->render('dossier', [
+            'modelClasseur' => $modelClasseur,
+            'modelDossier' => $modelDossier,
+            'modelDocument' => $modelDocument,
+            'modelGrUsager' => $modelGrUsager,
+        ]);
     }
 
     /**

@@ -45,7 +45,7 @@ class Document extends \yii\db\ActiveRecord
             [['TITRE_DOC', 'CREATEUR'], 'string', 'max' => 50],
             [['DESCRIPTION_DOC'], 'string', 'max' => 5000],
             [['SOURCE'], 'string', 'max' => 150],
-            [['ID_DOSSIER'], 'exist', 'skipOnError' => true, 'targetClass' => Dossier::className(), 'targetAttribute' => ['ID_DOSSIER' => 'ID_DOSSIER']],
+            [['ID_DOSSIER'], 'exist', 'skipOnError' => true, 'targetClass' => Dossier::class, 'targetAttribute' => ['ID_DOSSIER' => 'ID_DOSSIER']],
         ];
     }
 
@@ -80,7 +80,7 @@ class Document extends \yii\db\ActiveRecord
      */
     public function getMETAs()
     {
-        return $this->hasMany(Metadonnee::className(), ['ID_META' => 'ID_META'])->viaTable('contenir', ['ID_DOC' => 'ID_DOC']);
+        return $this->hasMany(Metadonnee::class, ['ID_META' => 'ID_META'])->viaTable('contenir', ['ID_DOC' => 'ID_DOC']);
     }
 
     /**
@@ -88,6 +88,6 @@ class Document extends \yii\db\ActiveRecord
      */
     public function getDOSSIER()
     {
-        return $this->hasOne(Dossier::className(), ['ID_DOSSIER' => 'ID_DOSSIER']);
+        return $this->hasOne(Dossier::class, ['ID_DOSSIER' => 'ID_DOSSIER']);
     }
 }

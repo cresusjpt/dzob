@@ -56,8 +56,9 @@ class Dossier extends \yii\db\ActiveRecord
             [['COMMENTAIRE_DOSSIER'], 'string', 'max' => 500],
             [['ETAT_DOSSIER_TRAITEMENT'], 'string', 'max' => 1],
             [['ID_DOSSIER'], 'unique'],
-            [['ID_CLASSEUR'], 'exist', 'skipOnError' => true, 'targetClass' => Classeur::className(), 'targetAttribute' => ['ID_CLASSEUR' => 'ID_CLASSEUR']],
-            [['DOS_ID_DOSSIER'], 'exist', 'skipOnError' => true, 'targetClass' => Dossier::className(), 'targetAttribute' => ['DOS_ID_DOSSIER' => 'ID_DOSSIER']],
+            [['LIBELLE_DOSSIER'], 'unique'],
+            [['ID_CLASSEUR'], 'exist', 'skipOnError' => true, 'targetClass' => Classeur::class, 'targetAttribute' => ['ID_CLASSEUR' => 'ID_CLASSEUR']],
+            [['DOS_ID_DOSSIER'], 'exist', 'skipOnError' => true, 'targetClass' => Dossier::class, 'targetAttribute' => ['DOS_ID_DOSSIER' => 'ID_DOSSIER']],
         ];
     }
 
@@ -92,7 +93,7 @@ class Dossier extends \yii\db\ActiveRecord
      */
     public function getDocuments()
     {
-        return $this->hasMany(Document::className(), ['ID_DOSSIER' => 'ID_DOSSIER']);
+        return $this->hasMany(Document::class, ['ID_DOSSIER' => 'ID_DOSSIER']);
     }
 
     /**
@@ -100,7 +101,7 @@ class Dossier extends \yii\db\ActiveRecord
      */
     public function getCLASSEUR()
     {
-        return $this->hasOne(Classeur::className(), ['ID_CLASSEUR' => 'ID_CLASSEUR']);
+        return $this->hasOne(Classeur::class, ['ID_CLASSEUR' => 'ID_CLASSEUR']);
     }
 
     /**
@@ -108,7 +109,7 @@ class Dossier extends \yii\db\ActiveRecord
      */
     public function getPERSONNE()
     {
-        return $this->hasOne(Client::className(), ['ID_CLIENT' => 'ID_CLIENT']);
+        return $this->hasOne(Client::class, ['ID_CLIENT' => 'ID_CLIENT']);
     }
 
     /**
@@ -116,7 +117,7 @@ class Dossier extends \yii\db\ActiveRecord
      */
     public function getDOSIDDOSSIER()
     {
-        return $this->hasOne(Dossier::className(), ['ID_DOSSIER' => 'DOS_ID_DOSSIER']);
+        return $this->hasOne(Dossier::class, ['ID_DOSSIER' => 'DOS_ID_DOSSIER']);
     }
 
     /**
@@ -124,7 +125,7 @@ class Dossier extends \yii\db\ActiveRecord
      */
     public function getDossiers()
     {
-        return $this->hasMany(Dossier::className(), ['DOS_ID_DOSSIER' => 'ID_DOSSIER']);
+        return $this->hasMany(Dossier::class, ['DOS_ID_DOSSIER' => 'ID_DOSSIER']);
     }
 
     /**
@@ -132,7 +133,7 @@ class Dossier extends \yii\db\ActiveRecord
      */
     public function getFrais()
     {
-        return $this->hasMany(Frais::className(), ['ID_DOSSIER' => 'ID_DOSSIER']);
+        return $this->hasMany(Frais::class, ['ID_DOSSIER' => 'ID_DOSSIER']);
     }
 
     /**
@@ -140,7 +141,7 @@ class Dossier extends \yii\db\ActiveRecord
      */
     public function getGrUsagers()
     {
-        return $this->hasMany(GrUsager::className(), ['ID_DOSSIER' => 'ID_DOSSIER']);
+        return $this->hasMany(GrUsager::class, ['ID_DOSSIER' => 'ID_DOSSIER']);
     }
 
     /**
@@ -172,7 +173,7 @@ class Dossier extends \yii\db\ActiveRecord
      */
     public function getTRAITEMENTs()
     {
-        return $this->hasMany(Traitement::className(), ['ID_TRAITEMENT' => 'ID_TRAITEMENT'])->viaTable('subir', ['ID_DOSSIER' => 'ID_DOSSIER']);
+        return $this->hasMany(Traitement::class, ['ID_TRAITEMENT' => 'ID_TRAITEMENT'])->viaTable('subir', ['ID_DOSSIER' => 'ID_DOSSIER']);
     }
 
     /**

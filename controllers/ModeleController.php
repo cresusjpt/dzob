@@ -3,9 +3,12 @@
 namespace app\controllers;
 
 use app\models\Action;
+use app\models\SysParam;
 use Yii;
 use app\models\Modele;
 use app\models\ModeleSearch;
+use yii\base\Model;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -19,6 +22,7 @@ class ModeleController extends Controller
     public $_tablename;
     public $_models;
     public $_logging;
+
     /**
      * @inheritdoc
      */
@@ -148,5 +152,42 @@ class ModeleController extends Controller
             $logManager = new SysLogManager();
             $logManager->inputLog($this->_user_actions, $this->_tablename, $this->_models);
         }
+    }
+
+    /**
+     * @param int $modele
+     * @return string|\yii\web\Response
+     */
+    public function actionGenerer($modele = 0)
+    {
+        $modelModel = Modele::find()->all();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('site/login');
+        }
+
+        if ($modele != 0) {
+            $modeleObject = Modele::findOne($modele);
+            if (isset($_POST) && !empty($_POST)) {
+                $value = 'param_value';
+                $param = SysParam::findOne('MODELE_VARIABLE')->PARAM_VALUE;
+                $result = [];
+                $contenu = $modeleObject->CONTENU_MODELE;
+                for ($i = 0; $i < $modeleObject->NB_PARAMETRE; $i++) {
+                    $real = $i + 1;
+                    array_push($result, array($param . $i => $_POST[$value . $i]));
+                    $contenu = str_replace($param . $real, $_POST[$value . $i], $contenu);
+                }
+                echo $contenu;
+                die();
+            }
+            return $this->render('_generer', [
+                    'model' => $modeleObject,
+                ]
+            );
+        }
+
+        return $this->render('generer', [
+            'model' => $modelModel,
+        ]);
     }
 }

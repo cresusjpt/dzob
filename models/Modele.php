@@ -15,6 +15,8 @@ use Yii;
  */
 class Modele extends \yii\db\ActiveRecord
 {
+
+    public $param_value;
     /**
      * @inheritdoc
      */

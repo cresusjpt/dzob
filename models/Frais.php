@@ -34,10 +34,20 @@ class Frais extends \yii\db\ActiveRecord
             [['ID_DOSSIER', 'MONTANT'], 'required'],
             [['ID_FRAIS', 'ID_DOSSIER'], 'integer'],
             [['MONTANT'], 'number'],
+            [['MONTANT'], 'validateMontant'],
             [['DATE_REGLE'], 'safe'],
             [['ID_FRAIS'], 'unique'],
             [['ID_DOSSIER'], 'exist', 'skipOnError' => true, 'targetClass' => Dossier::class, 'targetAttribute' => ['ID_DOSSIER' => 'ID_DOSSIER']],
         ];
+    }
+
+    public function validateMontant($attribute, $params)
+    {
+        if ($this->getDifference() <= 0) {
+            $this->addError($attribute, 'Les frais de dossier ont été déja soldé');
+        } elseif ($this->MONTANT > $this->getDifference()) {
+            $this->addError($attribute, 'Le montant est supérieur au reste à payer');
+        }
     }
 
     /**
@@ -51,6 +61,7 @@ class Frais extends \yii\db\ActiveRecord
             'MONTANT' => Yii::t('app', 'Montant'),
             'DATE_REGLE' => Yii::t('app', 'Date Regle'),
             'NATURE_FRAIS' => Yii::t('app', 'Nature Frais'),
+            'difference' => Yii::t('app', 'Reste à Payer'),
         ];
     }
 
@@ -59,6 +70,16 @@ class Frais extends \yii\db\ActiveRecord
      */
     public function getDOSSIER()
     {
-        return $this->hasOne(Dossier::className(), ['ID_DOSSIER' => 'ID_DOSSIER']);
+        return $this->hasOne(Dossier::class, ['ID_DOSSIER' => 'ID_DOSSIER']);
+    }
+
+    /**
+     *
+     */
+    public function getDifference()
+    {
+        $fraisSearch = new FraisSearch();
+        $resteAPayer = $fraisSearch->resteAPayer($this->ID_DOSSIER);
+        return $resteAPayer['RESTE_A_PAYER'];
     }
 }

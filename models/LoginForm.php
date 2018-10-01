@@ -37,8 +37,8 @@ class LoginForm extends Model
     }
 
     /**
-     * Validates the mdp.
-     * This method serves as the inline validation for mdp.
+     * Validates the password.
+     * This method serves as the inline validation for password.
      *
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
@@ -63,7 +63,7 @@ class LoginForm extends Model
         if ($this->validate()) {
             $user = $this->getUser();
             if ($user->ETAT == 'ACTIF') {
-                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);//one month if remember me is checked
             } else {
                 Yii::$app->session->setFlash('warning', 'Votre compte a été desactivé. Veuillez contacter l\'administrateur');
             }
@@ -81,7 +81,6 @@ class LoginForm extends Model
         if ($this->_user === false) {
             $this->_user = Utilisateur::findByUsername($this->username);
         }
-
         return $this->_user;
     }
 }

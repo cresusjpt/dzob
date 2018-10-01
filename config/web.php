@@ -47,6 +47,9 @@ $config = [
                 'filebrowserImageUploadUrl' => '/ckeditor/default/image-upload',
             ]
         ],
+        'treemanager' => [
+            'class' => '\kartik\tree\Module',
+        ],
         'gridview' => [
             'class' => '\kartik\grid\Module'
         ],
@@ -60,6 +63,7 @@ $config = [
                     //AIzaSyBzEU5o4tu97TNBEKflPQiDM5OkcB6xX1k
                     'key' => '',
                     'libraries' => 'places',
+                    //'libraries' => 'places',
                     'language'=>'fr',
                     'v' => '3.exp',
                 ]

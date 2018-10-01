@@ -29,7 +29,8 @@ class AppAsset extends AssetBundle
         'http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,200,100,800',
 
         /*CSS REQUIRED FOR SUBVIEW CONTENTS*/
-        'T_assets/plugins/owl-carousel/owl-carousel/owl.carousel.css',
+        'T_assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css',
+        /*'T_assets/plugins/owl-carousel/owl-carousel/owl.carousel.css',
         'T_assets/plugins/owl-carousel/owl-carousel/owl.theme.css',
         'T_assets/plugins/owl-carousel/owl-carousel/owl.transitions.css',
         'T_assets/plugins/summernote/dist/summernote.css',
@@ -39,15 +40,12 @@ class AppAsset extends AssetBundle
         'T_assets/plugins/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css',
         'T_assets/plugins/DataTables/media/css/DT_bootstrap.css',
         'T_assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css',
-        'T_assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css',
+        'T_assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css',*/
 
         /*CSS REQUIRED FOR THIS PAGE ONLY*/
         'T_assets/plugins/weather-icons/css/weather-icons.min.css',
         'T_assets/plugins/nvd3/nv.d3.min.css',
         'T_assets/plugins/jQuery-File-Upload/css/jquery.fileupload-ui.css',
-
-        /*Tree view style*/
-        'T_assets/plugins/jstree/dist/themes/default/style.css',
 
         /*CORE CSS*/
         'T_assets/css/styles.css',
@@ -107,26 +105,6 @@ class AppAsset extends AssetBundle
         'T_assets/js/index.js',
         'T_assets/plugins/jquery.pulsate/jquery.pulsate.min.js',
 		'T_assets/js/pages-user-profile.js',
-
-        //dfdfdfdf
-        'T_assets/plugins/jstree/dist/jstree.min.js',
-        'T_assets/js/ui-treeview.js',
-
-        //file upload
-        'T_assets/plugins/jQuery-File-Upload/js/vendor/jquery.ui.widget.js',
-        'http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js',
-        'T_assets/plugins/javascript-Load-Image/js/load-image.all.min.js',
-        'http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js',
-        'http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js',
-        'T_assets/plugins/jQuery-File-Upload/js/jquery.iframe-transport.js',
-        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload.js',
-        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-process.js',
-        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-image.js',
-        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-audio.js',
-        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-video.js',
-        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-validate.js',
-        'T_assets/plugins/jQuery-File-Upload/js/jquery.fileupload-ui.js',
-        'T_assets/plugins/jQuery-File-Upload/js/main.js',
 
         /*CORE JAVASCRIPTS*/
         'T_assets/js/main.js',

@@ -87,10 +87,10 @@ class UtilisateurSearch extends Utilisateur
 
         $query = (new Query())->select('*');
 
-
-        $query->from(['u' => 'utilisateur', 'g' => 'gr_usager'])
-            ->where(['u.IDENTIFIANT'=>'g.IDENTIFIANT','g.GR_LIBELLE'=>$gr_libelle])
-        ->all();
+        $query->from('utilisateur u')
+            ->innerJoin('gr_usager g', 'u.IDENTIFIANT = g.IDENTIFIANT')
+            ->andWhere(['g.GR_LIBELLE' => $gr_libelle])
+            ->all();
 
         // add conditions that should always apply here
 

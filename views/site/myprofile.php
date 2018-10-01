@@ -9,6 +9,10 @@
 use app\models\Profil;
 use app\models\UserProfil;
 use app\models\SysLog;
+use yii\widgets\ActiveForm;
+use yii\helpers\Url;
+use yii\helpers\Html;
+use dosamigos\datepicker\DatePicker;
 
 $this->title = 'Dzob | Profile';
 ?>
@@ -42,17 +46,11 @@ $this->title = 'Dzob | Profile';
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                         <div class="user-image">
                                             <div class="fileupload-new thumbnail"><img
-                                                        src="<?=\yii\helpers\Url::to('T_assets/images/avatar-1-xl.jpg')?>" alt="">
+                                                        src="<?= Url::base() . DIRECTORY_SEPARATOR . Url::to($user->PHOTO) ?>"
+                                                        alt="">
                                             </div>
                                             <div class="fileupload-preview fileupload-exists thumbnail"></div>
                                             <div class="user-image-buttons">
-																		<span class="btn btn-azure btn-file btn-sm"><span
-                                                                                    class="fileupload-new"><i
-                                                                                        class="fa fa-pencil"></i></span><span
-                                                                                    class="fileupload-exists"><i
-                                                                                        class="fa fa-pencil"></i></span>
-																			<input type="file">
-																		</span>
                                                 <a href="#" class="btn fileupload-exists btn-red btn-sm"
                                                    data-dismiss="fileupload">
                                                     <i class="fa fa-times"></i>
@@ -184,7 +182,8 @@ $this->title = 'Dzob | Profile';
                     </div>
                 </div>
                 <div id="panel_edit_account" class="tab-pane fade">
-                    <form action="#" role="form" id="form">
+                    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+                    <!--<form action="#" role="form" id="form">-->
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>Informations du compte</h3>
@@ -192,144 +191,61 @@ $this->title = 'Dzob | Profile';
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label">
-                                        Nom
-                                    </label>
-                                    <input type="text" placeholder="<?= $user->NOM ?>" class="form-control"
-                                           id="firstname" name="firstname">
+                                    <?= $form->field($user, 'NOM')->textInput(['maxlength' => true, 'placeholder' => $user->NOM]) ?>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">
-                                        Prénom
-                                    </label>
-                                    <input type="text" placeholder="<?= $user->PRENOM ?>" class="form-control"
-                                           id="lastname" name="lastname">
+                                    <?= $form->field($user, 'PRENOM')->textInput(['maxlength' => true, 'placeholder' => $user->PRENOM]) ?>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">
-                                        Email
-                                    </label>
-                                    <input type="email" placeholder="<?= $user->EMAIL ?>" class="form-control"
-                                           id="email" name="email">
+                                    <?= $form->field($user, 'EMAIL')->input('email', ['maxlength' => true, 'placeholder' => $user->EMAIL]) ?>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">
-                                        Téléphone
-                                    </label>
-                                    <input type="email" placeholder="<?= $user->TELEPHONE ?>" class="form-control"
-                                           id="phone" name="email">
+                                    <?= $form->field($user, 'TELEPHONE')->textInput(['maxlength' => true, 'placeholder' => $user->TELEPHONE]) ?>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">
-                                        Mot de passe
-                                    </label>
-                                    <input type="password" placeholder="password" class="form-control" name="password"
-                                           id="password">
+                                    <?= $form->field($user, 'oldpassword')->passwordInput(['maxlength' => true]) ?>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">
-                                        confirmation de mot de passe
-                                    </label>
-                                    <input type="password" placeholder="password" class="form-control"
-                                           id="password_again" name="password_again">
+                                    <?= $form->field($user, 'newpassword')->passwordInput(['maxlength' => true]) ?>
+                                </div>
+                                <div class="form-group">
+                                    <?= $form->field($user, 'repeatpassword')->passwordInput(['maxlength' => true]) ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group connected-group">
-                                    <label class="control-label">
-                                        Date de naissance
-                                    </label>
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <select name="dd" id="dd" class="form-control">
-                                                <option value="">JJ</option>
-                                                <option value="01">1</option>
-                                                <option value="02">2</option>
-                                                <option value="03">3</option>
-                                                <option value="04">4</option>
-                                                <option value="05">5</option>
-                                                <option value="06">6</option>
-                                                <option value="07">7</option>
-                                                <option value="08">8</option>
-                                                <option value="09">9</option>
-                                                <option value="10">10</option>
-                                                <option value="11">11</option>
-                                                <option value="12">12</option>
-                                                <option value="13">13</option>
-                                                <option value="14">14</option>
-                                                <option value="15">15</option>
-                                                <option value="16">16</option>
-                                                <option value="17">17</option>
-                                                <option value="18">18</option>
-                                                <option value="19">19</option>
-                                                <option value="20">20</option>
-                                                <option value="21">21</option>
-                                                <option value="22">22</option>
-                                                <option value="23">23</option>
-                                                <option value="24">24</option>
-                                                <option value="25">25</option>
-                                                <option value="26" selected="selected">26</option>
-                                                <option value="27">27</option>
-                                                <option value="28">28</option>
-                                                <option value="29">29</option>
-                                                <option value="30">30</option>
-                                                <option value="31">31</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <select name="mm" id="mm" class="form-control">
-                                                <option value="">MM</option>
-                                                <option value="01" selected="selected">1</option>
-                                                <option value="02">2</option>
-                                                <option value="03">3</option>
-                                                <option value="04">4</option>
-                                                <option value="05">5</option>
-                                                <option value="06">6</option>
-                                                <option value="07">7</option>
-                                                <option value="08">8</option>
-                                                <option value="09">9</option>
-                                                <option value="10">10</option>
-                                                <option value="11">11</option>
-                                                <option value="12">12</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="text" placeholder="1995" id="yyyy" name="yyyy"
-                                                   class="form-control">
-                                        </div>
+                                        <?= $form->field($user, 'DATE_NAISSANCE')->widget(
+                                            DatePicker::class, [
+                                            // inline too, not bad
+                                            'inline' => false,
+                                            'language' => 'fr',
+                                            //'template' => '<div class="well well-sm" style="background-color: #fff;">{input}</div>',
+                                            'clientOptions' => [
+                                                'autoclose' => true,
+                                                'endDate' => date('Y-m-d'),
+                                                'todayHighlight' => true,
+                                                'format' => 'yyyy-mm-dd'
+                                            ]
+                                        ]); ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">
-                                        Sexe
-                                    </label>
-                                    <div>
-                                        <label class="radio-inline">
-                                            <input type="radio" class="grey" value="" name="gender" id="gender_female">
-                                            Masculin
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" class="grey" value="" name="gender" id="gender_male"
-                                                   checked="checked">
-                                            Féminin
-                                        </label>
-                                    </div>
+                                    <?= $form->field($user, 'SEXE')->radioList(['M' => 'Masculin', 'F' => 'Féminin']) ?>
                                 </div>
                                 <div class="form-group">
                                     <label>
-                                        Image Upload
+                                        Photo de profil
                                     </label>
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
-                                        <div class="fileupload-new thumbnail"><img src="<?= \yii\helpers\Url::to('T_assets/images/avatar-1-xl.jpg')?>" alt="">
+                                        <div class="fileupload-new thumbnail"><img
+                                                    src="<?= Url::base() . DIRECTORY_SEPARATOR . Url::to($user->PHOTO) ?>"
+                                                    alt="">
                                         </div>
                                         <div class="fileupload-preview fileupload-exists thumbnail"></div>
                                         <div class="user-edit-image-buttons">
-                                            <span class="btn btn-azure btn-file"><span
-                                                        class="fileupload-new"><i
-                                                            class="fa fa-picture"></i> Choisir une image</span><span
-                                                        class="fileupload-exists"><i
-                                                            class="fa fa-picture"></i> Modifier</span>
-                                                <input type="file">
+                                            <span class="btn btn-azure btn-file">
+                                                <?= $form->field($user, 'file', ['options' => ['tag' => 'span', 'class' => 'fileinput-button'], 'template' => '<i class="fa fa-picture"></i><span>Choisir une image</span>{hint}{input}'])->fileInput() ?>
                                             </span>
                                             <a href="#" class="btn fileupload-exists btn-red" data-dismiss="fileupload">
                                                 <i class="fa fa-times"></i> Supprimer
@@ -343,12 +259,11 @@ $this->title = 'Dzob | Profile';
                             <div class="col-md-8">
                             </div>
                             <div class="col-md-4">
-                                <button class="btn btn-green btn-block" type="submit">
-                                    Modifier <i class="fa fa-arrow-circle-right"></i>
-                                </button>
+                                <?= Html::submitButton(Yii::t('app', 'Modifier'), ['class' => 'btn btn-green btn-block', 'template' => '{input}<i class="fa fa-arrow-circle-right"></i>']) ?>
                             </div>
                         </div>
-                    </form>
+                    <?php ActiveForm::end(); ?>
+                    <!--</form>-->
                 </div>
                 <div id="panel_projects" class="tab-pane fade">
                     <table class="table table-striped table-bordered table-hover" id="projects">
@@ -707,3 +622,14 @@ $this->title = 'Dzob | Profile';
         </div>
     </div>
 </div>
+<?php
+$script = <<< JS
+jQuery(document).ready(function() {
+    $('input').iCheck({
+    checkboxClass: 'icheckbox_minimal',
+    radioClass: 'iradio_square-grey',
+  });
+});
+JS;
+$this->registerJs($script);
+?>

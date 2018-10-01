@@ -4,14 +4,15 @@
 
 /* @var $content string */
 
+use app\controllers\ImageUtils;
 use app\models\Fonctionnalite;
 use app\models\FonctionUser;
 use app\models\Menu;
+use app\models\SysParam;
 use yii\helpers\Html;
 use app\assets\AppAsset;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
-
 $modelMenu = Menu::find()
     ->orderBy('NUM_ORDREMENU')
     ->all();
@@ -37,6 +38,17 @@ if (!Yii::$app->user->isGuest){
         ->where(['IDENTIFIANT' => $user->IDENTIFIANT])
         ->orderBy('IDENTIFIANT')
         ->all();
+
+    //user profile operations
+    $directory = SysParam::findOne('UPLOADS_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR . SysParam::findOne('PP_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR;
+    $extension = pathinfo($user->PHOTO, PATHINFO_EXTENSION);
+    if ($extension == 'jpg' || $extension == 'jpeg') {
+        $extension = 'jpg';
+    } else {
+        $extension = 'png';
+    }
+    $initialName = 'pp_' . str_replace(' ', '_', $user->NOM . $user->PRENOM) . ImageUtils::NAME_SMALL . '.' . $extension;
+    $photopath = $directory . $initialName;
 
 } else {
     return Yii::$app->getResponse()->redirect(['site/login'])->send();
@@ -151,7 +163,7 @@ AppAsset::register($this);
                         <i class="fa fa-bars"></i>
                     </a>
                     <!-- start: LOGO -->
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="<?= Url::toRoute('site/index') ?>">
                         <img src="<?= Url::to('@web/T_assets/images/logo.png'); ?>" alt="Dzob"/>
                     </a>
                     <!-- end: LOGO -->
@@ -164,7 +176,8 @@ AppAsset::register($this);
                             <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle"
                                data-close-others="true"
                                href="#">
-                                <img src="<?= Url::to('@web/T_assets/images/avatar-1-small.jpg'); ?>" class="img-circle"
+                                <img src="<?= Url::base() . DIRECTORY_SEPARATOR . Url::to($photopath); ?>"
+                                     class="img-circle"
                                      alt=""> <span
                                         class="username hidden-xs"><?= $user->PRENOM ?> <?= $user->NOM ?></span> <i
                                         class="fa fa-caret-down "></i>
@@ -223,7 +236,7 @@ AppAsset::register($this);
                     </div>
                     <div class="user-profile border-top padding-horizontal-10 block">
                         <div class="inline-block">
-                            <img src="<?= Url::to('@web/T_assets/images/avatar-1.jpg'); ?>" alt="">
+                            <img src="<?= Url::base() . DIRECTORY_SEPARATOR . Url::to($photopath); ?>" alt="">
                         </div>
                         <div class="inline-block">
                             <h5 class="no-margin"> Bienvenue </h5>
@@ -440,86 +453,21 @@ AppAsset::register($this);
                                 <!-- start: TOP NAVIGATION MENU -->
                                 <ul class="nav navbar-right">
                                     <!-- start: TO-DO DROPDOWN -->
-                                    <li class="dropdown">
-                                        <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle"
-                                           data-close-others="true" href="#">
-                                            <i class="fa fa-plus"></i> SUBVIEW
-                                            <div class="tooltip-notification hide">
-                                                <div class="tooltip-notification-arrow"></div>
-                                                <div class="tooltip-notification-inner">
-                                                    <div>
-                                                        <div class="semi-bold">
-                                                            HI THERE!
-                                                        </div>
-                                                        <div class="message">
-                                                            Try the Subview Live Experience
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-light dropdown-subview">
-                                            <li class="dropdown-header">
-                                                Notes
-                                            </li>
-                                            <li>
-                                                <a href="#newNote" class="new-note"><span class="fa-stack"> <i
-                                                                class="fa fa-file-text-o fa-stack-1x fa-lg"></i> <i
-                                                                class="fa fa-plus fa-stack-1x stack-right-bottom text-danger"></i> </span>
-                                                    Add new note</a>
-                                            </li>
-                                            <li>
-                                                <a href="#readNote" class="read-all-notes"><span class="fa-stack"> <i
-                                                                class="fa fa-file-text-o fa-stack-1x fa-lg"></i> <i
-                                                                class="fa fa-share fa-stack-1x stack-right-bottom text-danger"></i> </span>
-                                                    Read all notes</a>
-                                            </li>
-                                            <li class="dropdown-header">
-                                                Calendar
-                                            </li>
-                                            <li>
-                                                <a href="#newEvent" class="new-event"><span class="fa-stack"> <i
-                                                                class="fa fa-calendar-o fa-stack-1x fa-lg"></i> <i
-                                                                class="fa fa-plus fa-stack-1x stack-right-bottom text-danger"></i> </span>
-                                                    Add new event</a>
-                                            </li>
-                                            <li>
-                                                <a href="#showCalendar" class="show-calendar"><span class="fa-stack"> <i
-                                                                class="fa fa-calendar-o fa-stack-1x fa-lg"></i> <i
-                                                                class="fa fa-share fa-stack-1x stack-right-bottom text-danger"></i> </span>
-                                                    Show calendar</a>
-                                            </li>
-                                            <li class="dropdown-header">
-                                                Contributors
-                                            </li>
-                                            <li>
-                                                <a href="#newContributor" class="new-contributor"><span
-                                                            class="fa-stack"> <i
-                                                                class="fa fa-user fa-stack-1x fa-lg"></i> <i
-                                                                class="fa fa-plus fa-stack-1x stack-right-bottom text-danger"></i> </span>
-                                                    Add new contributor</a>
-                                            </li>
-                                            <li>
-                                                <a href="#showContributors" class="show-contributors"><span
-                                                            class="fa-stack"> <i
-                                                                class="fa fa-user fa-stack-1x fa-lg"></i> <i
-                                                                class="fa fa-share fa-stack-1x stack-right-bottom text-danger"></i> </span>
-                                                    Show all contributor</a>
-                                            </li>
-                                        </ul>
-                                    </li>
+
                                     <li class="menu-search">
                                         <a href="#">
-                                            <i class="fa fa-search"></i> SEARCH
+                                            <i class="fa fa-search"></i> Rechercher
                                         </a>
                                         <!-- start: SEARCH POPOVER -->
                                         <div class="popover bottom search-box transition-all">
                                             <div class="arrow"></div>
                                             <div class="popover-content">
                                                 <!-- start: SEARCH FORM -->
-                                                <form class="" id="searchform" action="#">
+                                                <form class="" id="searchform" method="post"
+                                                      action="<?= Url::toRoute(['site/rechercher']) ?>">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="Search">
+                                                        <input type="text" name="toolbarSearch" id="toolbarSearch"
+                                                               class="form-control" placeholder="Rechercher">
                                                         <span class="input-group-btn">
 																<button class="btn btn-main-color btn-squared"
                                                                         type="button">
@@ -587,7 +535,7 @@ AppAsset::register($this);
         </div>
         <!-- end: MAIN CONTAINER -->
         <!-- start: FOOTER -->
-        <footer class="inner">
+        <footer class="inner hidden-print">
             <div class="footer-inner">
                 <div class="pull-left">
                     <?php echo date('Y') ?> &copy; Dzob.
@@ -985,7 +933,6 @@ AppAsset::register($this);
     <script>
         jQuery(document).ready(function () {
             Main.init();
-            UITreeview.init();
             PagesUserProfile.init();
             SVExamples.init();
         });

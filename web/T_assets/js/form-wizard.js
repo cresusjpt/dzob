@@ -18,8 +18,7 @@ var FormWizard = function () {
     var animateBar = function (val) {
         if ((typeof val == 'undefined') || val == "") {
             val = 1;
-        };
-        
+        }
         var valueNow = Math.floor(100 / numberOfSteps * val);
         $('.step-bar').css('width', valueNow + '%');
     };
@@ -177,7 +176,6 @@ var FormWizard = function () {
         
         
         if (numberOfSteps >= nextstep && nextstep > stepnumber) {
-        	
             // cache the form element selector
             if (wizardForm.valid()) { // validate the form
                 wizardForm.validate().focusInvalid();
@@ -188,7 +186,7 @@ var FormWizard = function () {
                 animateBar(nextstep);
                 isStepValid = true;
                 return true;
-            };
+            }
         } else if (nextstep < stepnumber) {
         	for (i=nextstep; i<=stepnumber; i++){
         		$('.anchor').children("li:nth-child(" + i + ")").children("a").addClass('wait').children('.stepNumber').removeClass('animated tada');

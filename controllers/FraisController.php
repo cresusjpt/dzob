@@ -87,6 +87,11 @@ class FraisController extends Controller
         ]);
     }
 
+    public function actionExport()
+    {
+        return $this->render('export');
+    }
+
     /**
      * Updates an existing Frais model.
      * If update is successful, the browser will be redirected to the 'view' page.

@@ -56,7 +56,7 @@ class UserProfil extends \yii\db\ActiveRecord
      */
     public function getPERSONNE()
     {
-        return $this->hasOne(Utilisateur::className(), ['ID_PERSONNE' => 'ID_PERSONNE', 'IDENTIFIANT' => 'IDENTIFIANT']);
+        return $this->hasOne(Utilisateur::class, ['ID_PERSONNE' => 'ID_PERSONNE', 'IDENTIFIANT' => 'IDENTIFIANT']);
     }
 
     /**
@@ -64,7 +64,7 @@ class UserProfil extends \yii\db\ActiveRecord
      */
     public function getCODEPROFIL()
     {
-        return $this->hasOne(Profil::className(), ['CODE_PROFIL' => 'CODE_PROFIL']);
+        return $this->hasOne(Profil::class, ['CODE_PROFIL' => 'CODE_PROFIL']);
     }
 
     /**

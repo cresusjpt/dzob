@@ -96,6 +96,7 @@ class JournalController extends Controller
      */
     public function actionUpdate($id)
     {
+        throw new NotFoundHttpException('Vous n\'avez pas le droit de consulter cette page');
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

@@ -9,6 +9,8 @@ use app\models\Dossier;
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
 /* @var $form yii\widgets\ActiveForm */
+
+\app\assets\FileAsset::register($this);
 ?>
 
 <div class="document-form">

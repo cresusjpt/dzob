@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= GridView::widget([
-            'export' => false,
+        'export' => false,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     //$searchModel->IDENTIFIANT = $model->IDENTIFIANT;
                     //var_dump();
                     //die();
-                    $dataProvider = $searchModel->searchBYGR($model->GR_LIBELLE,Yii::$app->request->queryParams);
+                    $dataProvider = $searchModel->searchBYGR($model->GR_LIBELLE, Yii::$app->request->queryParams);
                     return Yii::$app->controller->renderPartial('_utilisateurs', [
                         'searchModel' => $searchModel,
                         'dataProvider' => $dataProvider,

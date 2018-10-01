@@ -34,17 +34,13 @@ class Evenement extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_EVENEMENT', 'REFERENCE_PATRIMOINE', 'LIBELLE_EVENEMENT', 'DATE_EVENEMENT', 'ETAT_EVENEMENT'], 'required'],
+            [['REFERENCE_PATRIMOINE', 'LIBELLE_EVENEMENT', 'DATE_EVENEMENT', 'ETAT_EVENEMENT'], 'required'],
             [['ID_EVENEMENT'], 'integer'],
             [['DATE_EVENEMENT', 'DATE_REALISATION'], 'safe'],
-            [['REFERENCE_PATRIMOINE'], 'string', 'max' => 10],
+            [['REFERENCE_PATRIMOINE'], 'string', 'max' => 11],
             [['LIBELLE_EVENEMENT'], 'string', 'max' => 200],
             [['COMMENTAIRE_EVENEMENT'], 'string', 'max' => 500],
             [['ETAT_EVENEMENT'], 'string', 'max' => 1],
-            [['ID_EVENEMENT'], 'unique'],
-            [['REFERENCE_PATRIMOINE'], 'unique'],
-            [['REFERENCE_PATRIMOINE'], 'exist', 'skipOnError' => true, 'targetClass' => Immobilier::className(), 'targetAttribute' => ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']],
-            [['REFERENCE_PATRIMOINE'], 'exist', 'skipOnError' => true, 'targetClass' => Mobilier::className(), 'targetAttribute' => ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']],
         ];
     }
 
@@ -60,7 +56,7 @@ class Evenement extends \yii\db\ActiveRecord
             'COMMENTAIRE_EVENEMENT' => Yii::t('app', 'Commentaire  Evenement'),
             'DATE_EVENEMENT' => Yii::t('app', 'Date  Evenement'),
             'ETAT_EVENEMENT' => Yii::t('app', 'Etat  Evenement'),
-            'DATE_REALISATION' => Yii::t('app', 'Date  Realisation'),
+            'DATE_REALISATION' => Yii::t('app', 'Date  Réalisation'),
         ];
     }
 
@@ -69,7 +65,7 @@ class Evenement extends \yii\db\ActiveRecord
      */
     public function getREFERENCEPATRIMOINE()
     {
-        return $this->hasOne(Immobilier::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
+        return $this->hasOne(Immobilier::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
     }
 
     /**
@@ -77,6 +73,6 @@ class Evenement extends \yii\db\ActiveRecord
      */
     public function getREFERENCEPATRIMOINE0()
     {
-        return $this->hasOne(Mobilier::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
+        return $this->hasOne(Mobilier::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
     }
 }

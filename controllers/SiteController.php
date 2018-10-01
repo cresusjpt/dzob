@@ -4,17 +4,21 @@ namespace app\controllers;
 
 use app\models\Profil;
 use app\models\SysLog;
+use app\models\SysParam;
 use app\models\UserProfil;
 use app\models\Utilisateur;
 use SebastianBergmann\CodeCoverage\Util;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\UserForm;
+use app\controllers\ImageUtils;
+use yii\web\UploadedFile;
 
 class SiteController extends Controller
 {
@@ -115,7 +119,6 @@ class SiteController extends Controller
         if ($models->load(Yii::$app->request->post())) {
             $models->setPassword($models->rawpassword);
             $models->generateAuthKey();
-
             if ($models->validate()) {
                 $models->save();
                 Yii::$app->session->setFlash('success', 'Inscription reussie');
@@ -189,22 +192,81 @@ class SiteController extends Controller
      * Displays profile page.
      *
      * @return string
+     * @throws \yii\base\Exception
      */
     public function actionProfile()
     {
         if (Yii::$app->user->isGuest) {
             return $this->redirect('site/login');
         }
+        //$user = Yii::$app->user->identity;
+        $user = Utilisateur::findOne(['IDENTIFIANT' => Yii::$app->user->identity->IDENTIFIANT]);
         $user_profil = UserProfil::findOne(['IDENTIFIANT' => Yii::$app->user->identity->IDENTIFIANT]);
         $profile_name = Profil::findOne(['CODE_PROFIL' => $user_profil->CODE_PROFIL]);
         $log = SysLog::find()->where(['IDENTIFIANT' => $user_profil->IDENTIFIANT])->orderBy(['DATE_LOG' => 'DESC'])->limit(20)->all();
 
+        if ($user->load(Yii::$app->request->post())) {
+            $user->rawpassword = 'password';
+            if (!is_null($user->file = UploadedFile::getInstance($user, 'file'))) {
+                $imageFile = UploadedFile::getInstance($user, 'file');
+                $directory = SysParam::findOne('UPLOADS_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR . SysParam::findOne('PP_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR;
+                if (!is_dir($directory)) {
+                    FileHelper::createDirectory($directory);
+                }
+                $initialName = 'pp_' . str_replace(' ', '_', $user->NOM . $user->PRENOM);
+                $fileName = 'pp_' . str_replace(' ', '_', $user->NOM . $user->PRENOM) . '.' . $imageFile->extension;
+                $filePath = $directory . $fileName;
+                if ($imageFile->saveAs($filePath)) {
+                    ImageUtils::generateMiniature($filePath, $imageFile->extension, $directory, $initialName);
+                    $user->PHOTO = $filePath;
+                    $user->DM_MODIFICATION = date("Y-m-d H:i:s");
+                }
+            }
+            if (!empty($user->oldpassword)) {
+                if (!empty($user->newpassword)) {
+                    if ($user->validatePassword($user->oldpassword)) {
+                        if ($user->isSamePassword($user->newpassword, $user->repeatpassword)) {
+                            $user->setPassword($user->newpassword);
+                        } else {
+                            $user->addError($user->newpassword, 'Les deux nouveau mot de passe ne correspondent pas');
+                            $user->addError($user->repeatpassword, 'Les deux nouveau mot de passe ne correspondent pas');
+                        }
+                    } else {
+                        $user->addError($user->oldpassword, 'Le mot de passe ne correspond pas');
+                    }
+                } else {
+                    $user->addError($user->newpassword, 'Le nouveau mot de passe ne peut être vide');
+                }
+            }
+            if (!$user->hasErrors()) {
+                $user->save();
+            } else {
+                var_dump($user->errors);
+                die();
+            }
+            return $this->redirect('profile');
+
+        }
+
         return $this->render('myprofile', [
                 'log' => $log,
                 'profile_name' => $profile_name,
-                'user' => Yii::$app->user->identity,
+                'user' => $user,
             ]
         );
+    }
+
+    public function actionRechercher()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('site/login');
+        }
+
+        if (isset($_POST['toolbarSearch'])) {
+            var_dump('je suis riche de savoir, mais j\'en veux toujours plus');
+            die();
+        }
+        return $this->render('rechercher');
     }
 
     public function actionLock()

@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Droits;
+use yii\db\Query;
+use yii\web\NotFoundHttpException;
 
 /**
  * DroitsSearch represents the model behind the search form of `app\models\Droits`.
@@ -30,6 +32,29 @@ class DroitsSearch extends Droits
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
+    }
+
+    /**
+     * @param $identifiant
+     * @param $id_doc
+     * @return array
+     * @throws NotFoundHttpException
+     */
+    public function searchBYDOCAndIDENTIFIANT($identifiant, $id_doc)
+    {
+        $query = (new Query())->select('d.*')
+            ->from('droits d')
+            ->innerJoin('gr_usager g', 'g.ID_DROITS = d.ID_DROITS')
+            ->innerJoin('dossier dos', 'dos.ID_DOSSIER = g.ID_DOSSIER')
+            ->innerJoin('document doc', 'doc.ID_DOSSIER = dos.ID_DOSSIER')
+            ->andWhere(['d.ETAT_DROIT' => 'ACTIF'])
+            ->andWhere(['doc.ID_DOC' => $id_doc])
+            ->andWhere(['g.IDENTIFIANT' => $identifiant])
+            ->all();
+        if (count($query) == 0) {
+            throw new NotFoundHttpException('Vous n\'avez pas le droit de consulter cette page');
+        }
+        return $query;
     }
 
     /**

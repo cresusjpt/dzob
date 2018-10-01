@@ -9,6 +9,7 @@ use dosamigos\fileupload\FileUploadUI;
 /* @var $this yii\web\View */
 /* @var $model app\models\Fichier */
 /* @var $form yii\widgets\ActiveForm */
+\app\assets\FileAsset::register($this);
 ?>
 
 <div class="fichier-form">

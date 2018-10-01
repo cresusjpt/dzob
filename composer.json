@@ -34,7 +34,12 @@
         "extpoint/yii2-megamenu": "^1.7",
         "yii2mod/yii2-google-maps-markers": "*",
         "yii2tech/sitemap": "^1.0",
-        "kalyabin/yii2-select-google-map-location": "*"
+      "kalyabin/yii2-select-google-map-location": "*",
+      "kartik-v/yii2-tree-manager": "@dev",
+      "kartik-v/yii2-krajee-base": "dev-master",
+      "2amigos/yii2-leaflet-extension": "*",
+      "cyneek/yii2-upload-behavior": " *",
+      "yiisoft/yii2-sphinx": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

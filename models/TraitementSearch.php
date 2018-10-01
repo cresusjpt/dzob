@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Traitement;
+use yii\db\Query;
 
 /**
  * TraitementSearch represents the model behind the search form of `app\models\Traitement`.
@@ -71,5 +72,11 @@ class TraitementSearch extends Traitement
         $query->andFilterWhere(['like', 'COMMENTAIRE_TRAITEMENT', $this->COMMENTAIRE_TRAITEMENT]);
 
         return $dataProvider;
+    }
+
+    public function searchBYDossier($id_dossier)
+    {
+        $query = (new Query())->select('t.*,l.NOM_TRAITEMENT')->from('livre_traitement l')->innerJoin('traitement t', 't.ID_LT = l.ID_LT')->andWhere(['t.ID_DOSSIER' => $id_dossier])->all();
+        return $query;
     }
 }

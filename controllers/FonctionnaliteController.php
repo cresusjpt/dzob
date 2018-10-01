@@ -172,7 +172,5 @@ class FonctionnaliteController extends Controller
 
         $fonctionnalities = Fonctionnalite::find()->where(['ID_MENU'=>$id_menu])->all();
         echo Json::encode($fonctionnalities);
-
-
     }
 }

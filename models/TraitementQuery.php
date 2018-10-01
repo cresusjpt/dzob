@@ -2,6 +2,9 @@
 
 namespace app\models;
 
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
+
 /**
  * This is the ActiveQuery class for [[Traitement]].
  *

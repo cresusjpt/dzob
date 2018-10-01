@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Frais;
+use yii\db\Query;
 
 /**
  * FraisSearch represents the model behind the search form of `app\models\Frais`.
@@ -67,5 +68,24 @@ class FraisSearch extends Frais
         ]);
 
         return $dataProvider;
+    }
+
+    /*
+     * SELECT dossier.`FRAIS_DOSSIER`-SUM(frais.`MONTANT`) AS 'reste a payer'
+        FROM dossier, frais
+        WHERE dossier.`ID_DOSSIER` = frais.`ID_DOSSIER`
+        AND dossier.`ID_DOSSIER` = 10
+
+     */
+
+    public function resteAPayer($dossier)
+    {
+        $query = (new Query())->select('d.FRAIS_DOSSIER-SUM(f.MONTANT) AS RESTE_A_PAYER')
+            ->from('dossier d')
+            ->innerJoin('frais f', 'd.ID_DOSSIER = f.ID_DOSSIER')
+            ->andWhere(['d.ID_DOSSIER' => $dossier])
+            ->one();
+
+        return $query;
     }
 }

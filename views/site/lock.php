@@ -6,16 +6,28 @@
  * Time: 19:11
  */
 
+use app\controllers\ImageUtils;
+use app\models\SysParam;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
+//user profile operations
+$directory = SysParam::findOne('UPLOADS_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR . SysParam::findOne('PP_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR;
+$extension = pathinfo($model->PHOTO, PATHINFO_EXTENSION);
+if ($extension == 'jpg' || $extension == 'jpeg') {
+    $extension = 'jpg';
+} else {
+    $extension = 'png';
+}
+$initialName = 'pp_' . str_replace(' ', '_', $model->NOM . $model->PRENOM) . ImageUtils::NAME_XL . '.' . $extension;
+$photopath = $directory . $initialName;
 ?>
 
 <!-- start: BODY -->
 <div class="main-ls animated flipInX">
     <div class="logo">
-        <img alt="" src="<?= Url::to('@web/T_assets/images/avatar-1-xl.jpg'); ?>"/>
+        <img alt="" src="<?= Url::base() . DIRECTORY_SEPARATOR . Url::to($photopath); ?>"/>
     </div>
     <div class="box-ls">
         <div class="user-info">

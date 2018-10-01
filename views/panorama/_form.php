@@ -19,16 +19,10 @@ use dosamigos\google\maps\services\DirectionsRequest;
 use dosamigos\google\maps\overlays\Polygon;
 use dosamigos\google\maps\layers\BicyclingLayer;
 
-$coord = new LatLng(['lat' => 39.720089311812094, 'lng' => 2.91165944519042]);
+$coord = new LatLng(['lat' => 6.135090, 'lng' => 1.255164]);
 $map = new Map([
     'center' => $coord,
-    'zoom' => 14,
-]);
-
-$coord = new LatLng(['lat' => 39.720089311812094, 'lng' => 2.91165944519042]);
-$map = new Map([
-    'center' => $coord,
-    'zoom' => 14,
+    'zoom' => 10,
 ]);
 
 // lets use the directions renderer
@@ -69,21 +63,32 @@ $directionsService = new DirectionsService([
 // Thats it, append the resulting script to the map
 $map->appendScript($directionsService->getJs());
 
-// Lets add a marker now
-$marker = new Marker([
-    'position' => $coord,
-    'title' => 'My Home Town',
-]);
 
-// Provide a shared InfoWindow to the marker
-$marker->attachInfoWindow(
-    new InfoWindow([
-        'content' => '<p>This is my super cool content</p>'
-    ])
-);
+/*var bounds = new GLatLngBounds();
+for (... each point ...) {
+    bounds.extend(latlng);
+}
+map.setZoom(map.getBoundsZoomLevel(bounds));
+map.setCenter(bounds.getCenter());*/
 
-// Add marker to the map
-$map->addOverlay($marker);
+foreach ($model as $oneModel) {
+    $markCoord = new LatLng(['lat' => $oneModel->LATITUDE, 'lng' => $oneModel->LONGITUDE]);
+    // Lets add a marker now
+    $marker = new Marker([
+        'position' => $markCoord,
+        'title' => $oneModel->REFERENCE_PATRIMOINE,
+    ]);
+
+    // Provide a shared InfoWindow to the marker
+    $marker->attachInfoWindow(
+        new InfoWindow([
+            'content' => '<p>' . $oneModel->DESCRIPTION_IMMO . '</p>'
+        ])
+    );
+
+    // Add marker to the map
+    $map->addOverlay($marker);
+}
 
 // Now lets write a polygon
 $coords = [
@@ -113,6 +118,9 @@ $bikeLayer = new BicyclingLayer(['map' => $map->getName()]);
 $map->appendScript($bikeLayer->getJs());
 
 // Display the map -finally :)
+
+$map->width = 1000;
+$map->height = 1024;
 ?>
 
 <div class="row">
@@ -120,7 +128,7 @@ $map->appendScript($bikeLayer->getJs());
         <!-- start: BASIC MAP PANEL -->
         <div class="panel panel-white">
             <div class="panel-heading">
-                <h4 class="panel-title">Basic <span class="text-bold">Map</span></h4>
+                <h4 class="panel-title"><span class="text-bold"></span></h4>
                 <div class="panel-tools">
                     <div class="dropdown">
                         <a data-toggle="dropdown" class="btn btn-xs dropdown-toggle btn-transparent-grey">

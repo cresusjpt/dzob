@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Créer Frais'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Ajouter Frais'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'dOSSIER.LIBELLE_DOSSIER',
             'MONTANT',
             'DATE_REGLE',
+            'difference',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

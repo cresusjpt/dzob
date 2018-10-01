@@ -7,11 +7,14 @@
  */
 namespace app\controllers;
 
+use app\models\Immobilier;
 use yii\web\Controller;
 
 class PanoramaController extends Controller{
 
     public function actionIndex(){
-        return $this->render('_form');
+
+        $model = Immobilier::find()->all();
+        return $this->render('_form', ['model' => $model]);
     }
 }
