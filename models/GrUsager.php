@@ -37,7 +37,6 @@ class GrUsager extends \yii\db\ActiveRecord
             [['ID_DROITS', 'ID_PERSONNE', 'IDENTIFIANT', 'ID_DOSSIER', 'GR_LIBELLE'], 'required'],
             [['ID_DROITS', 'ID_PERSONNE', 'IDENTIFIANT', 'ID_DOSSIER'], 'integer'],
             [['GR_LIBELLE'], 'string', 'max' => 50],
-            [['GR_LIBELLE'], 'unique'],
             [['GR_DESCRIPTION'], 'string', 'max' => 500],
             [['ID_DROITS', 'ID_PERSONNE', 'IDENTIFIANT', 'ID_DOSSIER'], 'unique', 'targetAttribute' => ['ID_DROITS', 'ID_PERSONNE', 'IDENTIFIANT', 'ID_DOSSIER']],
             [['ID_DOSSIER'], 'exist', 'skipOnError' => true, 'targetClass' => Dossier::class, 'targetAttribute' => ['ID_DOSSIER' => 'ID_DOSSIER']],

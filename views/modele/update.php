@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Modele */
+/* @var $modelParam app\models\ModelParam */
 
 $this->title = Yii::t('app', 'Modifier Modele: {nameAttribute}', [
     'nameAttribute' => $model->NOM_MODELE,
@@ -18,6 +19,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Modifier');
 
     <?= $this->render('_form', [
         'model' => $model,
+        'modelParam' => $modelParam
     ]) ?>
 
 </div>

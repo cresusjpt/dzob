@@ -22,6 +22,7 @@ use Yii;
  */
 class Mobilier extends \yii\db\ActiveRecord
 {
+    public $file;
     /**
      * @inheritdoc
      */
@@ -40,6 +41,8 @@ class Mobilier extends \yii\db\ActiveRecord
             [['ID_MOBILIER', 'ID_PERSONNE', 'ID_AYANTDROIT'], 'integer'],
             [['REFERENCE_PATRIMOINE'], 'string', 'max' => 10],
             [['DESCRIPTION_MO'], 'string', 'max' => 150],
+            [['RESSOURCE'], 'string', 'max' => 250],
+            [['file'], 'file'],
             [['REFERENCE_PATRIMOINE', 'ID_MOBILIER'], 'unique', 'targetAttribute' => ['REFERENCE_PATRIMOINE', 'ID_MOBILIER']],
             [['ID_PERSONNE', 'ID_AYANTDROIT'], 'exist', 'skipOnError' => true, 'targetClass' => AyantDroit::className(), 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']],
         ];
@@ -97,6 +100,14 @@ class Mobilier extends \yii\db\ActiveRecord
     public function getPERSONNE()
     {
         return $this->hasOne(AyantDroit::className(), ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
+    }
+
+    public function getImage()
+    {
+        if (!empty($this->RESSOURCE) && $this->RESSOURCE != 'NON') {
+            return 'OUI';
+        }
+        return 'NON';
     }
 
     /**

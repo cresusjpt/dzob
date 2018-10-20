@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'SEXE',
             'TELEPHONE',
             'ADRESSE',
-            'DATE_NAISSANCE',
+            'DATE_NAISSANCE:date',
             'EMAIL:email',
             'USERNAME',
             'PASSWORD',
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'AUTH_KEY',
             //'ACCESS_TOKEN',
             'ETAT',
-            'DM_MODIFICATION',
+            'DM_MODIFICATION:date',
         ],
     ]) ?>
 

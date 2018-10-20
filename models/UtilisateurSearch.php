@@ -83,8 +83,6 @@ class UtilisateurSearch extends Utilisateur
 
     public function searchBYGR($gr_libelle, $params)
     {
-
-
         $query = (new Query())->select('*');
 
         $query->from('utilisateur u')

@@ -34,6 +34,7 @@ class LoginAsset extends AssetBundle
         'T_assets/plugins/iCheck/skins/all.css',
         'T_assets/css/styles-responsive.css',
         'T_assets/plugins/font-awesome/css/font-awesome-ie7.min.css',
+        ['T_assets/favicon.ico', 'rel' => 'shortcut icon'],
     ];
 
     public $js = [

@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'ACTEUR_COURRIER',
             'pRIORITE.NATURE_COURRIER',
             'tYPECOURRIER.NOM_TYPE',
-            'DATE',
+            'DATE:date',
             'OBJET_COURRIER',
             'CONTENU_COURRIER',
 

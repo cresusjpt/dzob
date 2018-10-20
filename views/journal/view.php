@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'CODE_ACTION',
             'ID_PERSONNE',
             'IDENTIFIANT',
-            'DATE_LOG',
+            'DATE_LOG:date',
             'TABLE_LOG',
             'LIB_LOG',
         ],

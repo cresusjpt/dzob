@@ -2,15 +2,24 @@
 
 namespace app\controllers;
 
+use app\models\ModeleSphinx;
 use app\models\Profil;
+use app\models\Rdv;
+use app\models\SphinxModele;
 use app\models\SysLog;
 use app\models\SysParam;
 use app\models\UserProfil;
 use app\models\Utilisateur;
 use SebastianBergmann\CodeCoverage\Util;
 use Yii;
+use yii\db\Expression;
 use yii\filters\AccessControl;
 use yii\helpers\FileHelper;
+use yii\helpers\Html;
+use yii\helpers\Json;
+use yii\sphinx\ActiveDataProvider;
+use yii\sphinx\MatchExpression;
+use yii\sphinx\Query;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -79,7 +88,20 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect('site/login');
         } else {
-            return $this->render('index');
+
+            $civilite = Yii::$app->user->identity->getCivilite();
+
+            $date = date('Y-m-d H:00:00');
+            $whereClause = "DATE_RDV >= '$date'";
+
+            $modelRdv = Rdv::find()
+                ->where($whereClause)
+                ->andWhere(['NOTAIRE' => $civilite])
+                ->limit(3)
+                ->all();
+            return $this->render('index', [
+                'rdv' => $modelRdv,
+            ]);
         }
     }
 
@@ -119,6 +141,7 @@ class SiteController extends Controller
         if ($models->load(Yii::$app->request->post())) {
             $models->setPassword($models->rawpassword);
             $models->generateAuthKey();
+            $models->ETAT = 'INACTIF';
             if ($models->validate()) {
                 $models->save();
                 Yii::$app->session->setFlash('success', 'Inscription reussie');
@@ -203,7 +226,7 @@ class SiteController extends Controller
         $user = Utilisateur::findOne(['IDENTIFIANT' => Yii::$app->user->identity->IDENTIFIANT]);
         $user_profil = UserProfil::findOne(['IDENTIFIANT' => Yii::$app->user->identity->IDENTIFIANT]);
         $profile_name = Profil::findOne(['CODE_PROFIL' => $user_profil->CODE_PROFIL]);
-        $log = SysLog::find()->where(['IDENTIFIANT' => $user_profil->IDENTIFIANT])->orderBy(['DATE_LOG' => 'DESC'])->limit(20)->all();
+        $log = SysLog::find()->where(['IDENTIFIANT' => $user_profil->IDENTIFIANT])->orderBy('DATE_LOG DESC')->limit(20)->all();
 
         if ($user->load(Yii::$app->request->post())) {
             $user->rawpassword = 'password';
@@ -219,7 +242,6 @@ class SiteController extends Controller
                 if ($imageFile->saveAs($filePath)) {
                     ImageUtils::generateMiniature($filePath, $imageFile->extension, $directory, $initialName);
                     $user->PHOTO = $filePath;
-                    $user->DM_MODIFICATION = date("Y-m-d H:i:s");
                 }
             }
             if (!empty($user->oldpassword)) {
@@ -239,10 +261,10 @@ class SiteController extends Controller
                 }
             }
             if (!$user->hasErrors()) {
-                $user->save();
+                $user->DM_MODIFICATION = date("Y-m-d H:i:s");
+                $user->save(false);
             } else {
-                var_dump($user->errors);
-                die();
+                echo Json::encode($user->getErrors());
             }
             return $this->redirect('profile');
 
@@ -256,17 +278,49 @@ class SiteController extends Controller
         );
     }
 
+    public function actionViewPdf()
+    {
+        $filepath = $_GET['filename'];
+        if (file_exists($filepath)) {
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: inline; filename = Un titre pas comme les autres');
+            header('Content-Transfer-Encoding: binary');
+            header('Content-Length: ' . filesize($filepath));
+            header('Accept-Ranges: bytes');
+            $this->renderAjax($filepath);
+            //readfile($filepath);
+        }
+    }
+
+    public function actionSphinx()
+    {
+    }
+
     public function actionRechercher()
     {
+        $modele = new Sphinxmodele();
         if (Yii::$app->user->isGuest) {
             return $this->redirect('site/login');
         }
 
-        if (isset($_POST['toolbarSearch'])) {
-            var_dump('je suis riche de savoir, mais j\'en veux toujours plus');
-            die();
+        if (isset($_GET['toolbarSearch']) && !empty($_GET['toolbarSearch'])) {
+
+            $search = $_GET['toolbarSearch'];
+
+            $query = new Query();
+            $rows = $query->from('sphinxmodele')
+                //->match(new Expression(':match',['match'=>'@(contenu_modele) '.Yii::$app->sphinx->escapeMatchValue($search)]))
+                ->match(new MatchExpression('@contenu_modele :contenu_modele', ['contenu_modele' => '' . Yii::$app->sphinx->escapeMatchValue($search)]))
+                //->match(new MatchExpression('@nom_modele :nom_modele',['nom_modele'=>''.Yii::$app->sphinx->escapeMatchValue($search)]))
+                //->orMatch(new MatchExpression('@contenu_modele :contenu_modele',['contenu_modele'=>''.Yii::$app->sphinx->escapeMatchValue($search)]))
+                ->all();
+
+
+            return $this->render('rechercher', [
+                'result' => $rows,
+                'initialsearch' => $search,
+            ]);
         }
-        return $this->render('rechercher');
     }
 
     public function actionLock()

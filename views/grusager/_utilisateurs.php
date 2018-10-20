@@ -26,14 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'USERNAME',
             'TELEPHONE',
             'ADRESSE',
-            'DATE_NAISSANCE',
-            'sexe',
+            'DATE_NAISSANCE:date',
+            'SEXE',
             'EMAIL:email',
-            //'PASSWORD',
-            //'AUTH_KEY',
-            //'ACCESS_TOKEN',
             'ETAT',
-            //'DM_MODIFICATION',
         ],
     ]); ?>
     <?php Pjax::end()?>

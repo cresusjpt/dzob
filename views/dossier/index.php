@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'pERSONNE.PRENOM',
             'LIBELLE_DOSSIER',
             //'COMMENTAIRE_DOSSIER',
-            'DATE_CREATION',
+            'DATE_CREATION:date',
             //'DATE_DMDOSSIER',
             'FRAIS_DOSSIER',
             'etatDossier',

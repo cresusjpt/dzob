@@ -7,17 +7,33 @@
  */
 
 use yii\helpers\Html;
+use yii2assets\pdfjs\PdfJs;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Modele */
 /* @var $modelDocument app\models\Document */
 /* @var $modelDroit app\models\Droits */
-$model = \app\models\Modele::findOne(1);
+
 $this->title = $modelDocument->TITRE_DOC;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Document'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $modelDroit = \yii\helpers\Json::decode($modelDroit);
 $content = file_get_contents($modelDocument->SOURCE);
+$printable = false;
+$but = [
+    'sidebarToggle' => true,
+    'viewFind' => true,
+    'pageUp' => true,
+    'pageDown' => true,
+    'zoomIn' => true,
+    'zoomOut' => true,
+    'scaleSelect' => true,
+    'presentationMode' => true,
+    'print' => false,
+    'openFile' => false,
+    'download' => false,
+    'viewBookmark' => false,
+];
 ?>
 <div class="modele-view">
 
@@ -26,15 +42,20 @@ $content = file_get_contents($modelDocument->SOURCE);
         <?php
         foreach ($modelDroit as $key => $oneDroit) {
             if ($oneDroit['LIBELLE_DROIT'] == 'PRINT') {
-                ?>
-                <?= Html::a(Yii::t('app', 'Imprimer'), '#', ['class' => 'btn btn-primary hidden-print', 'onClick' => 'window.print()']) ?>
-                <?php
+                $printable = true;
+                $extension = pathinfo($modelDocument->SOURCE, PATHINFO_EXTENSION);
+                if ($extension == 'pdf' || $extension == 'PDF') {
+                    ?>
+                    <?php
+                } else {
+                    ?>
+                    <?= Html::a(Yii::t('app', 'Télecharger'), '@web/' . $modelDocument->SOURCE, ['class' => 'btn btn-primary hidden-print']) ?>
+                    <?php
+                }
             }
             if ($oneDroit['LIBELLE_DROIT'] == 'UPDATE') {
                 ?>
-
                 <?= Html::a(Yii::t('app', 'Modifier'), ['/document/update', 'id' => $modelDocument->ID_DOC], ['class' => 'btn btn-primary hidden-print']) ?>
-                <?= Html::a(Yii::t('app', 'Télecharger'), '#', ['class' => 'btn btn-primary hidden-print', 'onClick' => 'window.print()']) ?>
                 <?= Html::a(Yii::t('app', 'Supprimer'), ['/document/delete', 'id' => $modelDocument->ID_DOC], [
                     'class' => 'btn btn-danger hidden-print',
                     'data' => [
@@ -53,8 +74,8 @@ $content = file_get_contents($modelDocument->SOURCE);
             <div class="panel panel-white">
                 <div class="panel-heading">
                     <i class="fa fa-reorder hidden-print"></i>
-                    <span class="hidden-print"><?= $model->NOM_MODELE ?></span>
-                    <div class="panel-tools">
+                    <span class="hidden-print"><?= $modelDocument->TITRE_DOC; ?></span>
+                    <div class="panel-tools hidden-print">
                         <div class="dropdown">
                             <a data-toggle="dropdown" class="btn btn-xs dropdown-toggle btn-transparent-grey">
                                 <i class="fa fa-cog"></i>
@@ -78,7 +99,51 @@ $content = file_get_contents($modelDocument->SOURCE);
                     </div>
                 </div>
                 <div class="panel-body">
-                    <?= $model->CONTENU_MODELE ?>
+                    <?php
+                    $extension = pathinfo($modelDocument->SOURCE, PATHINFO_EXTENSION);
+                    if ($extension == 'pdf' || $extension == 'PDF') {
+                        if ($printable) {
+                            $but['print'] = true;
+                            $but['download'] = true;
+                        }
+                        try {
+                            echo PdfJs::widget([
+                                'url' => Url::to('@web/' . $modelDocument->SOURCE),
+                                'buttons' => $but,
+                                'height' => '1024px',
+                                'options' => [
+                                    'language' => 'fr',
+                                ]
+                            ]);
+                        } catch (Exception $e) {
+                        }
+                    } else {
+                        try {
+                            echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
+                                'url' => 'http://iaidiscuss.alwaysdata.net/author/STAGE.docx',//url на ваш документ
+                                'width' => '100%',
+                                'height' => '1024',
+                                //https://geektimes.ru/post/111647/
+                                'embedded' => true,
+                                'a' => \lesha724\documentviewer\GoogleDocumentViewer::A_BI //A_V = 'v', A_GT= 'gt', A_BI = 'bi'
+                            ]);
+                        } catch (Exception $e) {
+                        }
+
+                        /*echo \lesha724\documentviewer\MicrosoftDocumentViewer::widget([
+                            'url' =>'http://iaidiscuss.alwaysdata.net/author/CV_3IAI.pdf',//url на ваш документ
+                            'width' => '100%',
+                            'height' => '100%'
+                        ]);*/
+
+                        /*echo \lesha724\documentviewer\ADocumentViewer::widget([
+                            'url' => Url::to('@web/' . $modelDocument->SOURCE), //url на ваш документ или http://example.com/test.odt
+                            'width' => '100%',
+                            'height' => '100%',
+                        ]);*/
+
+                    }
+                    ?>
                 </div>
             </div>
         </div>

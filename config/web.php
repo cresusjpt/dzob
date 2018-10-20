@@ -47,81 +47,111 @@ $config = [
                 'filebrowserImageUploadUrl' => '/ckeditor/default/image-upload',
             ]
         ],
+        'pdfjs' => [
+            'class' => '\yii2assets\pdfjs\Module',
+        ],
+        'gii' => [
+            'class' => 'yii\gii\Module',
+            'generators' => [
+                'sphinxModel' => [
+                    'class' => 'yii\sphinx\gii\model\Generator'
+                ]
+            ],
+        ],
         'treemanager' => [
             'class' => '\kartik\tree\Module',
         ],
         'gridview' => [
             'class' => '\kartik\grid\Module'
         ],
+        'reportico' => [
+            'class' => 'reportico\reportico\Module',
+            'controllerMap' => [
+                'reportico' => 'reportico\reportico\controllers\ReporticoController',
+                'mode' => 'reportico\reportico\controllers\ModeController',
+                'ajax' => 'reportico\reportico\controllers\AjaxController',
+            ]
+        ],
     ],
 
     'components' => [
-    'assetManager' => [
-        'bundles' => [
-            'dosamigos\google\maps\MapAsset' => [
-                'options' => [
-                    //AIzaSyBzEU5o4tu97TNBEKflPQiDM5OkcB6xX1k
-                    'key' => '',
-                    'libraries' => 'places',
-                    //'libraries' => 'places',
-                    'language'=>'fr',
-                    'v' => '3.exp',
+        'formatter' => [
+            'thousandSeparator' => ' ',
+            'currencyCode' => 'FCFA',
+        ],
+        'sphinx' => [
+            'class' => 'yii\sphinx\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;port=9306;',
+            'username' => '',
+            'password' => '',
+        ],
+        'assetManager' => [
+            'bundles' => [
+                'dosamigos\google\maps\MapAsset' => [
+                    'options' => [
+                        //AIzaSyBzEU5o4tu97TNBEKflPQiDM5OkcB6xX1k
+                        'key' => 'AIzaSyBzEU5o4tu97TNBEKflPQiDM5OkcB6xX1k',
+                        'libraries' => 'places',
+                        //'libraries' => 'places',
+                        'language' => 'fr',
+                        'v' => '3.exp',
+                    ]
                 ]
             ]
-        ]
-    ],
-    'view' => [
-        'theme' => [
-            'pathMap' => [
-                '@dosamigos/fileupload/views' => '@app/views/fileupload'
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@dosamigos/fileupload/views' => '@app/views/fileupload'
+                ]
             ]
-        ]
-    ],
-    'request' => [
-        // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-        'cookieValidationKey' => 'IAIGL3',
-    ],
-    'cache' => [
-        'class' => 'yii\caching\FileCache',
-    ],
-    'user' => [
-        'identityClass' => 'app\models\Utilisateur',
-        'enableAutoLogin' => true,
-    ],
-    'errorHandler' => [
-        'errorAction' => 'site/error',
-    ],
-    'mailer' => [
-        'class' => 'yii\swiftmailer\Mailer',
-        // send all mails to a file by default. You have to set
-        // 'useFileTransport' to false and configure a transport
-        // for the mailer to send real emails.
-        'useFileTransport' => true,
-    ],
-    'log' => [
-        'traceLevel' => YII_DEBUG ? 3 : 0,
-        'targets' => [
-            [
-                'class' => 'yii\log\FileTarget',
-                'levels' => ['error', 'warning'],
+        ],
+        'request' => [
+            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'cookieValidationKey' => 'IAIGL3',
+        ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
+        'user' => [
+            'identityClass' => 'app\models\Utilisateur',
+            'enableAutoLogin' => true,
+        ],
+        'errorHandler' => [
+            'errorAction' => 'site/error',
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            // send all mails to a file by default. You have to set
+            // 'useFileTransport' to false and configure a transport
+            // for the mailer to send real emails.
+            'useFileTransport' => true,
+        ],
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning'],
+                ],
             ],
         ],
-    ],
-    'db' => $db,
-
-    'urlManager' => [
-        'enablePrettyUrl' => true,
-        'showScriptName' => false,
-        'rules' => [
-            '<alias:\w+>' => 'site/<alias>',
+        'db' => $db,
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                'uploads/documents/<filename:[a-aA-Z]+\.pdf>' => 'site/viewPdf',
+                '<alias:\w+>' => 'site/<alias>',
+                '<[a-aA-Z]/profile>' => 'site/profile',
+            ],
         ],
+
+        /*'as beforeRequest'=>[
+            'class'=>'app\components\CheckIfLoggedIn',
+        ],*/
+
     ],
-
-    /*'as beforeRequest'=>[
-        'class'=>'app\components\CheckIfLoggedIn',
-    ],*/
-
-],
     'params' => $params,
 ];
 

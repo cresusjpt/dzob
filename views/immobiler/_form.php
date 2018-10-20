@@ -15,6 +15,8 @@ use app\models\Patrimoine;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'file', ['options' => ['tag' => 'span', 'class' => 'btn btn-success fileinput-button'], 'template' => '<i class="glyphicon glyphicon-plus"></i><span>Ajouter une photo</span>{hint}{input}'])->fileInput() ?>
+
     <?= $form->field($model, 'REFERENCE_PATRIMOINE')->dropDownList(
         ArrayHelper::map(Patrimoine::find()->all(),'REFERENCE_PATRIMOINE','NOM_PATRIMOINE'),
         ['prompt'=>'Selectionner le patrimoine']

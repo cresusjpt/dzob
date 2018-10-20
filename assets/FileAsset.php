@@ -26,6 +26,7 @@ class FileAsset extends AssetBundle
     ];
     public $js = [
         //file upload
+
         'T_assets/plugins/jQuery-File-Upload/js/vendor/jquery.ui.widget.js',
         'http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js',
         'T_assets/plugins/javascript-Load-Image/js/load-image.all.min.js',

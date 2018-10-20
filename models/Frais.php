@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\controllers\Utils;
 use Yii;
 
 /**
@@ -31,9 +32,10 @@ class Frais extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_DOSSIER', 'MONTANT'], 'required'],
+            [['ID_DOSSIER', 'MONTANT', 'REMETTANT', 'DATE_REGLE'], 'required'],
             [['ID_FRAIS', 'ID_DOSSIER'], 'integer'],
             [['MONTANT'], 'number'],
+            [['REMETTANT'], 'string', 'max' => 255],
             [['MONTANT'], 'validateMontant'],
             [['DATE_REGLE'], 'safe'],
             [['ID_FRAIS'], 'unique'],
@@ -59,7 +61,8 @@ class Frais extends \yii\db\ActiveRecord
             'ID_FRAIS' => Yii::t('app', 'Frais'),
             'ID_DOSSIER' => Yii::t('app', 'Dossier'),
             'MONTANT' => Yii::t('app', 'Montant'),
-            'DATE_REGLE' => Yii::t('app', 'Date Regle'),
+            'DATE_REGLE' => Yii::t('app', 'Date Reglement'),
+            'REMETTANT' => Yii::t('app', 'Nom et prénom du remettant'),
             'NATURE_FRAIS' => Yii::t('app', 'Nature Frais'),
             'difference' => Yii::t('app', 'Reste à Payer'),
         ];
@@ -81,5 +84,16 @@ class Frais extends \yii\db\ActiveRecord
         $fraisSearch = new FraisSearch();
         $resteAPayer = $fraisSearch->resteAPayer($this->ID_DOSSIER);
         return $resteAPayer['RESTE_A_PAYER'];
+    }
+
+    public function getMontantEnLettre()
+    {
+        $devise = SysParam::findOne('DEVISE');
+        return ucfirst(Utils::numberConverter($this->MONTANT) . ' ' . $devise->PARAM_VALUE);
+    }
+
+    public function getClient()
+    {
+        return Client::findOne(['ID_CLIENT' => Dossier::findOne(['ID_DOSSIER' => $this->ID_DOSSIER])->ID_CLIENT])->getCivilite();
     }
 }

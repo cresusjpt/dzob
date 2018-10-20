@@ -79,4 +79,25 @@ class TraitementSearch extends Traitement
         $query = (new Query())->select('t.*,l.NOM_TRAITEMENT')->from('livre_traitement l')->innerJoin('traitement t', 't.ID_LT = l.ID_LT')->andWhere(['t.ID_DOSSIER' => $id_dossier])->all();
         return $query;
     }
+
+    public function getCountTraitementByDossier($id_dossier)
+    {
+        $query = (new Query())->select('*')
+            ->from('traitement')
+            ->where(['ID_DOSSIER' => $id_dossier])
+            ->count();
+
+        return $query;
+    }
+
+    public function getCountValidTraitementByDossier($id_dossier)
+    {
+        $query = (new Query())
+            ->from('traitement')
+            ->where(['ID_DOSSIER' => $id_dossier])
+            ->andWhere(['ETAT_TRAITEMENT' => 1])
+            ->count();
+
+        return $query;
+    }
 }

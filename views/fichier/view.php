@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'ID_FICHIER',
             'REFERENCE',
             'NOM_FICHIER',
-            'DATE_EFFECTIVE',
+            'DATE_EFFECTIVE:date',
             'CREATEUR',
             'FORMAT_FICHIER',
         ],

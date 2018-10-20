@@ -15,14 +15,16 @@ use app\models\AyantDroit;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'file', ['options' => ['tag' => 'span', 'class' => 'btn btn-success fileinput-button'], 'template' => '<i class="glyphicon glyphicon-plus"></i><span>Ajouter une image</span>{hint}{input}'])->fileInput() ?>
+
     <?= $form->field($model, 'REFERENCE_PATRIMOINE')->dropDownList(
             ArrayHelper::map(Patrimoine::find()->all(),'REFERENCE_PATRIMOINE','NOM_PATRIMOINE'),
             ['prompt'=>'Selectionner le patrimoine']
     ) ?>
 
     <?= $form->field($model, 'ID_AYANTDROIT')->dropDownList(
-        ArrayHelper::map(Patrimoine::find()->all(),'ID_AYANTDROIT','civilite'),
-        ['prompt'=>'Selectionner le patrimoine']
+        ArrayHelper::map(AyantDroit::find()->all(), 'ID_AYANTDROIT', 'civilite'),
+        ['prompt' => 'Selectionner le responsable']
     ) ?>
 
     <?= $form->field($model, 'DESCRIPTION_MO')->textarea(['rows'=>10,'maxlength' => true]) ?>

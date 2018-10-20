@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="dossier-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a(Yii::t('app', 'Modifier'), ['update', 'id' => $model->ID_DOSSIER], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Supprimer'), ['delete', 'id' => $model->ID_DOSSIER], [
@@ -28,19 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'ID_DOSSIER',
+            //'ID_DOSSIER',
             'LIBELLE_DOSSIER',
             'cLASSEUR.NOM_CLASSEUR',
             //'ID_PERSONNE',
             'pERSONNE.NOM',
             'pERSONNE.PRENOM',
-            'dOSIDDOSSIER.LIBELLE_DOSSIER',
-            'FRAIS_DOSSIER',
-            'DATE_CREATION',
+            'FRAIS_DOSSIER:integer',
+            'DATE_CREATION:date',
             'etatDossier',
             'STATUT_DOSSIER',
             'COMMENTAIRE_DOSSIER',
-            'DATE_DMDOSSIER',
+            'DATE_DMDOSSIER:datetime',
         ],
     ]) ?>
 

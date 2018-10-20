@@ -25,6 +25,7 @@ use Yii;
  */
 class Immobilier extends \yii\db\ActiveRecord
 {
+    public $file;
     /**
      * @inheritdoc
      */
@@ -42,8 +43,10 @@ class Immobilier extends \yii\db\ActiveRecord
             [['REFERENCE_PATRIMOINE', 'DESCRIPTION_IMMO', 'ADRESSE'], 'required'],
             [['ID_IMMOBILIER', 'ID_PERSONNE', 'ID_AYANTDROIT'], 'integer'],
             [['LATITUDE', 'LONGITUDE'], 'number'],
+            [['file'], 'file'],
             [['REFERENCE_PATRIMOINE'], 'string', 'max' => 10],
             [['DESCRIPTION_IMMO'], 'string', 'max' => 250],
+            [['RESSOURCE'], 'string', 'max' => 250],
             [['ADRESSE'], 'string', 'max' => 200],
             [['REFERENCE_PATRIMOINE', 'ID_IMMOBILIER'], 'unique', 'targetAttribute' => ['REFERENCE_PATRIMOINE', 'ID_IMMOBILIER']],
             [['ID_PERSONNE', 'ID_AYANTDROIT'], 'exist', 'skipOnError' => true, 'targetClass' => AyantDroit::class, 'targetAttribute' => ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']],
@@ -72,7 +75,7 @@ class Immobilier extends \yii\db\ActiveRecord
      */
     public function getAvoirs()
     {
-        return $this->hasMany(Avoir::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
+        return $this->hasMany(Avoir::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
     }
 
     /**
@@ -80,7 +83,7 @@ class Immobilier extends \yii\db\ActiveRecord
      */
     public function getPERSONNEs()
     {
-        return $this->hasMany(AyantDroit::className(), ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT'])->viaTable('avoir', ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
+        return $this->hasMany(AyantDroit::class, ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT'])->viaTable('avoir', ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
     }
 
     /**
@@ -88,7 +91,7 @@ class Immobilier extends \yii\db\ActiveRecord
      */
     public function getEvenements()
     {
-        return $this->hasMany(Evenement::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
+        return $this->hasMany(Evenement::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
     }
 
     /**
@@ -96,7 +99,7 @@ class Immobilier extends \yii\db\ActiveRecord
      */
     public function getFinances()
     {
-        return $this->hasMany(Finance::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
+        return $this->hasMany(Finance::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
     }
 
     /**
@@ -104,7 +107,20 @@ class Immobilier extends \yii\db\ActiveRecord
      */
     public function getPERSONNE()
     {
-        return $this->hasOne(AyantDroit::className(), ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
+        return $this->hasOne(AyantDroit::class, ['ID_PERSONNE' => 'ID_PERSONNE', 'ID_AYANTDROIT' => 'ID_AYANTDROIT']);
+    }
+
+    public function getImage()
+    {
+        if (!empty($this->RESSOURCE) && $this->RESSOURCE != 'NON') {
+            return 'OUI';
+        }
+        return 'NON';
+    }
+
+    public function getResponsable()
+    {
+
     }
 
     /**
@@ -112,6 +128,6 @@ class Immobilier extends \yii\db\ActiveRecord
      */
     public function getValeurs()
     {
-        return $this->hasMany(Valeur::className(), ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
+        return $this->hasMany(Valeur::class, ['REFERENCE_PATRIMOINE' => 'REFERENCE_PATRIMOINE']);
     }
 }

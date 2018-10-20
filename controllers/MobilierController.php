@@ -3,12 +3,16 @@
 namespace app\controllers;
 
 use app\models\Action;
+use app\models\AyantDroit;
+use app\models\SysParam;
 use Yii;
 use app\models\Mobilier;
 use app\models\MobilierSearch;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * MobilierController implements the CRUD actions for Mobilier model.
@@ -74,12 +78,29 @@ class MobilierController extends Controller
      * Creates a new Mobilier model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws \yii\base\Exception
      */
     public function actionCreate()
     {
         $model = new Mobilier();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $imageFile = UploadedFile::getInstance($model, 'file');
+            $directory = SysParam::findOne('UPLOADS_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR . SysParam::findOne('RESOURCE_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR;
+            if (!is_dir($directory)) {
+                FileHelper::createDirectory($directory);
+            }
+            if ($imageFile) {
+                $time = time();
+                $fileName = str_replace(' ', '_', $model->DESCRIPTION_MO) . str_replace(' ', '_', $model->REFERENCE_PATRIMOINE) . $time . '.' . $imageFile->extension;
+                $filePath = $directory . $fileName;
+                if ($imageFile->saveAs($filePath)) {
+                    $model->RESSOURCE = $filePath;
+                }
+            }
+
+            $model->ID_PERSONNE = AyantDroit::findOne(['ID_AYANTDROIT' => $model->ID_AYANTDROIT])->ID_PERSONNE;
+            $model->save();
             return $this->redirect(['view', 'REFERENCE_PATRIMOINE' => $model->REFERENCE_PATRIMOINE, 'ID_MOBILIER' => $model->ID_MOBILIER]);
         }
 
@@ -95,12 +116,28 @@ class MobilierController extends Controller
      * @param integer $ID_MOBILIER
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \yii\base\Exception
      */
     public function actionUpdate($REFERENCE_PATRIMOINE, $ID_MOBILIER)
     {
         $model = $this->findModel($REFERENCE_PATRIMOINE, $ID_MOBILIER);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $imageFile = UploadedFile::getInstance($model, 'file');
+            $directory = SysParam::findOne('UPLOADS_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR . SysParam::findOne('RESOURCE_DIR_NAME')->PARAM_VALUE . DIRECTORY_SEPARATOR;
+            if (!is_dir($directory)) {
+                FileHelper::createDirectory($directory);
+            }
+            if ($imageFile) {
+                $time = time();
+                $fileName = str_replace(' ', '_', $model->DESCRIPTION_MO) . str_replace(' ', '_', $model->REFERENCE_PATRIMOINE) . $time . '.' . $imageFile->extension;
+                $filePath = $directory . $fileName;
+                if ($imageFile->saveAs($filePath)) {
+                    $model->RESSOURCE = $filePath;
+                }
+            }
+            $model->ID_PERSONNE = AyantDroit::findOne(['ID_AYANTDROIT' => $model->ID_AYANTDROIT])->ID_PERSONNE;
+            $model->save();
             return $this->redirect(['view', 'REFERENCE_PATRIMOINE' => $model->REFERENCE_PATRIMOINE, 'ID_MOBILIER' => $model->ID_MOBILIER]);
         }
 

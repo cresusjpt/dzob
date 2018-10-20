@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Immobilier;
+use yii\db\Query;
 
 /**
  * ImmobilierSearch represents the model behind the search form of `app\models\Immobilier`.
@@ -72,5 +73,23 @@ class ImmobilierSearch extends Immobilier
             ->andFilterWhere(['like', 'ADRESSE', $this->ADRESSE]);
 
         return $dataProvider;
+    }
+
+    public function searchResponsable($id, $type)
+    {
+        if ($type == 'IMMO') {
+            $query = (new Query())->select('NOM, PRENOM')
+                ->from('ayant_droit a')
+                ->innerJoin('immobilier i', 'a.ID_AYANTDROIT = i.ID_AYANTDROIT')
+                ->andWhere(['i.ID_IMMOBILIER' => $id])
+                ->one();
+        } elseif ($type == 'MO') {
+            $query = (new Query())->select('NOM, PRENOM')
+                ->from('ayant_droit a')
+                ->innerJoin('mobilier m', 'a.ID_AYANTDROIT = m.ID_AYANTDROIT')
+                ->andWhere(['m.ID_MOBILIER' => $id])
+                ->one();
+        }
+        return $query;
     }
 }

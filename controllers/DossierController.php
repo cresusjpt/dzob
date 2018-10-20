@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Action;
 use app\models\Classeur;
+use app\models\Client;
 use app\models\Courrier;
 use app\models\Document;
 use app\models\Droits;
@@ -13,12 +14,16 @@ use app\models\GrUsager;
 use app\models\Traitement;
 use app\models\TraitementQuery;
 use app\models\TraitementSearch;
+use Mpdf\Mpdf;
+use Mpdf\MpdfException;
 use Yii;
 use app\models\Dossier;
 use app\models\DossierSearch;
 use yii\db\ActiveQuery;
 use yii\db\Query;
+use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -81,9 +86,83 @@ class DossierController extends Controller
         ]);
     }
 
+    /**
+     * @throws MpdfException
+     */
+    public function actionPrint()
+    {
+        if (isset($_POST['SOURCE'])) {
+            $SOURCE = $_POST['SOURCE'];
+            $url = Url::to($SOURCE);
+            $file = null;
+            $file = fopen($url, "r");
+            if ($file == null) {
+                echo "je suis magnifique";
+            } elseif ($file) {
+                $file_content = fread($file, filesize($url));
+                $mpdf = new Mpdf();
+                //$mpdf->title = $modeleObject->NOM_MODELE;
+                $mpdf->WriteText(0, 0, Html::encode($file_content));
+                //$mpdf->WriteHTML($file_content);
+                echo $mpdf->Output();
+                //echo $file_content;
+            }
+        }
+
+    }
+
+    public function actionUpdateTraitement()
+    {
+        if (isset($_POST['check'], $_POST['libelle_document'])) {
+            $check = $_POST['check'];
+            $lib = $_POST['libelle_document'];
+            $variable = substr($check, 7);
+            $typeTraitement = substr($variable, 0, 1); // 1 = en cours 2= terminé
+            $typeTraitement = intval($typeTraitement) - 1;
+            $idTraitement = substr($variable, 2);
+            $idTraitement = intval($idTraitement) - 1;
+
+            $id_dossier = Dossier::findOne(['LIBELLE_DOSSIER' => $lib])->ID_DOSSIER;
+            $traitements = new TraitementSearch();
+            $result = $traitements->searchBYDossier($id_dossier);
+            $taille = count($result);
+
+            for ($i = 0; $i < $taille; $i++) {
+                if ($i == $idTraitement) {
+                    $modelTraitement = new Traitement();
+                    $modelTraitement->ID_DOSSIER = $result[$idTraitement]['ID_DOSSIER'];
+                    $modelTraitement->ID_LT = $result[$idTraitement]['ID_LT'];
+                    $modelTraitement->ID_TRAITEMENT = $result[$idTraitement]['ID_TRAITEMENT'];
+                    $modelTraitement->ETAT_TRAITEMENT = $typeTraitement;
+                    $modelTraitement->COMMENTAIRE_TRAITEMENT = $result[$idTraitement]['COMMENTAIRE_TRAITEMENT'];
+                    $modelTraitement->DATE_DEBUT = $result[$idTraitement]['DATE_DEBUT'];
+                    $modelTraitement->DATE_FIN = $result[$idTraitement]['DATE_FIN'];
+                    $modelTraitement->DATE_PREVUE = $result[$idTraitement]['DATE_PREVUE'];
+
+                    $mT = Traitement::findOne(['ID_DOSSIER' => $modelTraitement->ID_DOSSIER, 'ID_LT' => $modelTraitement->ID_LT, 'ID_TRAITEMENT' => $modelTraitement->ID_TRAITEMENT, 'COMMENTAIRE_TRAITEMENT' => $modelTraitement->COMMENTAIRE_TRAITEMENT, 'DATE_DEBUT' => $modelTraitement->DATE_DEBUT, 'DATE_FIN' => $modelTraitement->DATE_FIN, 'DATE_PREVUE' => $modelTraitement->DATE_PREVUE]);
+                    $mT->ETAT_TRAITEMENT = $modelTraitement->ETAT_TRAITEMENT;
+                    $mT->save();
+                }
+            }
+
+            $all_count = $traitements->getCountTraitementByDossier($result[$idTraitement]['ID_DOSSIER']);
+            $valid_count = $traitements->getCountValidTraitementByDossier($result[$idTraitement]['ID_DOSSIER']);
+
+            $all_count = intval($all_count);
+            $valid_count = intval($valid_count);
+
+            $return_var = $valid_count / $all_count;
+
+            echo $return_var;
+            // echo Json::encode($result);
+        }
+    }
+
     public function actionGetDossierClick($libelle_document)
     {
-        return $this->redirect('edit?libelle_document=' . $libelle_document);
+        $url = Url::to(['dossier/edit', 'libelle_document' => $libelle_document]);
+        //return $this->redirect('edit?libelle_document=' . $libelle_document);
+        return $this->redirect($url);
     }
 
     /**
@@ -161,10 +240,17 @@ class DossierController extends Controller
     {
         $model = new Dossier();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_DOSSIER]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->ID_PERSONNE = Client::findOne(['ID_CLIENT' => $model->ID_CLIENT])->ID_PERSONNE;
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_DOSSIER]);
+            } else {
+                if ($model->hasErrors()) {
+                    var_dump($model->getErrors());
+                    die();
+                }
+            }
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -182,6 +268,7 @@ class DossierController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->ID_PERSONNE = Client::findOne(['ID_CLIENT' => $model->ID_CLIENT])->ID_PERSONNE;
             $model->DATE_DMDOSSIER = date("Y-m-d H:i:s");
             $model->save();
             return $this->redirect(['view', 'id' => $model->ID_DOSSIER]);

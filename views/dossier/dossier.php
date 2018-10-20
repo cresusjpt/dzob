@@ -101,8 +101,8 @@ $this->title = 'Explorateur de dossiers'
                             ?>
                         </ul>
                     </div>
-                    <?=
-                    TreeView::widget([
+                    <?php
+                    /*echo TreeView::widget([
                         'query' => Tree::find()->addOrderBy('root,lft'),
                         'headingOptions' => ['label' => 'Explorateur de dossiers'],
                         'isAdmin' => true,
@@ -112,7 +112,7 @@ $this->title = 'Explorateur de dossiers'
                         'cacheSettings' => [
                             'enableCache' => false,
                         ],
-                    ])
+                    ])*/
                     ?>
                 </div>
             </div>
@@ -191,7 +191,7 @@ $('#tree').delegate(".dossier","click",function(event) {
       location.origin = location.protocol + '//' + location.host + ':' +location.port;
   }
   baseurl = location.origin;
-  $.get(baseurl+'/dossier/get-traitement',{libelle_dossier : libelle_dossier},function(data) {
+  $.get('/dossier/get-traitement',{libelle_dossier : libelle_dossier},function(data) {
     var dataParsed = JSON.parse(data);
     if (dataParsed == '') {
         swal("Aucun traitement!");
@@ -260,20 +260,25 @@ $('#tree').delegate(".dossier","click",function(event) {
             '</div>'+
         '</div>'   
       );
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_square-blue',
+      });
+      $('input').on('ifChecked', function(event){
+          var idTask = $(this).attr('id');
+          var lib = libelle_dossier;
+          $.post('/dossier/update-traitement',{check:idTask,libelle_document:lib},function(data) {
+              var valueNow = Math.floor(data * 100);
+              $('.step-bar').css('width', valueNow + '%');
+          });
+      });
+      var id2 = '#iCheck-2-'+realIndex;
+      var id1 = '#iCheck-1-'+realIndex;
       if (d.ETAT_TRAITEMENT == 1){
-          var id2 = '#iCheck-2-'+realIndex;
           $(id2).iCheck('check');
       }else if (d.ETAT_TRAITEMENT == 0)  {
-          var id1 = '#iCheck-1-'+realIndex;
           $(id1).iCheck('check');
       }
-      $('input').on('ifChecked', function(event){
-        alert(event.type + ' callback');
-      });
-      
-     /* $('input.radio-callback').on('ifChecked', function(event) {
-			alert('checked ' + $(this).val() + ' radio button');
-	  });*/
       $('#traitement').show();
     });
     }
@@ -289,7 +294,7 @@ $('#tree').delegate(".document","click",function(event,data) {
       location.origin = location.protocol + '//' + location.host + ':' +location.port;
   }
   baseurl = location.origin;
-  $.get(baseurl+'/dossier/get-dossier-click',{libelle_document : libelle_document},function(data) {
+  $.get('/dossier/get-dossier-click',{libelle_document : libelle_document},function(data) {
       var noonData = JSON.parse(data);
   });
 });

@@ -28,10 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'ID_DROITS',
             'LIBELLE_DROIT',
-            'DATE_DROIT',
+            'DATE_DROIT:date',
             'ETAT_DROIT',
             'COMMENTAIRE_DROIT',
-            'DATE_DM',
+            'DATE_DM:date',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

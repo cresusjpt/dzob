@@ -3,9 +3,14 @@
 namespace app\controllers;
 
 use app\models\Action;
+use app\models\FonctionProfil;
+use app\models\FonctionUser;
+use app\models\User;
+use app\models\UserProfil;
 use Yii;
 use app\models\Utilisateur;
 use app\models\UtilisateurSearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -85,9 +90,19 @@ class UtilisateurController extends Controller
         $this->_logging = false;
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->setPassword($model->rawpassword);
-            $model->generateAuthKey();
+            if ($model->isSamePassword($model->rawpassword, $model->PASSWORD)) {
+                $model->setPassword($model->rawpassword);
+                $model->generateAuthKey();
+            } else {
+                $model->addError($model->rawpassword, 'Les deux nouveau mot de passe ne correspondent pas');
+                $model->addError($model->PASSWORD, 'Les deux nouveau mot de passe ne correspondent pas');
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+
             if ($model->validate()) {
+                $this->bindUSerFonct($model);
                 $action = Action::findOne('CREATE');
                 $this->_user_actions = $action->CODE_ACTION;
                 $this->_tablename = Utilisateur::tableName();
@@ -102,6 +117,32 @@ class UtilisateurController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    private function bindUSerFonct(Utilisateur $user)
+    {
+        if (UserProfil::findAll(['ID_PERSONNE' => $user->ID_PERSONNE, 'IDENTIFIANT' => $user->IDENTIFIANT])) {
+            UserProfil::deleteAll(['ID_PERSONNE' => $user->ID_PERSONNE, 'IDENTIFIANT' => $user->IDENTIFIANT]);
+
+            if (FonctionUser::findAll(['IDPERSONNE' => $user->ID_PERSONNE, 'IDENTIFIANT' => $user->IDENTIFIANT])) {
+                FonctionUser::deleteAll(['IDPERSONNE' => $user->ID_PERSONNE, 'IDENTIFIANT' => $user->IDENTIFIANT]);
+            }
+        }
+
+        $user_profil = new UserProfil();
+        $user_profil->CODE_PROFIL = $user->profil;
+        $user_profil->ID_PERSONNE = $user->ID_PERSONNE;
+        $user_profil->IDENTIFIANT = $user->IDENTIFIANT;
+        $user_profil->save();
+
+        $fp = FonctionProfil::findAll(['CODE_PROFIL' => $user->profil]);
+        foreach ($fp as $key => $value) {
+            $fu = new FonctionUser();
+            $fu->IDPERSONNE = $user_profil->ID_PERSONNE;
+            $fu->IDENTIFIANT = $user_profil->IDENTIFIANT;
+            $fu->ID_FONCT = $value->ID_FONCT;
+            $fu->save();
+        }
     }
 
     /**
@@ -119,17 +160,33 @@ class UtilisateurController extends Controller
         $this->_logging = false;
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->setPassword($model->rawpassword);
-            $model->generateAuthKey();
-            $model->DM_MODIFICATION = date("Y-m-d H:i:s");
-            $action = Action::findOne('UPDATE');
-            $this->_user_actions = $action->CODE_ACTION;
-            $this->_tablename = Utilisateur::tableName();
-            $this->_models = $model;
-            $this->_logging = true;
-            $model->save();
-            $this->logger();
-            return $this->redirect(['view', 'ID_PERSONNE' => $model->ID_PERSONNE, 'IDENTIFIANT' => $model->IDENTIFIANT]);
+            //var_dump($model);
+
+            if ($model->isSamePassword($model->rawpassword, $model->PASSWORD)) {
+                $model->setPassword($model->rawpassword);
+                $model->generateAuthKey();
+            } else {
+                $model->addError($model->rawpassword, 'Les deux nouveau mot de passe ne correspondent pas');
+                $model->addError($model->PASSWORD, 'Les deux nouveau mot de passe ne correspondent pas');
+                //set password to null avoid to show the hashpassword in the view
+                $model->PASSWORD = null;
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+            if ($model->validate()) {
+                $this->bindUSerFonct($model);
+                $model->DM_MODIFICATION = date("Y-m-d H:i:s");
+                $action = Action::findOne('UPDATE');
+                $this->_user_actions = $action->CODE_ACTION;
+                $this->_tablename = Utilisateur::tableName();
+                $this->_models = $model;
+                $this->_logging = true;
+                $model->save();
+                $this->logger();
+                return $this->redirect(['view', 'ID_PERSONNE' => $model->ID_PERSONNE, 'IDENTIFIANT' => $model->IDENTIFIANT]);
+            }
+
         }
 
         //set password to null avoid to show the hashpassword in the view

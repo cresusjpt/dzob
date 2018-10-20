@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'NAME_MENU',
             'LIBEL_MENU',
             'CONTROLE',
-            'MEN_ID_MENU',
+            /*'MEN_ID_MENU',*/
             'NUM_ORDREMENU',
             //'MENU_URL:url',
             //'ICONE_NAME_MENU',

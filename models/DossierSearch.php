@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Dossier;
+use yii\db\Query;
 
 /**
  * DossierSearch represents the model behind the search form of `app\models\Dossier`.

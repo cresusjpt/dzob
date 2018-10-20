@@ -23,7 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= GridView::widget([
-        'export' => false,
+        //'export' => true,
+        'export' => [
+            'fontAwesome' => true,
+        ],
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -33,13 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail' => function ($model, $key, $index, $column) {
-                    $searchModel = new UtilisateurSearch();
+                    $searchModele = new UtilisateurSearch();
                     //$searchModel->IDENTIFIANT = $model->IDENTIFIANT;
-                    //var_dump();
-                    //die();
-                    $dataProvider = $searchModel->searchBYGR($model->GR_LIBELLE, Yii::$app->request->queryParams);
+
+                    $dataProvider = $searchModele->searchBYGR($model->GR_LIBELLE, Yii::$app->request->queryParams);
                     return Yii::$app->controller->renderPartial('_utilisateurs', [
-                        'searchModel' => $searchModel,
+                        'searchModel' => $searchModele,
                         'dataProvider' => $dataProvider,
                     ]);
                 }

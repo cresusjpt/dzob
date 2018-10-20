@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'ADRESSE',
             'LATITUDE',
             'LONGITUDE',
+            'image',
         ],
     ]) ?>
 

@@ -43,8 +43,20 @@ class EvenementController extends Controller
     {
         $searchModel = new EvenementSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $events = Evenement::find()->all();
+        $finalEvent = [];
+
+        foreach ($events as $oneEvent) {
+            $event = new \yii2fullcalendar\models\Event();
+            $event->id = $oneEvent->ID_EVENEMENT;
+            $event->title = $oneEvent->LIBELLE_EVENEMENT;
+            $event->start = $oneEvent->DATE_EVENEMENT;
+            $event->end = $oneEvent->DATE_REALISATION;
+            $finalEvent[] = $event;
+        }
 
         return $this->render('index', [
+            'events' => $finalEvent,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

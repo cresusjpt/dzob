@@ -4,8 +4,9 @@ var Index = function() {"use strict";
 	var runChart1 = function() {
 		function randValue() {
 			return (Math.floor(Math.random() * (100 + 4000 - 2000))) + 2000;
-		};
-		function createSeries() {
+        }
+
+        function createSeries() {
 			var y = date.getFullYear(), m = date.getMonth();
 			var firstDay = new Date(y, m, 1);
 			var fifthDay = new Date(y, m, 5);
@@ -182,9 +183,9 @@ var Index = function() {"use strict";
 	var runChart4 = function() {
 		function randValue() {
 			return (Math.floor(Math.random() * (100 + 4000 - 2000))) + 2000;
-		};
+        }
 
-		function createSeries() {
+        function createSeries() {
 			var y = date.getFullYear(), m = date.getMonth();
 			var firstDay = new Date(y, m, 1);
 			var fifthDay = new Date(y, m, 5);
@@ -262,13 +263,13 @@ var Index = function() {"use strict";
 			tooltipFormat: '<span style="color: {{color}}">&#9679;</span> {{offset:names}}: {{value}}',
 			tooltipValueLookups: {
 				names: {
-					0: 'Sunday',
-					1: 'Monday',
-					2: 'Tuesday',
-					3: 'Wednesday',
-					4: 'Thursday',
-					5: 'Friday',
-					6: 'Saturday'
+                    0: 'Dimanche',
+                    1: 'Lundi',
+                    2: 'Mardi',
+                    3: 'Mercredi',
+                    4: 'Jeudi',
+                    5: 'Vendredi',
+                    6: 'Samedi'
 
 				}
 			}
@@ -281,13 +282,13 @@ var Index = function() {"use strict";
 			tooltipFormat: '<span style="color: {{color}}">&#9679;</span> {{offset:names}}: {{value}}',
 			tooltipValueLookups: {
 				names: {
-					0: 'Sunday',
-					1: 'Monday',
-					2: 'Tuesday',
-					3: 'Wednesday',
-					4: 'Thursday',
-					5: 'Friday',
-					6: 'Saturday'
+                    0: 'Dimanche',
+                    1: 'Lundi',
+                    2: 'Mardi',
+                    3: 'Mercredi',
+                    4: 'Jeudi',
+                    5: 'Vendredi',
+                    6: 'Samedi'
 
 				}
 			}
@@ -300,13 +301,13 @@ var Index = function() {"use strict";
 			tooltipFormat: '<span style="color: {{color}}">&#9679;</span> {{offset:names}}: {{value}}',
 			tooltipValueLookups: {
 				names: {
-					0: 'Sunday',
-					1: 'Monday',
-					2: 'Tuesday',
-					3: 'Wednesday',
-					4: 'Thursday',
-					5: 'Friday',
-					6: 'Saturday'
+                    0: 'Dimanche',
+                    1: 'Lundi',
+                    2: 'Mardi',
+                    3: 'Mercredi',
+                    4: 'Jeudi',
+                    5: 'Vendredi',
+                    6: 'Samedi'
 
 				}
 			}
@@ -328,18 +329,18 @@ var Index = function() {"use strict";
 			tooltipFormat: '<span style="color: {{color}}">&#9679;</span> {{offset:names}}: {{y:val}}',
 			tooltipValueLookups: {
 				names: {
-					0: 'January',
-					1: 'February',
-					2: 'March',
-					3: 'April',
-					4: 'May',
-					5: 'June',
-					6: 'July',
-					7: 'August',
-					8: 'September',
-					9: 'October',
-					10: 'November',
-					11: 'December'
+                    0: 'Janvier',
+                    1: 'Février',
+                    2: 'Mars',
+                    3: 'Avril',
+                    4: 'Mai',
+                    5: 'Juin',
+                    6: 'Juillet',
+                    7: 'Août',
+                    8: 'Septembre',
+                    9: 'Octobre',
+                    10: 'Novembre',
+                    11: 'Décembre'
 
 				}
 			}
@@ -361,18 +362,18 @@ var Index = function() {"use strict";
 			tooltipFormat: '<span style="color: {{color}}">&#9679;</span> {{offset:names}}: {{y:val}}',
 			tooltipValueLookups: {
 				names: {
-					0: 'January',
-					1: 'February',
-					2: 'March',
-					3: 'April',
-					4: 'May',
-					5: 'June',
-					6: 'July',
-					7: 'August',
-					8: 'September',
-					9: 'October',
-					10: 'November',
-					11: 'December'
+                    0: 'Janvier',
+                    1: 'Février',
+                    2: 'Mars',
+                    3: 'Avril',
+                    4: 'Mai',
+                    5: 'Juin',
+                    6: 'Juillet',
+                    7: 'Août',
+                    8: 'Septembre',
+                    9: 'Octobre',
+                    10: 'Novembre',
+                    11: 'Décembre'
 
 				}
 			}

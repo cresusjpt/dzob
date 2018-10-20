@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
             //'ID_EVENEMENT',
             //'REFERENCE_PATRIMOINE',
             'LIBELLE_EVENEMENT',
-            'DATE_EVENEMENT',
-            'DATE_REALISATION',
-            'COMMENTAIRE_EVENEMENT',
+            'DATE_EVENEMENT:date',
+            'DATE_REALISATION:date',
+            'COMMENTAIRE_EVENEMENT:ntext',
             'ETAT_EVENEMENT',
         ],
     ]) ?>

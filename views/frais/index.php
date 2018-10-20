@@ -28,9 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'ID_FRAIS',
             'dOSSIER.LIBELLE_DOSSIER',
-            'MONTANT',
-            'DATE_REGLE',
-            'difference',
+            'MONTANT:integer',
+            'DATE_REGLE:date',
+            'difference:integer',
+            'REMETTANT',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -96,4 +96,9 @@ class Client extends \yii\db\ActiveRecord
         }
         return $sexe;
     }
+
+    public function getCivilite()
+    {
+        return $this->NOM . ' ' . $this->PRENOM;
+    }
 }

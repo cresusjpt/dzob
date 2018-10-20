@@ -33,9 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'ID_TRAITEMENT',
             'ETAT_TRAITEMENT',
             'COMMENTAIRE_TRAITEMENT:ntext',
-            'DATE_DEBUT',
-            'DATE_FIN',
-            'DATE_PREVUE',
+            'DATE_DEBUT:date',
+            'DATE_FIN:date',
+            'DATE_PREVUE:date',
         ],
     ]) ?>
 

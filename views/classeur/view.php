@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'ID_CLASSEUR',
             'NOM_CLASSEUR',
-            'DATE_CLASSEUR',
+            'DATE_CLASSEUR:date',
         ],
     ]) ?>
 

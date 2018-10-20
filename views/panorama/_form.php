@@ -6,6 +6,9 @@
  * Time: 12:38
  */
 
+use app\controllers\Utils;
+use app\models\AyantDroit;
+use app\models\Patrimoine;
 use dosamigos\google\maps\services\DirectionsWayPoint;
 use dosamigos\google\maps\services\TravelMode;
 use dosamigos\google\maps\overlays\PolylineOptions;
@@ -18,109 +21,115 @@ use dosamigos\google\maps\LatLng;
 use dosamigos\google\maps\services\DirectionsRequest;
 use dosamigos\google\maps\overlays\Polygon;
 use dosamigos\google\maps\layers\BicyclingLayer;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 $coord = new LatLng(['lat' => 6.135090, 'lng' => 1.255164]);
 $map = new Map([
     'center' => $coord,
-    'zoom' => 10,
+    'zoom' => 8,
 ]);
+$map->width = '100%';
+$map->height = 1024;
 
-// lets use the directions renderer
-$home = new LatLng(['lat' => 39.720991014764536, 'lng' => 2.911801719665541]);
-$school = new LatLng(['lat' => 39.719456079114956, 'lng' => 2.8979293346405166]);
-$santo_domingo = new LatLng(['lat' => 39.72118906848983, 'lng' => 2.907628202438368]);
-
-// setup just one waypoint (Google allows a max of 8)
-$waypoints = [
-    new DirectionsWayPoint(['location' => $santo_domingo])
-];
-
-$directionsRequest = new DirectionsRequest([
-    'origin' => $home,
-    'destination' => $school,
-    'waypoints' => $waypoints,
-    'travelMode' => TravelMode::DRIVING
-]);
-
-// Lets configure the polyline that renders the direction
-$polylineOptions = new PolylineOptions([
-    'strokeColor' => '#FFAA00',
-    'draggable' => true
-]);
-
-// Now the renderer
-$directionsRenderer = new DirectionsRenderer([
-    'map' => $map->getName(),
-    'polylineOptions' => $polylineOptions
-]);
-
-// Finally the directions service
-$directionsService = new DirectionsService([
-    'directionsRenderer' => $directionsRenderer,
-    'directionsRequest' => $directionsRequest
-]);
-
-// Thats it, append the resulting script to the map
-$map->appendScript($directionsService->getJs());
-
-
-/*var bounds = new GLatLngBounds();
-for (... each point ...) {
-    bounds.extend(latlng);
-}
-map.setZoom(map.getBoundsZoomLevel(bounds));
-map.setCenter(bounds.getCenter());*/
-
+$i = 1;
 foreach ($model as $oneModel) {
     $markCoord = new LatLng(['lat' => $oneModel->LATITUDE, 'lng' => $oneModel->LONGITUDE]);
+    $pop = 'Utils::markerPopUp($oneModel)' . $i;
+    /*$pop = '<div class="overlayer-wrapper">
+                <div class="padding-20">
+                    <h4 class="text-white no-margin">dsdsdsds</h4>
+                    <h5 class=\"text-white\">dsdsdsdsd</h5>
+                </div>
+            </div>'.$i;*/
     // Lets add a marker now
     $marker = new Marker([
         'position' => $markCoord,
         'title' => $oneModel->REFERENCE_PATRIMOINE,
+        'label' => $oneModel->REFERENCE_PATRIMOINE,
     ]);
 
-    // Provide a shared InfoWindow to the marker
-    $marker->attachInfoWindow(
-        new InfoWindow([
-            'content' => '<p>' . $oneModel->DESCRIPTION_IMMO . '</p>'
-        ])
-    );
+    $map->appendScript('
+        google.maps.event.addListener(' . $marker->getName() . ',\'click\',function(evt){
+            $(\'#immomodal\').modal(\'show\')
+            .find(\'#modalContent\')
+            .html(\'' . $pop . '\')
+        });
+    ');
 
+    $i++;
     // Add marker to the map
     $map->addOverlay($marker);
 }
+?>
 
-// Now lets write a polygon
-$coords = [
-    new LatLng(['lat' => 25.774252, 'lng' => -80.190262]),
-    new LatLng(['lat' => 18.466465, 'lng' => -66.118292]),
-    new LatLng(['lat' => 32.321384, 'lng' => -64.75737]),
-    new LatLng(['lat' => 25.774252, 'lng' => -80.190262])
-];
-
-$polygon = new Polygon([
-    'paths' => $coords
+<?php
+$modelImmo = $model[1];
+$patrimoine = Patrimoine::findOne(['REFERENCE_PATRIMOINE' => $modelImmo->REFERENCE_PATRIMOINE]);
+$responsable = AyantDroit::findOne(['ID_PERSONNE' => $modelImmo->ID_PERSONNE, 'ID_AYANTDROIT' => $modelImmo->ID_AYANTDROIT]);
+$civilite = $responsable->getCivilite();
+$ref = $modelImmo->REFERENCE_PATRIMOINE;
+$nom_patri = $patrimoine->NOM_PATRIMOINE;
+$image = Url::to($modelImmo->RESSOURCE);
+Modal::begin([
+    'header' => 'Immobilier',
+    'id' => 'immomodal',
+    'size' => 'modal-small'
 ]);
-
-// Add a shared info window
-$polygon->attachInfoWindow(new InfoWindow([
-    'content' => '<p>This is my super cool Polygon</p>'
-]));
-
-// Add it now to the map
-$map->addOverlay($polygon);
-
-
-// Lets show the BicyclingLayer :)
-$bikeLayer = new BicyclingLayer(['map' => $map->getName()]);
-
-// Append its resulting script
-$map->appendScript($bikeLayer->getJs());
-
-// Display the map -finally :)
-
-$map->width = 1000;
-$map->height = 1024;
+/*echo "<div id='modalContent'></div>";*/
+echo "<div id='modalContent'><div class=\"col-lg-4 col-md-5\">
+            <div class=\"panel uploads\">
+                <div class=\"panel-body panel-portfolio no-padding\">
+                    <div class=\"portfolio-grid portfolio-hover\">
+                        <div class=\"overlayer bottom-left fullwidth\">
+                            <div class=\"overlayer-wrapper\">
+                                <div class=\"padding-20\">
+                                    <h4 class=\"text-white no-margin\">$ref</h4>
+                                    <h5 class=\"text-white\">$nom_patri</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=\"e-slider owl-carousel owl-theme portfolio-grid portfolio-hover\" data-plugin-options=\'{\"pagination\": false, \"stopOnHover\": true}\'>
+                            <div class=\"item\">
+                                <img src=\"$image\" alt=\"\">
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"partition partition-white padding-15\">
+                        <div class=\"clearfix space5\">
+                            <div class=\"col-xs-12 text-center no-padding\">
+                                $modelImmo->DESCRIPTION_IMMO
+                            </div>
+                        </div>
+                        <div class=\"clearfix padding-5\">
+                            <div class=\"col-xs-9 text-center no-padding\">
+                                <a href=\"#\" class=\"text-dark\">
+                                    Responsable : $civilite
+                                </a>
+                            </div>
+                            <div class=\"col-xs-4 text-center no-padding\">
+                                <div class=\"border-right border-dark\">
+                                    <a href=\"#\" class=\"text-dark\">
+                                        <i class=\"fa fa-heart-o text-red\"></i> 250
+                                    </a>
+                                </div>
+                            </div>
+                            <div class=\"col-xs-4 text-center no-padding\">
+                                <div class=\"border-right border-dark\">
+                                    <a href=\"#\" class=\"text-dark\">
+                                        <i class=\"fa fa-bookmark-o text-green\"></i> 20
+                                    </a>
+                                </div>
+                            </div>
+                            <div class=\"col-xs-4 text-center no-padding\">
+                                <a href=\"#\" class=\"text-dark\"><i class=\"fa fa-comment-o text-azure\"></i> 544</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div></div>";
+Modal::end();
 ?>
 
 <div class="row">
@@ -136,10 +145,12 @@ $map->height = 1024;
                         </a>
                         <ul class="dropdown-menu dropdown-light pull-right" role="menu">
                             <li>
-                                <a class="panel-collapse collapses" href="#"><i class="fa fa-angle-up"></i> <span>Réduire</span> </a>
+                                <a class="panel-collapse collapses" href="#"><i class="fa fa-angle-up"></i> <span>Réduire</span>
+                                </a>
                             </li>
                             <li>
-                                <a class="panel-refresh" href="#"> <i class="fa fa-refresh"></i> <span>Actualiser</span> </a>
+                                <a class="panel-refresh" href="#"> <i class="fa fa-refresh"></i> <span>Actualiser</span>
+                                </a>
                             </li>
                             <li>
                                 <a class="panel-expand" href="#"> <i class="fa fa-expand"></i> <span>Plein écran</span></a>
@@ -150,7 +161,7 @@ $map->height = 1024;
                 </div>
             </div>
             <div class="panel-body">
-                <?= $map->display();?>
+                <?= $map->display(); ?>
             </div>
         </div>
         <!-- end: BASIC MAP PANEL -->

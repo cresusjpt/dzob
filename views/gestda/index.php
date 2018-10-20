@@ -199,7 +199,7 @@ $('#submitProfil').click(function (e) {
                 $.blockUI({
                         message : '<i class="fa fa-spinner fa-spin"></i> Veuillez patientez quelques secondes...'
                 });
-               $.post(baseurl+'/gestda/fonction-profil',{FONCT:JSON.stringify(object),PROFIL:profil_code},function(data) {
+               $.post('/gestda/fonction-profil',{FONCT:JSON.stringify(object),PROFIL:profil_code},function(data) {
                    $('#dossier-table').html('');
                    $.unblockUI();
                    swal(data);
@@ -224,7 +224,7 @@ $('#menu').change(function() {
       location.origin = location.protocol + '//' + location.host + ':' +location.port;
    }
   baseurl = location.origin;
-  $.get(baseurl+'/fonctionnalite/get-fonctionnalite',{ id_menu : id_menu}, function(data) {
+  $.get('/fonctionnalite/get-fonctionnalite',{ id_menu : id_menu}, function(data) {
       var dataParsed = JSON.parse(data);
       $('#dossier-table').html('');
         $.each(dataParsed, function(index, d){
@@ -257,7 +257,7 @@ $('#menuUser ').change(function() {
       location.origin = location.protocol + '//' + location.host + ':' +location.port;
     }
   baseurl = location.origin;
-  $.get(baseurl+'/fonctionnalite/get-fonctionnalite',{ id_menu : id_menu}, function(data) {
+  $.get('/fonctionnalite/get-fonctionnalite',{ id_menu : id_menu}, function(data) {
       var dataParsed = JSON.parse(data);
       $('#dossier-tableUser').html('');
         $.each(dataParsed, function(index, d){

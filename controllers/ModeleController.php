@@ -3,11 +3,16 @@
 namespace app\controllers;
 
 use app\models\Action;
+use app\models\DynamicModel;
+use app\models\ModelParam;
 use app\models\SysParam;
+use Exception;
+use Mpdf\Mpdf;
 use Yii;
 use app\models\Modele;
 use app\models\ModeleSearch;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -77,17 +82,48 @@ class ModeleController extends Controller
      * Creates a new Modele model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws \yii\db\Exception
      */
     public function actionCreate()
     {
         $model = new Modele();
+        $modelParam = [new ModelParam];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_MODELE]);
+        if ($model->load(Yii::$app->request->post())) {
+            $modelParam = DynamicModel::createMultiple(ModelParam::class);
+            DynamicModel::loadMultiple($modelParam, Yii::$app->request->post());
+
+            $model->NB_PARAMETRE = count($modelParam);
+
+            // validate all models
+            $valid = $model->validate();
+            $valid = DynamicModel::validateMultiple($modelParam) && $valid;
+
+            if ($valid) {
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($modelParam as $oneParam) {
+                            $oneParam->ID_MODELE = $model->ID_MODELE;
+                            if (!($flag = $oneParam->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->ID_MODELE]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'modelParam' => (empty($modelParam)) ? [new ModelParam()] : $modelParam,
         ]);
     }
 
@@ -97,17 +133,55 @@ class ModeleController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \yii\db\Exception
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelParam = ModelParam::findAll(['ID_MODELE' => $id]);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_MODELE]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            ModelParam::deleteAll(['ID_MODELE' => $model->ID_MODELE]);
+            $oldIDs = ArrayHelper::map($modelParam, 'ID_MODELE', 'ID_MODELE');
+            $modelParam = DynamicModel::createMultiple(ModelParam::class);
+            DynamicModel::loadMultiple($modelParam, Yii::$app->request->post());
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelParam, 'ID_MODELE', 'ID_MODELE')));
+            $model->NB_PARAMETRE = count($modelParam);
+
+            // validate all models
+            $valid = $model->validate();
+            $valid = DynamicModel::validateMultiple($modelParam) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (!empty($deletedIDs)) {
+                            ModelParam::deleteAll(['ID_MODELE' => $model->ID_MODELE]);
+                        }
+                        foreach ($modelParam as $oneParam) {
+                            $oneParam->ID_MODELE = $model->ID_MODELE;
+                            if (!($flag = $oneParam->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->ID_MODELE]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'modelParam' => (empty($modelParam)) ? [new ModelParam()] : $modelParam,
+
         ]);
     }
 
@@ -123,6 +197,7 @@ class ModeleController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        ModelParam::deleteAll(['ID_MODELE' => $id]);
 
         return $this->redirect(['index']);
     }
@@ -157,6 +232,7 @@ class ModeleController extends Controller
     /**
      * @param int $modele
      * @return string|\yii\web\Response
+     * @throws \Mpdf\MpdfException
      */
     public function actionGenerer($modele = 0)
     {
@@ -164,9 +240,10 @@ class ModeleController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect('site/login');
         }
-
         if ($modele != 0) {
             $modeleObject = Modele::findOne($modele);
+            $modelParam = ModelParam::find()->where(['ID_MODELE' => $modeleObject->ID_MODELE])->orderBy('ORDRE ASC')->all();
+            //echo Json::encode($modelParam);
             if (isset($_POST) && !empty($_POST)) {
                 $value = 'param_value';
                 $param = SysParam::findOne('MODELE_VARIABLE')->PARAM_VALUE;
@@ -177,11 +254,15 @@ class ModeleController extends Controller
                     array_push($result, array($param . $i => $_POST[$value . $i]));
                     $contenu = str_replace($param . $real, $_POST[$value . $i], $contenu);
                 }
-                echo $contenu;
-                die();
+                //find another process
+                $mpdf = new Mpdf();
+                $mpdf->title = $modeleObject->NOM_MODELE;
+                $mpdf->WriteHTML($contenu);
+                $mpdf->Output();
             }
             return $this->render('_generer', [
                     'model' => $modeleObject,
+                    'modelParam' => $modelParam,
                 ]
             );
         }

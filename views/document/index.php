@@ -29,8 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'ID_DOC',
             'TITRE_DOC',
             'DESCRIPTION_DOC',
-            'DATE_DOC',
-            'DATE_EFFECTIVE',
+            'DATE_EFFECTIVE:date',
             'CREATEUR',
             //'SOURCE',
 

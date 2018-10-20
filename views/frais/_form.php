@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Dossier;
 use dosamigos\datepicker\DatePicker;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Frais */
@@ -15,10 +16,13 @@ use dosamigos\datepicker\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ID_DOSSIER')->dropDownList(
-    ArrayHelper::map(Dossier::find()->all(),'ID_DOSSIER','LIBELLE_DOSSIER'),
-    ['prompt'=>'Selectionner le dossier','maxlength'=>true]
-    ) ?>
+    <?= $form->field($model, 'ID_DOSSIER')->widget(Select2::class, [
+        'data' => ArrayHelper::map(Dossier::find()->all(), 'ID_DOSSIER', 'LIBELLE_DOSSIER'),
+        'options' => ['placeholder' => 'Selectionner le dossier', 'maxlength' => true],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
 
     <?= $form->field($model, 'MONTANT')->input('number') ?>
 
@@ -30,11 +34,13 @@ use dosamigos\datepicker\DatePicker;
         //'template' => '<div class="well well-sm" style="background-color: #fff;">{input}</div>',
         'clientOptions' => [
             'autoclose' => true,
-            'endDate'=>date('Y-m-d'),
+            'endDate' => date('Y-m-d'),
             'todayHighlight' => true,
             'format' => 'yyyy-mm-dd'
         ]
     ]); ?>
+
+    <?= $form->field($model, 'REMETTANT')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Enregistrer'), ['class' => 'btn btn-success']) ?>

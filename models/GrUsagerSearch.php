@@ -42,9 +42,9 @@ class GrUsagerSearch extends GrUsager
     public function search($params)
     {
         $query = GrUsager::find();
+        $query->groupBy(['GR_LIBELLE', 'GR_DESCRIPTION']);
 
         // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

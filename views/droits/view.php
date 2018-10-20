@@ -30,10 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             //'ID_DROITS',
             'LIBELLE_DROIT',
-            'DATE_DROIT',
+            'DATE_DROIT:date',
             'ETAT_DROIT',
             'COMMENTAIRE_DROIT',
-            'DATE_DM',
+            'DATE_DM:date',
         ],
     ]) ?>
 

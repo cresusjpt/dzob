@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Action;
 use app\models\SysParam;
 use app\models\Utilisateur;
+use Throwable;
 use Yii;
 use app\models\Fichier;
 use app\models\FichierSearch;
@@ -110,7 +111,8 @@ class FichierController extends Controller
                     FileHelper::createDirectory($directory);
                 }
                 if ($imageFile) {
-                    $fileName = uniqid(time(), true) . str_replace(' ', '_', $model->NOM_FICHIER) . '.' . $imageFile->extension;
+                    $time = time() + 1;
+                    $fileName = str_replace(' ', '_', $model->NOM_FICHIER) . $time . '.' . $imageFile->extension;
                     $filePath = $directory . $fileName;
                     if ($imageFile->saveAs($filePath)) {
                         $model->FORMAT_FICHIER = $imageFile->extension;
@@ -171,7 +173,7 @@ class FichierController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
-     * @throws \Throwable
+     * @throws Throwable
      * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)

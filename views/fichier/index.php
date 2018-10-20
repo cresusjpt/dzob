@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'REFERENCE',
             'NOM_FICHIER',
             'CREATEUR',
-            'DATE_EFFECTIVE',
+            'DATE_EFFECTIVE:date',
             'FORMAT_FICHIER',
 
             ['class' => 'yii\grid\ActionColumn'],

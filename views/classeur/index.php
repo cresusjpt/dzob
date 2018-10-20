@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'ID_CLASSEUR',
             'NOM_CLASSEUR',
-            'DATE_CLASSEUR',
+            'DATE_CLASSEUR:date',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

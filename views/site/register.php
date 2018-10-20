@@ -11,7 +11,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 
-$this->title = 'Dzob | Login';
+$this->title = 'Dzob | Inscription';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -28,21 +28,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="errorHandler alert alert-danger no-display">
                     <i class="fa fa-remove-sign"></i> Des erreurs ont survenues, Veuillez verifiez ci-dessous.
                 </div>
-                <?= $form->field($models, 'NOM',['options'=>[
-                    'tag'=>'div',
-                    'class'=>'form-group required '
+                <?= $form->field($models, 'NOM', ['options' => [
+                    'tag' => 'div',
+                    'class' => 'form-group required '
                 ],
-                    'template'=>'{input}
+                    'template' => '{input}
                         {error}{hint}'
-                ])->textInput(['placeholder'=>'Nom complet'])
+                ])->textInput(['placeholder' => 'Nom complet'])
                 ?>
-                <?= $form->field($models, 'PRENOM',['options'=>[
-                    'tag'=>'div',
-                    'class'=>'form-group required '
+                <?= $form->field($models, 'PRENOM', ['options' => [
+                    'tag' => 'div',
+                    'class' => 'form-group required '
                 ],
-                    'template'=>'{input}
+                    'template' => '{input}
                         {error}{hint}'
-                ])->textInput(['placeholder'=>'Prénom complet'])
+                ])->textInput(['placeholder' => 'Prénom'])
                 ?>
 
                 <?= $form->field($models, 'DATE_NAISSANCE')->widget(
@@ -54,75 +54,76 @@ $this->params['breadcrumbs'][] = $this->title;
                     //'template' => '<div class="well well-sm" style="background-color: #fff;">{input}</div>',
                     'clientOptions' => [
                         'autoclose' => true,
+                        'endDate' => date('Y-m-d'),
+                        'todayHighlight' => true,
                         'format' => 'yyyy-mm-dd'
                     ]
                 ]); ?>
 
-                <?= $form->field($models, 'EMAIL',['options'=>[
-                    'tag'=>'div',
-                    'class'=>'form-group required'
+                <?= $form->field($models, 'EMAIL', ['options' => [
+                    'tag' => 'div',
+                    'class' => 'form-group required'
                 ],
-                    'template'=>'{input}
+                    'template' => '{input}
                         {error}{hint}'
-                ])->input('email',['placeholder'=>'Email'])
+                ])->input('email', ['placeholder' => 'Email'])
                 ?>
-                <?= $form->field($models, 'TELEPHONE',['options'=>[
-                    'tag'=>'div',
-                    'class'=>'form-group required'
+                <?= $form->field($models, 'TELEPHONE', ['options' => [
+                    'tag' => 'div',
+                    'class' => 'form-group required'
                 ],
-                    'template'=>'{input}
+                    'template' => '{input}
                         {error}{hint}'
-                ])->textInput(['placeholder'=>'Telephone'])
+                ])->textInput(['placeholder' => 'Telephone'])
                 ?>
-                <?= $form->field($models, 'ADRESSE',['options'=>[
-                    'tag'=>'div',
-                    'class'=>'form-group required '
+                <?= $form->field($models, 'ADRESSE', ['options' => [
+                    'tag' => 'div',
+                    'class' => 'form-group required '
                 ],
-                    'template'=>'{input}
+                    'template' => '{input}
                         {error}{hint}'
-                ])->textInput(['placeholder'=>'Adresse'])
+                ])->textInput(['placeholder' => 'Adresse'])
                 ?>
                 <?= $form->field($models, 'SEXE')->radioList([
-                        'M'=>'Masculin',
-                        'F'=>'Feminin',
+                    'M' => 'Masculin',
+                    'F' => 'Feminin',
                 ])
                 ?>
                 <p>
                     Entrez les informations de connexion ci-dessous:
                 </p>
-                <?= $form->field($models, 'USERNAME',['options'=>[
-                    'tag'=>'div',
-                    'class'=>'form-group field-utilisateur-login required '
+                <?= $form->field($models, 'USERNAME', ['options' => [
+                    'tag' => 'div',
+                    'class' => 'form-group field-utilisateur-login required '
                 ],
-                    'template'=>'<span class="input-icon">{input}<i class="fa fa-user"></i></span>
+                    'template' => '<span class="input-icon">{input}<i class="fa fa-user"></i></span>
                         {error}{hint}'
-                ])->textInput(['placeholder'=>'Nom d\'utilisteur'])
+                ])->textInput(['placeholder' => 'Nom d\'utilisteur'])
                 ?>
 
-                <?= $form->field($models, 'PASSWORD',['options'=>[
-                    'tag'=>'div',
-                    'class'=>'form-group field-utilisateur-login required '
+                <?= $form->field($models, 'PASSWORD', ['options' => [
+                    'tag' => 'div',
+                    'class' => 'form-group field-utilisateur-login required '
                 ],
-                    'template'=>'<span class="input-icon">{input}<i class="fa fa-lock"></i></span>
+                    'template' => '<span class="input-icon">{input}<i class="fa fa-lock"></i></span>
                         {error}{hint}'
-                ])->passwordInput(['placeholder'=>'Mot de passe'])
+                ])->passwordInput(['placeholder' => 'Mot de passe'])
                 ?>
-                <?= $form->field($models, 'rawpassword',['options'=>[
-                    'tag'=>'div',
-                    'class'=>'form-group field-utilisateur-login required '
+                <?= $form->field($models, 'rawpassword', ['options' => [
+                    'tag' => 'div',
+                    'class' => 'form-group field-utilisateur-login required '
                 ],
-                    'template'=>'<span class="input-icon">{input}<i class="fa fa-lock"></i></span>
+                    'template' => '<span class="input-icon">{input}<i class="fa fa-lock"></i></span>
                         {error}{hint}'
-                ])->passwordInput(['placeholder'=>'Mot de passe encore'])
+                ])->passwordInput(['placeholder' => 'Mot de passe encore'])
                 ?>
-                <?= $form->field($models,'ETAT')->dropDownList(['ACTIF'=>'Actif','INACTIF'=>'Inactif'],['prompt'=>'Statut']) ?>
                 <div class="form-actions">
                     Déjà un compte?
-                    <a href="login" class="go-back">
+                    <a href="<?= \yii\helpers\Url::to('site/login') ?>" class="go-back">
                         Connexion
                     </a>
                     <div class="form-group">
-                        <?= Html::submitButton('Inscription <i class="fa fa-arrow-circle-right"></i>',['class'=>'btn btn-green pull-right'])?>
+                        <?= Html::submitButton('Inscription <i class="fa fa-arrow-circle-right"></i>', ['class' => 'btn btn-green pull-right']) ?>
                     </div>
                 </div>
             </fieldset>

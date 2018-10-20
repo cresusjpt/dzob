@@ -6,6 +6,7 @@ use app\models\Utilisateur;
 use Yii;
 use app\models\GrUsager;
 use app\models\GrUsagerSearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,8 +62,11 @@ class GrusagerController extends Controller
      */
     public function actionView($ID_DROITS, $ID_PERSONNE, $IDENTIFIANT, $ID_DOSSIER)
     {
+
+        $model = $this->findModel($ID_DROITS, $ID_PERSONNE, $IDENTIFIANT, $ID_DOSSIER);
+        $finalModel = GrUsager::findAll(['GR_LIBELLE' => $model->GR_LIBELLE, 'GR_DESCRIPTION' => $model->GR_DESCRIPTION]);
         return $this->render('view', [
-            'model' => $this->findModel($ID_DROITS, $ID_PERSONNE, $IDENTIFIANT, $ID_DOSSIER),
+            'model' => $finalModel,
         ]);
     }
 
@@ -113,8 +117,39 @@ class GrusagerController extends Controller
     {
         $model = $this->findModel($ID_DROITS, $ID_PERSONNE, $IDENTIFIANT, $ID_DOSSIER);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID_DROITS' => $model->ID_DROITS, 'ID_PERSONNE' => $model->ID_PERSONNE, 'IDENTIFIANT' => $model->IDENTIFIANT, 'ID_DOSSIER' => $model->ID_DOSSIER]);
+        if ($model->load(Yii::$app->request->post())) {
+            $count = count($model->IDENTIFIANT);
+
+            $last_idPersonne = 0;
+            $last_identifiant = 0;
+            for ($i = 0; $i < $count; $i++) {
+                $oneGrUsager = new GrUsager();
+                $oneGrUsager->ID_DROITS = $model->ID_DROITS;
+                $oneGrUsager->ID_DOSSIER = $model->ID_DOSSIER;
+                $oneGrUsager->GR_LIBELLE = $model->GR_LIBELLE;
+                $oneGrUsager->GR_DESCRIPTION = $model->GR_DESCRIPTION;
+                $oneGrUsager->IDENTIFIANT = $model->IDENTIFIANT[$i];
+                $oneGrUsager->ID_PERSONNE = Utilisateur::findOne(['IDENTIFIANT' => $oneGrUsager->IDENTIFIANT])->ID_PERSONNE;
+
+                $search = GrUsager::find()
+                    ->where(
+                        [
+                            'ID_DROITS' => $oneGrUsager->ID_DROITS,
+                            'ID_DOSSIER' => $oneGrUsager->ID_DOSSIER,
+                            'GR_LIBELLE' => $oneGrUsager->GR_LIBELLE,
+                            'GR_DESCRIPTION' => $oneGrUsager->GR_DESCRIPTION,
+                            'IDENTIFIANT' => $oneGrUsager->IDENTIFIANT,
+                            'ID_PERSONNE' => $oneGrUsager->ID_PERSONNE,
+                        ])
+                    ->count();
+
+                if ($search <= 0) {
+                    $last_idPersonne = $oneGrUsager->ID_PERSONNE;
+                    $last_identifiant = $oneGrUsager->IDENTIFIANT;
+                    $oneGrUsager->save();
+                }
+            }
+            return $this->redirect(['view', 'ID_DROITS' => $model->ID_DROITS, 'ID_PERSONNE' => $last_idPersonne, 'IDENTIFIANT' => $last_identifiant, 'ID_DOSSIER' => $model->ID_DOSSIER]);
         }
 
         return $this->render('update', [
